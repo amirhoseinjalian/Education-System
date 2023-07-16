@@ -27,8 +27,8 @@ import javax.persistence.*;
 public abstract class Answer extends LongIdEntity {
 
     @ManyToOne
-    @JoinColumn(name = "student_id")
-    private Student student;
+    @JoinColumn(name = "studentQuiz_id")
+    private StudentQuiz studentQuiz;
 
     @OneToOne
     @JoinColumn(name = "question_id")

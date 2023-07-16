@@ -37,8 +37,8 @@ public class Student extends Person {
     @OneToMany(mappedBy = "student")
     private List<StudentQuiz> quizzes;
 
-    @OneToMany(mappedBy = "student")
-    private List<Answer> answers;
+    /*@OneToMany(mappedBy = "student")
+    private List<Answer> answers;*/
 
     @Override
     public String toString() {

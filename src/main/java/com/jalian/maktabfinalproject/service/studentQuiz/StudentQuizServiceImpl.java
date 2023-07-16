@@ -52,7 +52,7 @@ public class StudentQuizServiceImpl extends BaseServiceImpl<StudentQuiz, Long, S
         return studentQuizRepository.getQuizzes(student.getId());
     }
 
-    public AtomicReference<Double> getTestQuestionGrade(Student student, Quiz quiz) {
+    /*public AtomicReference<Double> getTestQuestionGrade(Student student, Quiz quiz) {
         AtomicReference<Double> grade = new AtomicReference<>(0.0);
         List<Answer> answers = student.getAnswers();
         List<TestAnswer> testAnswers = new ArrayList<>();
@@ -64,6 +64,6 @@ public class StudentQuizServiceImpl extends BaseServiceImpl<StudentQuiz, Long, S
             grade.updateAndGet(v -> v + quizQuestionJoinTable.getScore());
         }});}});});
         return grade;
-    }
+    }*/
 
 }

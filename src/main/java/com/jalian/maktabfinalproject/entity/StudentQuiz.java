@@ -7,6 +7,7 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table
@@ -34,4 +35,7 @@ public class StudentQuiz extends LongIdEntity {
     private Boolean isJoined;
 
     private Double score;
+
+    @OneToMany(mappedBy = "studentQuiz")
+    private List<Answer> answers;
 }

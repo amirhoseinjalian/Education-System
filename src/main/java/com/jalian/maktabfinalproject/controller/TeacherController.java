@@ -109,7 +109,7 @@ public class TeacherController extends BasicController {
         return studentQuizService.getStudentsOfAQuiz(quizId).stream().map(student -> modelMapper.map(student, PersonDto.class)).collect(Collectors.toList());
     }
 
-    @PutMapping("/{studentId}/quizzes/{quizId}/grade")
+    @PutMapping("/{studentId}/quizzes/{quizId}/test-questions/grade")
     public List<StudentQuiz> getTestQuestionGrades() {
         return null;
     }

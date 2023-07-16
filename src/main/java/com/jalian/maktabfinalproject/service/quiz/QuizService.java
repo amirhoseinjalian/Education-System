@@ -12,11 +12,9 @@ public interface QuizService extends BaseService<Quiz, Long> {
 
     List<Question> questionBank(@Param("id") Long id);
 
-    /*<Value extends Question> List<Value> getQuestions();*/
-
     void addQuestion(Quiz quiz, Question question, Double score);
 
-    List<Quiz> getAllowedQuizzes(/*String studentId*/ Student student);
+    List<Quiz> getAllowedQuizzes(Student student);
 
-    double correctTestQuestion(Student student, Quiz quiz);
+    double correctTestQuestion(Student student, Quiz quiz) throws Exception;
 }

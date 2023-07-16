@@ -21,16 +21,16 @@ public class StudentController extends BasicController {
     }
 
     @GetMapping("/{studentId}/quizzes")
-    public List<QuizDto> getAllowedQuizzes(@PathVariable String studentId) {
+    public List<QuizDto> getAllowedQuizzes(@PathVariable String studentId) throws Exception {
         isValid(studentId, studentService);
-        return quizService.getAllowedQuizzes(studentId).stream().map(quiz -> modelMapper.map(quiz, QuizDto.class)).collect(Collectors.toList());
+        return quizService.getAllowedQuizzes(get(studentId, studentService)).stream().map(quiz -> modelMapper.map(quiz, QuizDto.class)).collect(Collectors.toList());
     }
 
     @PutMapping("/{studentId}/participating-in-a-test/{quizId}")
     public List<Question> participatingInAQuiz(@PathVariable String studentId, @PathVariable Long quizId) throws Exception {
         isValid(studentId, studentService);
         Quiz quiz = get(quizId, quizService);
-        if(!quizService.getAllowedQuizzes(studentId).contains(quiz)) {
+        if(!quizService.getAllowedQuizzes(get(studentId, studentService)).contains(quiz)) {
             throw new Exception("not found");
         }
         studentQuizService.joinedAQuiz(studentId, quizId);
@@ -60,7 +60,7 @@ public class StudentController extends BasicController {
         }
         isValid(studentId, studentService);
         Quiz quiz = get(quizId, quizService);
-        if(!quizService.getAllowedQuizzes(studentId).contains(quiz)) {
+        if(!quizService.getAllowedQuizzes(get(studentId, studentService)).contains(quiz)) {
             throw new Exception("not found");
         }
         answers.forEach(answer -> {if (answer instanceof TestAnswer) {

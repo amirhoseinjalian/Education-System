@@ -18,6 +18,7 @@ import java.util.concurrent.atomic.AtomicReference;
 @Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
 public class StudentQuizServiceImpl extends BaseServiceImpl<StudentQuiz, Long, StudentQuizRepository> implements StudentQuizService {
 
+    @Autowired
     private StudentQuizRepository studentQuizRepository;
 
     @Autowired
@@ -39,6 +40,16 @@ public class StudentQuizServiceImpl extends BaseServiceImpl<StudentQuiz, Long, S
     @Override
     public List<Student> getPassedStudents(Long quizId) {
         return studentQuizRepository.getPassedStudents(quizId);
+    }
+
+    @Override
+    public Student getStudent(String studentId) {
+        return studentQuizRepository.getStudent(studentId);
+    }
+
+    @Override
+    public Quiz getQuiz(Long quizId) {
+        return studentQuizRepository.getQuiz(quizId);
     }
 
     public AtomicReference<Double> getTestQuestionGrade(Student student, Quiz quiz) {

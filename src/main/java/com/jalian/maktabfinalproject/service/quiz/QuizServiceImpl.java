@@ -46,7 +46,7 @@ public class QuizServiceImpl extends BaseServiceImpl<Quiz, Long, QuizRepository>
         if(!students.contains(student)) {
             throw new Exception("Student not found");
         }
-        List<Answer> answers = student.getAnswers();
+        List<Answer> answers = null;
 
         return 0;
     }

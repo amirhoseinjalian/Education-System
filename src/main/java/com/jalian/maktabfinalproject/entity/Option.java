@@ -26,10 +26,6 @@ public class Option extends LongIdEntity {
 
     private String expression;
 
-    /*@ManyToOne
-    @JoinColumn(name = "question_id")
-    private TestQuestion testQuestion;*/
-
     public Option(Long id) {
         super(id);
     }

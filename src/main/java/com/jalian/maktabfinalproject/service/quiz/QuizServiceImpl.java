@@ -3,6 +3,8 @@ package com.jalian.maktabfinalproject.service.quiz;
 import com.jalian.maktabfinalproject.entity.*;
 import com.jalian.maktabfinalproject.repository.QuizRepository;
 import com.jalian.maktabfinalproject.service.base.BaseServiceImpl;
+import com.jalian.maktabfinalproject.service.question.QuestionService;
+import com.jalian.maktabfinalproject.service.question.testQuestion.TestQuestionService;
 import com.jalian.maktabfinalproject.service.studentQuiz.StudentQuizService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,6 +22,10 @@ public class QuizServiceImpl extends BaseServiceImpl<Quiz, Long, QuizRepository>
 
     @Autowired
     private StudentQuizService studentQuizService;
+
+    //eshkali nadare service ha beham vabaste and??????????????????????????????????????????????????
+    @Autowired
+    private TestQuestionService testQuestionService;
 
     public QuizServiceImpl(QuizRepository repository) {
         super(repository);
@@ -46,7 +52,7 @@ public class QuizServiceImpl extends BaseServiceImpl<Quiz, Long, QuizRepository>
         if(!students.contains(student)) {
             throw new Exception("Student not found");
         }
-        List<Answer> answers = null;
+        List<Answer> answers = studentQuizService.getAnswers(student, quiz);
 
         return 0;
     }

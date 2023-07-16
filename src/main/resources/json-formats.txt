@@ -1,0 +1,8 @@
+{
+    "username" : "mj",
+    "firstName": "mohammad",
+    "lastName": "jalian",
+    "birthdate": "2003-05-04",
+    "password": "123",
+    "status": "WAITING"
+}

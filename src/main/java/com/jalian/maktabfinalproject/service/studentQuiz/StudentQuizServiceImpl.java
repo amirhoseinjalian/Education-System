@@ -43,13 +43,13 @@ public class StudentQuizServiceImpl extends BaseServiceImpl<StudentQuiz, Long, S
     }
 
     @Override
-    public Student getStudent(String studentId) {
-        return studentQuizRepository.getStudent(studentId);
+    public List<Student> getStudents(Quiz quiz) {
+        return studentQuizRepository.getStudents(quiz.getId());
     }
 
     @Override
-    public Quiz getQuiz(Long quizId) {
-        return studentQuizRepository.getQuiz(quizId);
+    public List<Quiz> getQuizzes(Student student) {
+        return studentQuizRepository.getQuizzes(student.getId());
     }
 
     public AtomicReference<Double> getTestQuestionGrade(Student student, Quiz quiz) {

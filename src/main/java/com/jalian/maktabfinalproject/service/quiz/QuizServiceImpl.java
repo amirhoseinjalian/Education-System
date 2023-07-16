@@ -36,7 +36,12 @@ public class QuizServiceImpl extends BaseServiceImpl<Quiz, Long, QuizRepository>
     }
 
     @Override
-    public List<Quiz> getAllowedQuizzes(String studentId) {
-        return quizRepository.getAllowedQuizzes(studentId);
+    public double correctTestQuestion(Student student, Quiz quiz) {
+        return 0;
+    }
+
+    @Override
+    public List<Quiz> getAllowedQuizzes(Student student) {
+        return quizRepository.getAllowedQuizzes(student.getId());
     }
 }

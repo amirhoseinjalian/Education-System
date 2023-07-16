@@ -4,8 +4,6 @@ import com.jalian.maktabfinalproject.entity.Quiz;
 import com.jalian.maktabfinalproject.entity.Student;
 import com.jalian.maktabfinalproject.entity.StudentQuiz;
 import com.jalian.maktabfinalproject.service.base.BaseService;
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
@@ -17,7 +15,7 @@ public interface StudentQuizService extends BaseService<StudentQuiz, Long> {
 
     List<Student> getPassedStudents(Long quizId);
 
-    Student getStudent(String studentId);
+    List<Student> getStudents(Quiz quiz);
 
-    Quiz getQuiz(Long quizId);
+    List<Quiz> getQuizzes(Student student);
 }

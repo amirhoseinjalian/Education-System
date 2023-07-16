@@ -2,6 +2,7 @@ package com.jalian.maktabfinalproject.service.quiz;
 
 import com.jalian.maktabfinalproject.entity.Question;
 import com.jalian.maktabfinalproject.entity.Quiz;
+import com.jalian.maktabfinalproject.entity.Student;
 import com.jalian.maktabfinalproject.service.base.BaseService;
 import org.springframework.data.repository.query.Param;
 
@@ -15,5 +16,7 @@ public interface QuizService extends BaseService<Quiz, Long> {
 
     void addQuestion(Quiz quiz, Question question, Double score);
 
-    List<Quiz> getAllowedQuizzes(String studentId);
+    List<Quiz> getAllowedQuizzes(/*String studentId*/ Student student);
+
+    double correctTestQuestion(Student student, Quiz quiz);
 }

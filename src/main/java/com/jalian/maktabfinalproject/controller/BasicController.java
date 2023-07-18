@@ -60,7 +60,6 @@ public class BasicController {
 
     @PostMapping("/reg")
     public String registration(@RequestBody SignupDto signupDto) throws Exception {
-        //post kardan entity ba data rest bayad ba link anjam beshe!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         String type = signupDto.getRole().getName().toString();
         switch (type) {
             case "ADMIN":

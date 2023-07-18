@@ -6,7 +6,9 @@ import com.jalian.maktabfinalproject.entity.Student;
 import com.jalian.maktabfinalproject.service.base.BaseService;
 import org.springframework.data.repository.query.Param;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public interface QuizService extends BaseService<Quiz, Long> {
 
@@ -16,5 +18,5 @@ public interface QuizService extends BaseService<Quiz, Long> {
 
     List<Quiz> getAllowedQuizzes(Student student);
 
-    double correctTestQuestion(Student student, Quiz quiz) throws Exception;
+    Map<String, Double> correctTestQuestion(Student student, Quiz quiz) throws Exception;
 }

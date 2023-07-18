@@ -4,6 +4,7 @@ import com.jalian.maktabfinalproject.entity.*;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @RestController
@@ -110,7 +111,7 @@ public class TeacherController extends BasicController {
     }
 
     @PutMapping("/{studentId}/quizzes/{quizId}/test-questions/grade")
-    public List<StudentQuiz> getTestQuestionGrades() {
+    public Map<String, Double> getTestQuestionGrades() {
         return null;
     }
 }

@@ -5,12 +5,13 @@ import lombok.*;
 import javax.persistence.*;
 
 @Entity
+@Table(name = "quiz_question")
 @Builder
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class QuizQuestionJoinTable {
+public class QuizQuestionJoinTable extends BaseEntity<QuizQuestionKey> {
 
     @EmbeddedId
     private QuizQuestionKey quizQuestionKey;

@@ -1,6 +1,7 @@
 package com.jalian.maktabfinalproject.service.question;
 
 import com.jalian.maktabfinalproject.entity.Question;
+import com.jalian.maktabfinalproject.entity.Quiz;
 import com.jalian.maktabfinalproject.repository.QuestionRepository;
 import com.jalian.maktabfinalproject.service.base.BaseServiceImpl;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,5 +22,10 @@ public abstract class QuestionServiceImpl<Value extends Question, Repository ext
     @Override
     public List<Value> getQuestions(Long id) {
         return questionRepository.getQuestions(id);
+    }
+
+    @Override
+    public Double getScore(Quiz quiz, Question question) {
+        return questionRepository.getScore(quiz.getId(), question.getId());
     }
 }

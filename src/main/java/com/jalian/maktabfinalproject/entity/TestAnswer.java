@@ -24,7 +24,7 @@ import javax.persistence.*;
 @JsonTypeName("testAnswer")
 public class TestAnswer extends Answer {
 
-    @OneToMany
+    @OneToOne
     @JoinColumn(name = "option_id")
     private Option correctOption;
 }

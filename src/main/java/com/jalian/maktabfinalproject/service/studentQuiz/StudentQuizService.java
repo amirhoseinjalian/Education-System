@@ -19,6 +19,4 @@ public interface StudentQuizService extends BaseService<StudentQuiz, Long> {
     List<Student> getStudents(Quiz quiz);
 
     List<Quiz> getQuizzes(Student student);
-
-    List<Answer> getAnswers(Student student, Quiz quiz);
 }

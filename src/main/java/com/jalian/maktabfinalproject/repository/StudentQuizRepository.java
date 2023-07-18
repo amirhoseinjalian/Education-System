@@ -27,7 +27,4 @@ public interface StudentQuizRepository extends BaseRepository<StudentQuiz, Long>
 
     @Query("select s.quiz from StudentQuiz s where s.student.id = :studentId")
     List<Quiz> getQuizzes(@Param("studentId") String studentId);
-
-    @Query("select s.answers from StudentQuiz s where s.student.id = :studentId and s.quiz.id = :quizId")
-    List<Answer> getAnswers(@Param("studentId") String studentId, @Param("quizId") Long quizId);
 }

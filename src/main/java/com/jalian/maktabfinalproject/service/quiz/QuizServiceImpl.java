@@ -2,16 +2,16 @@ package com.jalian.maktabfinalproject.service.quiz;
 
 import com.jalian.maktabfinalproject.entity.*;
 import com.jalian.maktabfinalproject.repository.QuizRepository;
+import com.jalian.maktabfinalproject.service.answer.testAnswer.TestAnswerService;
 import com.jalian.maktabfinalproject.service.base.BaseServiceImpl;
-import com.jalian.maktabfinalproject.service.question.QuestionService;
 import com.jalian.maktabfinalproject.service.question.testQuestion.TestQuestionService;
+import com.jalian.maktabfinalproject.service.quizQuestion.QuizQuestionService;
 import com.jalian.maktabfinalproject.service.studentQuiz.StudentQuizService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 @Service
 @Transactional
@@ -26,6 +26,12 @@ public class QuizServiceImpl extends BaseServiceImpl<Quiz, Long, QuizRepository>
     //eshkali nadare service ha beham vabaste and??????????????????????????????????????????????????
     @Autowired
     private TestQuestionService testQuestionService;
+
+    @Autowired
+    private TestAnswerService testAnswerService;
+
+    @Autowired
+    private QuizQuestionService quizQuestionService;
 
     public QuizServiceImpl(QuizRepository repository) {
         super(repository);
@@ -46,15 +52,30 @@ public class QuizServiceImpl extends BaseServiceImpl<Quiz, Long, QuizRepository>
     }
 
     @Override
-    public double correctTestQuestion(Student student, Quiz quiz) throws Exception {
-        double grade = 0;
+    public Map<String, Double> correctTestQuestion(Student student, Quiz quiz) throws Exception {
+        final Double[] grade = {0.0};
         List<Student> students = studentQuizService.getStudents(quiz);
-        if(!students.contains(student)) {
+        if (!students.contains(student)) {
             throw new Exception("Student not found");
         }
-        List<Answer> answers = studentQuizService.getAnswers(student, quiz);
-
-        return 0;
+        List<TestAnswer> answers = testAnswerService.getAnswers(student, quiz);
+        List<Question> questions = quizQuestionService.getQuestions(quiz);
+        List<TestAnswer> correctAnswers = new ArrayList<>();
+        questions.forEach(question -> {
+            if (question instanceof TestQuestion) {
+                correctAnswers.add((TestAnswer) question.getAnswer());
+            }
+        });
+        correctAnswers.forEach(testAnswer -> {
+            answers.forEach(testAnswer1 -> {
+                if (testAnswer.equals(testAnswer1)) {
+                    grade[0] += quizQuestionService.findById(new QuizQuestionKey(quiz.getId(), testAnswer.getQuestion().getId())).get().getScore();
+                }
+            });
+        });
+        Map<String, Double> map = new LinkedHashMap<>();
+        map.put(student.getId(), grade[0]);
+        return map;
     }
 
     @Override

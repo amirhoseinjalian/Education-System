@@ -52,9 +52,4 @@ public class StudentQuizServiceImpl extends BaseServiceImpl<StudentQuiz, Long, S
     public List<Quiz> getQuizzes(Student student) {
         return studentQuizRepository.getQuizzes(student.getId());
     }
-
-    @Override
-    public List<Answer> getAnswers(Student student, Quiz quiz) {
-        return studentQuizRepository.getAnswers(student.getId(), quiz.getId());
-    }
 }

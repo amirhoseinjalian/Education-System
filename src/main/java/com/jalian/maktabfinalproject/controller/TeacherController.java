@@ -97,7 +97,7 @@ public class TeacherController extends BasicController {
     }
 
     @GetMapping("/{quizId}/students")
-    public List<PersonDto> getAtudentsOfAQuiz(@PathVariable Long quizId) throws Exception {
+    public List<PersonDto> getStudentsOfAQuiz(@PathVariable Long quizId) throws Exception {
         return studentQuizService.getStudentsOfAQuiz(get(quizId, quizService)).stream().map(student -> modelMapper.map(student, PersonDto.class)).collect(Collectors.toList());
     }
 
@@ -108,7 +108,9 @@ public class TeacherController extends BasicController {
     }
 
     @PutMapping("/{studentId}/quizzes/{quizId}/test-questions/grade")
-    public Map<String, Double> getTestQuestionGrades() {
-        return null;
+    public Map<String, Double> getTestQuestionGrades(@PathVariable String studentId, @PathVariable Long quizId) throws Exception {
+        Student student = get(studentId, studentService);
+        Quiz quiz = get(quizId, quizService);
+        return quizService.correctTestQuestion(student, quiz);
     }
 }

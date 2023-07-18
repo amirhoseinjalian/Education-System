@@ -57,10 +57,8 @@ public class QuizServiceImpl extends BaseServiceImpl<Quiz, Long, QuizRepository>
     @Override
     public Map<String, Double> correctTestQuestion(Student student, Quiz quiz) throws Exception {
         final Double[] grade = {0.0};
-        List<Student> students = studentQuizService.getStudentsOfAQuiz(quiz);
-        if (!students.contains(student)) {
-            throw new Exception("Student not found");
-        }
+        StudentQuiz studentQuiz = studentQuizService.findById(new StudentQuizKey(student.getId(), quiz.getId()))
+                .orElseThrow(() -> new NullPointerException("student or quiz not found"));
         List<TestAnswer> answers = testAnswerService.getAnswers(student, quiz);
         List<TestQuestion> questions = quizQuestionService.<TestQuestion>getQuestions(quiz, "TestQuestion");
         List<TestAnswer> correctAnswers = new ArrayList<>();
@@ -74,6 +72,8 @@ public class QuizServiceImpl extends BaseServiceImpl<Quiz, Long, QuizRepository>
                 }
             });
         });
+        studentQuiz.setGrade(grade[0]);
+        studentQuizService.save(studentQuiz);
         Map<String, Double> map = new LinkedHashMap<>();
         map.put(student.getId(), grade[0]);
         return map;

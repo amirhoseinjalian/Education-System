@@ -3,7 +3,8 @@ package com.jalian.maktabfinalproject.controller;
 import com.jalian.maktabfinalproject.entity.*;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
@@ -42,6 +43,8 @@ public class AdminController extends BasicController {
         Course course = get(id, courseService);
         List<Student> students = new ArrayList<>();
         studentsId.forEach(s -> students.add(studentService.findById(s).get()));
+        students.forEach(student -> studentService.addCourse(student, course));
+        courseService.addStudent(course, students);
         return courseService.findById(course.getId()).get();
     }
 

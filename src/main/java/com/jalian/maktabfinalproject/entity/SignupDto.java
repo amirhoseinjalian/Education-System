@@ -14,7 +14,7 @@ public class SignupDto {
     private String lastName;
     private String id;
     private String password;
-    private Date birthdate;
+    private Date birthDate;
     private Role role;
     private RegistrationStatus status = RegistrationStatus.WAITING;
 }

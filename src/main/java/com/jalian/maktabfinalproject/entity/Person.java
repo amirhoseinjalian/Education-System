@@ -1,12 +1,13 @@
 package com.jalian.maktabfinalproject.entity;
 
 import com.fasterxml.jackson.annotation.*;
-
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.hibernate.annotations.DynamicInsert;
 
 import javax.persistence.*;
-
 import java.sql.Date;
 
 @Entity
@@ -36,7 +37,7 @@ public abstract class Person extends BaseEntity<String> {
     @Column(name = "last_name")
     private String lastName;
 
-    private Date birthdate;
+    private Date birthDate;
 
     @Column(nullable = false)
     private String password;

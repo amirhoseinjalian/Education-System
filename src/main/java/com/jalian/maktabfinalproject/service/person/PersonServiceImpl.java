@@ -28,11 +28,4 @@ public abstract class PersonServiceImpl<Value extends Person, Repository extends
     public void confirmUsersReg(String username) {
         personRepository.confirmUsersReg(username);
     }
-
-    @Override
-    public List<Value> findByLastName() {
-        System.out.println("*******************************************");
-        System.out.println(personRepository.toString());
-        return personRepository.findByLastName();
-    }
 }

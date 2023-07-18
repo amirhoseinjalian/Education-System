@@ -13,9 +13,12 @@ public class TeacherController extends BasicController {
 
     @PostMapping("{teacherId}/{courseId}/quizzes")
     public List<Quiz> createQuiz(@RequestBody QuizDto quizDto, @PathVariable String teacherId, @PathVariable Long courseId) throws Exception {
-        isValid(teacherId, teacherService);
-        Quiz quiz = modelMapper.map(quizDto, Quiz.class);
+        Teacher teacher = get(teacherId, teacherService);
         Course course = get(courseId, courseService);
+        if (!teacher.getCourses().contains(course)) {
+            throw new Exception("toy do not have this course");
+        }
+        Quiz quiz = modelMapper.map(quizDto, Quiz.class);
         return courseService.addQuiz(course, quiz);
     }
 

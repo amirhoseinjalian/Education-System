@@ -1,9 +1,9 @@
 package com.jalian.maktabfinalproject.service.studentQuiz;
 
-import com.jalian.maktabfinalproject.entity.Answer;
 import com.jalian.maktabfinalproject.entity.Quiz;
 import com.jalian.maktabfinalproject.entity.Student;
 import com.jalian.maktabfinalproject.entity.StudentQuiz;
+import com.jalian.maktabfinalproject.entity.StudentQuizKey;
 import com.jalian.maktabfinalproject.repository.StudentQuizRepository;
 import com.jalian.maktabfinalproject.service.base.BaseServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +17,7 @@ import java.util.List;
 @Service
 @Transactional
 @Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
-public class StudentQuizServiceImpl extends BaseServiceImpl<StudentQuiz, Long, StudentQuizRepository> implements StudentQuizService {
+public class StudentQuizServiceImpl extends BaseServiceImpl<StudentQuiz, StudentQuizKey, StudentQuizRepository> implements StudentQuizService {
 
     @Autowired
     private StudentQuizRepository studentQuizRepository;
@@ -44,12 +44,7 @@ public class StudentQuizServiceImpl extends BaseServiceImpl<StudentQuiz, Long, S
     }
 
     @Override
-    public List<Student> getStudents(Quiz quiz) {
-        return studentQuizRepository.getStudents(quiz.getId());
-    }
-
-    @Override
-    public List<Quiz> getQuizzes(Student student) {
-        return studentQuizRepository.getQuizzes(student.getId());
+    public List<Quiz> getQuizzesOfAStudent(Student student) {
+        return studentQuizRepository.getQuizzesOfAStudent(student.getId());
     }
 }

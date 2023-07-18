@@ -22,19 +22,24 @@ import java.util.List;
         include = JsonTypeInfo.As.EXTERNAL_PROPERTY,
         property = "type")
 @JsonTypeName("studentQuiz")
-public class StudentQuiz extends LongIdEntity {
+public class StudentQuiz extends BaseEntity<StudentQuizKey> {
+
+    @EmbeddedId
+    private StudentQuizKey studentQuizKey;
 
     @ManyToOne
+    @MapsId("quizId")
     @JoinColumn(name = "student_id")
     private Student student;
 
     @ManyToOne
+    @MapsId("studentId")
     @JoinColumn(name = "quiz_id")
     private Quiz quiz;
 
     private Boolean isJoined;
 
-    private Double score;
+    private Double grade;
 
     @OneToMany(mappedBy = "studentQuiz")
     private List<Answer> answers;

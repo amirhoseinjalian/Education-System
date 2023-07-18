@@ -27,7 +27,7 @@ public class Role extends LongIdEntity {
     @Enumerated(EnumType.STRING)
     @Column(length = 20, columnDefinition = "enum('ADMIN','TEACHER','STUDENT') DEFAULT 'STUDENT'")
     @JsonProperty
-    private ERole name;
+    private RoleNames name;
 
     @OneToMany(mappedBy = "role")
     @JsonIgnore

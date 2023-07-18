@@ -1,6 +1,6 @@
 package com.jalian.maktabfinalproject.entity;
 
-public enum ERole {
+public enum RoleNames {
     ADMIN,
     TEACHER,
     STUDENT;

@@ -26,5 +26,5 @@ import javax.persistence.Table;
 @JsonTypeName("descriptiveQuestion")
 public class DescriptiveQuestion extends Question {
 
-    private String text;
+    private String question;
 }

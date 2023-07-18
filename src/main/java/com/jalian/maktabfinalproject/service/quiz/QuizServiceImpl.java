@@ -80,6 +80,16 @@ public class QuizServiceImpl extends BaseServiceImpl<Quiz, Long, QuizRepository>
     }
 
     @Override
+    public Quiz updateQuiz(Quiz newQuiz) {
+        Quiz oldQuiz = quizRepository.findById(newQuiz.getId()).orElseThrow(() -> new NullPointerException("not found"));
+        oldQuiz.setDate(newQuiz.getDate());
+        oldQuiz.setDescription(newQuiz.getDescription());
+        oldQuiz.setTime(newQuiz.getTime());
+        oldQuiz.setTitle(newQuiz.getTitle());
+        return quizRepository.save(oldQuiz);
+    }
+
+    @Override
     public List<Quiz> getAllowedQuizzes(Student student) {
         return quizRepository.getAllowedQuizzes(student.getId());
     }

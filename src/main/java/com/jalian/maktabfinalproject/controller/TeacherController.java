@@ -45,14 +45,10 @@ public class TeacherController extends BasicController {
         if (quizDto.getId() == null) {
             throw new Exception("not found");
         }
-        get(teacherId, teacherService);
-        get(courseId, courseService);
+        isValid(teacherId, teacherService);
+        isValid(courseId, courseService);
         Quiz newQuiz = modelMapper.map(quizDto, Quiz.class);
-        Quiz oldQuiz = quizService.findById(quizDto.getId()).get();
-        newQuiz.setQuestions(oldQuiz.getQuestions());
-        newQuiz.setCourse(oldQuiz.getCourse());
-        quizService.save(newQuiz);
-        return modelMapper.map(quizService.findById(newQuiz.getId()).get(), QuizDto.class);
+        return modelMapper.map(quizService.updateQuiz(newQuiz), QuizDto.class);
     }
 
     @GetMapping("/{courseId}/quizzes/test-questions")

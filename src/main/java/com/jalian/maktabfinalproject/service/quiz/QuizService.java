@@ -17,4 +17,6 @@ public interface QuizService extends BaseService<Quiz, Long> {
     List<Quiz> getAllowedQuizzes(Student student);
 
     Map<String, Double> correctTestQuestion(Student student, Quiz quiz) throws Exception;
+
+    Quiz updateQuiz(Quiz newQuiz);
 }

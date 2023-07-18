@@ -29,18 +29,18 @@ public class StudentQuizServiceImpl extends BaseServiceImpl<StudentQuiz, Student
     }
 
     @Override
-    public void joinedAQuiz(String studentId, Long quizId) {
-        studentQuizRepository.joinedAQuiz(studentId, quizId);
+    public void joinedAQuiz(Student student, Quiz quiz) {
+        studentQuizRepository.joinedAQuiz(student.getId(), quiz.getId());
     }
 
     @Override
-    public List<Student> getStudentsOfAQuiz(Long quizId) {
-        return studentQuizRepository.getStudentsOfAQuiz(quizId);
+    public List<Student> getStudentsOfAQuiz(Quiz quiz) {
+        return studentQuizRepository.getStudentsOfAQuiz(quiz.getId());
     }
 
     @Override
-    public List<Student> getPassedStudents(Long quizId) {
-        return studentQuizRepository.getPassedStudents(quizId);
+    public List<Student> getPassedStudents(Quiz quiz) {
+        return studentQuizRepository.getPassedStudents(quiz.getId());
     }
 
     @Override

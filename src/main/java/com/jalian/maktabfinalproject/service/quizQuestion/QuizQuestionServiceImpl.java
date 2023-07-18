@@ -24,13 +24,19 @@ public class QuizQuestionServiceImpl extends BaseServiceImpl<QuizQuestionJoinTab
         quizQuestionRepository = repository;
     }
 
+
     @Override
-    public List<Question> getQuestions(Quiz quiz) {
-        return quizQuestionRepository.getQuestions(quiz.getId());
+    public <Values extends Question> List<Values> getQuestions(Quiz quiz, String questionType) {
+        return quizQuestionRepository.<Values>getQuestions(quiz.getId(), questionType);
     }
 
     @Override
     public List<Quiz> getQuizzes(Question question) {
         return quizQuestionRepository.getQuizzes(question.getId());
+    }
+
+    @Override
+    public Double getScore(Quiz quiz, Question question) {
+        return quizQuestionRepository.getScore(quiz.getId(), question.getId());
     }
 }

@@ -1,7 +1,7 @@
 package com.jalian.maktabfinalproject.service.question.testQuestion;
 
+import com.jalian.maktabfinalproject.entity.Course;
 import com.jalian.maktabfinalproject.entity.TestQuestion;
-import com.jalian.maktabfinalproject.repository.QuestionRepository;
 import com.jalian.maktabfinalproject.repository.TestQuestionRepository;
 import com.jalian.maktabfinalproject.service.question.QuestionServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,8 +22,9 @@ public class TestQuestionServiceImpl extends QuestionServiceImpl<TestQuestion, T
         super(repository);
     }
 
+
     @Override
-    public List<TestQuestion> questionBank(Long id) {
-        return testQuestionRepository.questionBank(id);
+    public List<TestQuestion> questionBank(Course course) {
+        return testQuestionRepository.questionBank(course.getId());
     }
 }

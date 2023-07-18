@@ -11,7 +11,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 
 @Service
 @Transactional
@@ -37,10 +40,10 @@ public class QuizServiceImpl extends BaseServiceImpl<Quiz, Long, QuizRepository>
         super(repository);
     }
 
-    @Override
+    /*@Override
     public List<Question> questionBank(Long id) {
         return quizRepository.questionBank(id);
-    }
+    }*/
 
     @Override
     public void addQuestion(Quiz quiz, Question question, Double score) {
@@ -54,17 +57,15 @@ public class QuizServiceImpl extends BaseServiceImpl<Quiz, Long, QuizRepository>
     @Override
     public Map<String, Double> correctTestQuestion(Student student, Quiz quiz) throws Exception {
         final Double[] grade = {0.0};
-        List<Student> students = studentQuizService.getStudents(quiz);
+        List<Student> students = studentQuizService.getStudentsOfAQuiz(quiz);
         if (!students.contains(student)) {
             throw new Exception("Student not found");
         }
         List<TestAnswer> answers = testAnswerService.getAnswers(student, quiz);
-        List<Question> questions = quizQuestionService.getQuestions(quiz);
+        List<TestQuestion> questions = quizQuestionService.<TestQuestion>getQuestions(quiz, "TestQuestion");
         List<TestAnswer> correctAnswers = new ArrayList<>();
         questions.forEach(question -> {
-            if (question instanceof TestQuestion) {
                 correctAnswers.add((TestAnswer) question.getAnswer());
-            }
         });
         correctAnswers.forEach(testAnswer -> {
             answers.forEach(testAnswer1 -> {

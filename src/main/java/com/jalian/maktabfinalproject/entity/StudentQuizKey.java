@@ -4,6 +4,7 @@ import lombok.*;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
+import java.io.Serializable;
 
 @Embeddable
 @Setter
@@ -11,7 +12,7 @@ import javax.persistence.Embeddable;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class StudentQuizKey {
+public class StudentQuizKey implements Serializable {
 
     @Column(name = "student_id")
     private String studentId;

@@ -56,7 +56,7 @@ public class TeacherController extends BasicController {
     @GetMapping("/{courseId}/quizzes/test-questions")
     public List<TestQuestion> getTestQuestionBank(@PathVariable Long courseId) throws Exception {
         if (isValid(courseId, courseService)) {
-            return testQuestionService.questionBank(courseId);
+            return testQuestionService.questionBank(get(courseId, courseService));
         }
         throw new Exception("not found");
     }
@@ -64,7 +64,7 @@ public class TeacherController extends BasicController {
     @GetMapping("/{courseId}/quizzes/des-questions")
     public List<DescriptiveQuestion> getDesQuestionBank(@PathVariable Long courseId) throws Exception {
         if (isValid(courseId, courseService)) {
-            return descriptiveQuestionService.questionBank(courseId);
+            return descriptiveQuestionService.questionBank(get(courseId, courseService));
         }
         throw new Exception("not found");
     }
@@ -85,7 +85,7 @@ public class TeacherController extends BasicController {
         questionJoinTables.forEach(quizQuestionJoinTable -> questions.add(quizQuestionJoinTable.getQuestion()));
         List<TestQuestion> testQuestions = new ArrayList<>();
         questions.forEach(question -> {if(question instanceof TestQuestion) {testQuestions.add((TestQuestion) question);}});*/
-        return testQuestionService.getQuestions(quiz.getId());
+        return testQuestionService.getQuestions(quiz);
     }
 
     @PostMapping("/{courseId}/quizzes/{quizId}/descriptive-questions/{score}")
@@ -95,19 +95,18 @@ public class TeacherController extends BasicController {
         isValid(courseId, courseService);
         Quiz quiz = get(quizId, quizService);
         quizService.addQuestion(quiz, descriptiveQuestion, score);
-        return descriptiveQuestionService.getQuestions(quiz.getId());
+        return descriptiveQuestionService.getQuestions(quiz);
     }
 
     @GetMapping("/{quizId}/students")
-    public List<PersonDto> getAtudentsOfAQuiz(@PathVariable Long quizId) {
-        isValid(quizId, quizService);
-        return studentQuizService.getStudentsOfAQuiz(quizId).stream().map(student -> modelMapper.map(student, PersonDto.class)).collect(Collectors.toList());
+    public List<PersonDto> getAtudentsOfAQuiz(@PathVariable Long quizId) throws Exception {
+        return studentQuizService.getStudentsOfAQuiz(get(quizId, quizService)).stream().map(student -> modelMapper.map(student, PersonDto.class)).collect(Collectors.toList());
     }
 
     @GetMapping("/{quizId}/passed-students")
-    public List<PersonDto> getPassedStudents(@PathVariable Long quizId) {
-        isValid(quizId, quizService);
-        return studentQuizService.getStudentsOfAQuiz(quizId).stream().map(student -> modelMapper.map(student, PersonDto.class)).collect(Collectors.toList());
+    public List<PersonDto> getPassedStudents(@PathVariable Long quizId) throws Exception {
+        Quiz quiz = get(quizId, quizService);
+        return studentQuizService.getStudentsOfAQuiz(quiz).stream().map(student -> modelMapper.map(student, PersonDto.class)).collect(Collectors.toList());
     }
 
     @PutMapping("/{studentId}/quizzes/{quizId}/test-questions/grade")

@@ -18,7 +18,4 @@ public interface QuestionRepository<Value extends Question> extends BaseReposito
 
     @Query("select question from #{#entityName} question join question.quizzes q where q.quiz.id = :id")
     List<Value> getQuestions(@Param("id") Long id);
-
-    @Query(value = "select score from quiz_question where quiz_id = :quizId and question_id = :questionId", nativeQuery = true)
-    Double getScore(@Param("quizId") Long quizId, @Param("questionId") Long questionId);
 }

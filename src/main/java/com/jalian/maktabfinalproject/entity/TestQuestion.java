@@ -6,15 +6,13 @@ import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.*;
 
-import javax.persistence.Entity;
-import javax.persistence.OneToMany;
-import javax.persistence.PrimaryKeyJoinColumn;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.List;
 
 @Entity
 @Table
 @PrimaryKeyJoinColumn(name = "id")
+@DiscriminatorValue("TestQuestion")
 @Setter
 @Getter
 @Builder@EqualsAndHashCode(callSuper = true)

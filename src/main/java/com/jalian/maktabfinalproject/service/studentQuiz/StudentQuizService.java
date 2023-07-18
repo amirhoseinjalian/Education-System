@@ -10,11 +10,11 @@ import java.util.List;
 
 public interface StudentQuizService extends BaseService<StudentQuiz, StudentQuizKey> {
 
-    void joinedAQuiz(String studentId, Long quizId);
+    void joinedAQuiz(Student student, Quiz quiz);
 
-    List<Student> getStudentsOfAQuiz(Long quizId);
+    List<Student> getStudentsOfAQuiz(Quiz quiz);
 
-    List<Student> getPassedStudents(Long quizId);
+    List<Student> getPassedStudents(Quiz quiz);
 
     List<Quiz> getQuizzesOfAStudent(Student student);
 }

@@ -28,12 +28,12 @@ public class StudentQuiz extends BaseEntity<StudentQuizKey> {
     private StudentQuizKey studentQuizKey;
 
     @ManyToOne
-    @MapsId("quizId")
+    @MapsId("studentId")
     @JoinColumn(name = "student_id")
     private Student student;
 
     @ManyToOne
-    @MapsId("studentId")
+    @MapsId("quizId")
     @JoinColumn(name = "quiz_id")
     private Quiz quiz;
 

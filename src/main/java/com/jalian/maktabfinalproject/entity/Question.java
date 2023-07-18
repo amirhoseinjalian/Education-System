@@ -10,6 +10,7 @@ import java.util.List;
 @Table
 @Inheritance(strategy = InheritanceType.JOINED)
 @PrimaryKeyJoinColumn(name = "id")
+@DiscriminatorColumn(name = "Question_TYPE", discriminatorType = DiscriminatorType.STRING)
 @Setter
 @Getter
 @EqualsAndHashCode(callSuper = true)

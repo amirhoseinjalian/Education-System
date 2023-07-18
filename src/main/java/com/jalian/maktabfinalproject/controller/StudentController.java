@@ -6,8 +6,6 @@ import org.springframework.web.bind.annotation.*;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
 import java.util.stream.Collectors;
 
 @RestController
@@ -33,9 +31,9 @@ public class StudentController extends BasicController {
         if(!quizService.getAllowedQuizzes(get(studentId, studentService)).contains(quiz)) {
             throw new Exception("not found");
         }
-        studentQuizService.joinedAQuiz(studentId, quizId);
-        List<Question> questions = new ArrayList<>(testQuestionService.getQuestions(quizId));
-        questions.addAll(descriptiveQuestionService.getQuestions(quizId));
+        studentQuizService.joinedAQuiz(get(studentId, studentService), get(quizId, quizService));
+        List<Question> questions = new ArrayList<>(testQuestionService.getQuestions(get(quizId, quizService)));
+        questions.addAll(descriptiveQuestionService.getQuestions(get(quizId, quizService)));
         /*Timer timer = new Timer();
         long delay = (quiz.getTime() + 1) * 60 * 1000;
         timer.schedule(new TimerTask() {

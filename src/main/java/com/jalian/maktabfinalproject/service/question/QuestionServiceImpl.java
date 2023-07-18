@@ -20,12 +20,7 @@ public abstract class QuestionServiceImpl<Value extends Question, Repository ext
     }
 
     @Override
-    public List<Value> getQuestions(Long id) {
-        return questionRepository.getQuestions(id);
-    }
-
-    @Override
-    public Double getScore(Quiz quiz, Question question) {
-        return questionRepository.getScore(quiz.getId(), question.getId());
+    public List<Value> getQuestions(Quiz quiz) {
+        return questionRepository.getQuestions(quiz.getId());
     }
 }

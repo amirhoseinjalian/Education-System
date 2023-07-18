@@ -20,8 +20,4 @@ public interface PersonRepository<Value extends Person> extends BaseRepository<V
     @Query("update Person p set p.status = 'CONFIRMED' where p.id = :username")
     @Modifying
     public void confirmUsersReg(@Param("username") String username);
-
-    //yek mesal entezaie az query haye generic
-    @Query("select v from #{#entityName} v")
-    List<Value> findByLastName();
 }

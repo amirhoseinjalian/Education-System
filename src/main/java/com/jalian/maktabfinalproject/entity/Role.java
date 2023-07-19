@@ -19,7 +19,7 @@ import java.util.List;
 @DynamicUpdate
 @JsonIdentityInfo(
         generator = ObjectIdGenerators.PropertyGenerator.class,
-        property = "id")
+        property = "id", scope = Role.class)
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME,
         include = JsonTypeInfo.As.EXTERNAL_PROPERTY,
         property = "type")
@@ -31,7 +31,7 @@ public class Role extends LongIdEntity {
     @JsonProperty
     private RoleNames name;
 
-    @OneToMany(mappedBy = "role")
+    @OneToMany(mappedBy = "role", cascade = CascadeType.ALL)
     @JsonIgnore
     private List<Person> users;
 }

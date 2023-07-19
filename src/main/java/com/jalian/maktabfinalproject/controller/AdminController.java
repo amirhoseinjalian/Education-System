@@ -18,9 +18,9 @@ public class AdminController extends BasicController {
     }
 
     @GetMapping("/confirm-reg")
-    public List<PersonDto> confirmUsers(@RequestBody List<PersonDto> confirmDtos) {
-        confirmDtos.forEach(user -> {
-            studentService.confirmUsersReg(user.getId());////////////////////////////////////////////////////
+    public List<PersonDto> confirmUsers(@RequestBody List<String> ids) {
+        ids.forEach(string -> {
+            studentService.confirmUsersReg(string);////////////////////////////////////////////////////
         });
         return getAllWaitingPersons();
     }

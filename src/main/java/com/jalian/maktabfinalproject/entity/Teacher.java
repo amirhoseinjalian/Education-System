@@ -25,7 +25,7 @@ import java.util.List;
 @JsonTypeName("teacher")
 public class Teacher extends Person {
 
-    @ManyToMany
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinTable(
             name = "student_teacher",
             joinColumns = @JoinColumn(name = "teacher_id"),

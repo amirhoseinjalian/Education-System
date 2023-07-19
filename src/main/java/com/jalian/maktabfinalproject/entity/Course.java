@@ -27,7 +27,7 @@ import java.util.List;
 @JsonTypeName("course")
 public class Course extends LongIdEntity {
 
-    @ManyToMany(mappedBy = "courses")
+    @ManyToMany(mappedBy = "courses", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     List<Student> students;
 
     private String title;

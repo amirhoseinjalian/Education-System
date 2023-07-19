@@ -24,14 +24,14 @@ import java.util.List;
 @JsonTypeName("student")
 public class Student extends Person {
 
-    @ManyToMany/*(cascade = CascadeType.ALL)*///{CascadeType.PERSIST, CascadeType.MERGE})
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinTable(
             name = "student_course",
             joinColumns = @JoinColumn(name = "student_id"),
             inverseJoinColumns = @JoinColumn(name = "course_id"))
     List<Course> courses;
 
-    @ManyToMany(mappedBy = "students")
+    @ManyToMany(mappedBy = "students", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private List<Teacher> teachers;
 
     @OneToMany(mappedBy = "student")

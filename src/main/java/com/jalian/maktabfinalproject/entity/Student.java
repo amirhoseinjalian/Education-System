@@ -31,7 +31,7 @@ public class Student extends Person {
             inverseJoinColumns = @JoinColumn(name = "course_id"))
     List<Course> courses;
 
-    @ManyToMany(mappedBy = "students", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @ManyToMany(mappedBy = "students", cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH})
     private List<Teacher> teachers;
 
     @OneToMany(mappedBy = "student", cascade = {CascadeType.MERGE, CascadeType.PERSIST})

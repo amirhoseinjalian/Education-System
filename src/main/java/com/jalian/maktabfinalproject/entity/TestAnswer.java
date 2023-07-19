@@ -24,7 +24,7 @@ import javax.persistence.*;
 @JsonTypeName("testAnswer")
 public class TestAnswer extends Answer {
 
-    @OneToOne
+    @OneToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JoinColumn(name = "option_id")
     private Option correctOption;
 }

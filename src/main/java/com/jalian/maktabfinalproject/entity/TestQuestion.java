@@ -25,6 +25,6 @@ import java.util.List;
 @JsonTypeName("testQuestion")
 public class TestQuestion extends Question {
 
-    @OneToMany
+    @OneToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     private List<Option> options;
 }

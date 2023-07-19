@@ -15,7 +15,7 @@ public class CourseDto {
 
     private String title;
 
-    private Date beigining = new Date(System.currentTimeMillis());
+    private Date beginning = new Date(System.currentTimeMillis());
 
     private Date ending;
 }

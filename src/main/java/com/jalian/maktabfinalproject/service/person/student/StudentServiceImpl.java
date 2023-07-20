@@ -5,8 +5,10 @@ import com.jalian.maktabfinalproject.entity.Student;
 import com.jalian.maktabfinalproject.entity.Teacher;
 import com.jalian.maktabfinalproject.repository.StudentRepository;
 import com.jalian.maktabfinalproject.service.person.PersonServiceImpl;
+import com.jalian.maktabfinalproject.service.person.teacher.TeacherService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -22,13 +24,17 @@ public class StudentServiceImpl extends PersonServiceImpl<Student, StudentReposi
     @Qualifier(value = "studentRepository")
     private StudentRepository studentRepository;
 
+    @Autowired
+    @Lazy
+    private TeacherService teacherService;
+
     public StudentServiceImpl(StudentRepository repository) {
         super(repository);
     }
 
     @Override
     public void addCourse(Student student, Course course) {
-        ArrayList<Course> courses= new ArrayList<>(student.getCourses());
+        ArrayList<Course> courses = new ArrayList<>(student.getCourses());
         courses.add(course);
         student.setCourses(courses);
         //rah behtar vojud nadare??????????????????????????????????????????????????????????
@@ -36,6 +42,10 @@ public class StudentServiceImpl extends PersonServiceImpl<Student, StudentReposi
         List<Teacher> teachers = new ArrayList<>(student.getTeachers());
         teachers.add(course.getTeacher());
         student.setTeachers(teachers);
+        List<Student> students = new ArrayList<>(course.getStudents());
+        students.add(student);
+        course.getTeacher().setStudents(students);
+        teacherService.save(course.getTeacher());
         studentRepository.save(student);
     }
 }

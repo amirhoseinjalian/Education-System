@@ -5,7 +5,9 @@ import com.jalian.maktabfinalproject.entity.Student;
 import com.jalian.maktabfinalproject.entity.Teacher;
 import com.jalian.maktabfinalproject.repository.TeacherRepository;
 import com.jalian.maktabfinalproject.service.person.PersonServiceImpl;
+import com.jalian.maktabfinalproject.service.person.student.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,6 +20,10 @@ public class TeacherServiceImpl extends PersonServiceImpl<Teacher, TeacherReposi
 
     @Autowired
     private TeacherRepository teacherRepository;
+
+    @Autowired
+    @Lazy
+    private StudentService studentService;
 
     public TeacherServiceImpl(TeacherRepository repository) {
         super(repository);
@@ -34,6 +40,13 @@ public class TeacherServiceImpl extends PersonServiceImpl<Teacher, TeacherReposi
         courses.add(course);
         teacher.setCourses(courses);
         List<Student> students = new ArrayList<>(course.getStudents());
+        List<Teacher> teachers = null;
+        for (Student student : students) {
+            teachers = new ArrayList<>(student.getTeachers());
+            teachers.add(teacher);
+            student.setTeachers(teachers);
+            studentService.save(student);
+        }
         students.addAll(teacher.getStudents());
         teacher.setStudents(students);
         teacherRepository.save(teacher);

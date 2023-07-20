@@ -29,9 +29,9 @@ public class TeacherController extends BasicController {
     }
 
     @GetMapping("/{id}/courses/quizzes")
-    List<Quiz> getAllQuizzes(@PathVariable Long id) throws Exception {
+    List<QuizDto> getAllQuizzes(@PathVariable Long id) throws Exception {
         Course course = get(id, courseService);
-        return courseService.getAllQuizzes(course);
+        return courseService.getAllQuizzes(course).stream().map(quiz -> modelMapper.map(quiz, QuizDto.class)).collect(Collectors.toList());
     }
 
     @DeleteMapping("/courses/(id)")

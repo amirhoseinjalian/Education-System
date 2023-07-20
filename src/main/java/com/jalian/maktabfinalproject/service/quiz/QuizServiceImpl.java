@@ -53,9 +53,18 @@ public class QuizServiceImpl extends BaseServiceImpl<Quiz, Long, QuizRepository>
     @Override
     public void addQuestion(Quiz quiz, Question question, Double score) {
         QuizQuestionJoinTable quizQuestionJoinTable = new QuizQuestionJoinTable(new QuizQuestionKey(quiz.getId(), question.getId()), quiz, question, score);
+        quizQuestionJoinTable.setQuiz(quiz);
+        quizQuestionJoinTable.setQuestion(question);
+        quizQuestionJoinTable = quizQuestionService.save(quizQuestionJoinTable);
         List<QuizQuestionJoinTable> questionJoinTables = new ArrayList<>(quiz.getQuestions());
         questionJoinTables.add(quizQuestionJoinTable);
         quiz.setQuestions(questionJoinTables);
+        questionJoinTables = new ArrayList<>();
+        questionJoinTables.add(quizQuestionJoinTable);
+        if (question.getQuizzes() != null) {
+            questionJoinTables.addAll(question.getQuizzes());
+        }
+        question.setQuizzes(questionJoinTables);
         quizRepository.save(quiz);
     }
 

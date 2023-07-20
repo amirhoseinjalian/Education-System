@@ -21,7 +21,7 @@ public class QuizQuestionJoinTable extends BaseEntity<QuizQuestionKey> {
     @JoinColumn(name = "quiz_id")
     private Quiz quiz;
 
-    @ManyToOne
+    @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @MapsId("questionId")
     @JoinColumn(name = "question_id")
     private Question question;

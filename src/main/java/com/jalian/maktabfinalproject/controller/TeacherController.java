@@ -73,16 +73,11 @@ public class TeacherController extends BasicController {
 
         isValid(courseId, courseService);
         Quiz quiz = get(quizId, quizService);
-        if (!testQuestion.getOptions().contains(new Option(testQuestion.getAnswer().getId()))) {
+        if (!testQuestion.getOptions().contains(((TestAnswer) testQuestion.getAnswer()).getCorrectOption())) {
             throw new Exception("answer not found");
         }
+        testQuestion = testQuestionService.save(testQuestion);
         quizService.addQuestion(quiz, testQuestion, score);
-        /*//rah hal behtar izae!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-        List<QuizQuestionJoinTable> questionJoinTables = quiz.getQuestions();
-        List<Question> questions = new ArrayList<>();
-        questionJoinTables.forEach(quizQuestionJoinTable -> questions.add(quizQuestionJoinTable.getQuestion()));
-        List<TestQuestion> testQuestions = new ArrayList<>();
-        questions.forEach(question -> {if(question instanceof TestQuestion) {testQuestions.add((TestQuestion) question);}});*/
         return testQuestionService.getQuestions(quiz);
     }
 

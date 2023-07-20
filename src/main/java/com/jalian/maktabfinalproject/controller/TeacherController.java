@@ -19,7 +19,6 @@ public class TeacherController extends BasicController {
             throw new Exception("toy do not have this course");
         }
         Quiz quiz = modelMapper.map(quizDto, Quiz.class);
-        quizService.addToCourse(course, quiz);
         return courseService.addQuiz(course, quiz);
     }
 

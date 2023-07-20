@@ -41,6 +41,7 @@ public class CourseServiceImpl extends BaseServiceImpl<Course, Long, CourseRepos
     public List<Quiz> addQuiz(Course course, Quiz quiz) {
         List<Quiz> quizzes = new ArrayList<>(course.getQuizzes());
         quizzes.add(quiz);
+        quiz.setCourse(course);
         course.setQuizzes(quizzes);
         courseRepository.save(course);
         return course.getQuizzes();
@@ -49,6 +50,7 @@ public class CourseServiceImpl extends BaseServiceImpl<Course, Long, CourseRepos
     @Override
     public Course addTeacher(Course course, Teacher teacher) {
         course.setTeacher(teacher);
+        courseRepository.save(course);
         return courseRepository.findById(course.getId()).get();
     }
 

@@ -8,15 +8,17 @@ import org.hibernate.annotations.DynamicUpdate;
 import javax.persistence.*;
 import java.util.List;
 
-@EqualsAndHashCode(callSuper = true)
 @Entity
 @Table
-@Setter
-@Getter
-@Builder@NoArgsConstructor
-@AllArgsConstructor
 @DynamicInsert
 @DynamicUpdate
+@Setter
+@Getter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+@RequiredArgsConstructor
+@EqualsAndHashCode(callSuper = true)
 @JsonIdentityInfo(
         generator = ObjectIdGenerators.PropertyGenerator.class,
         property = "id", scope = Role.class)

@@ -38,7 +38,6 @@ public class StudentServiceImpl extends PersonServiceImpl<Student, StudentReposi
         courses.add(course);
         student.setCourses(courses);
         //rah behtar vojud nadare??????????????????????????????????????????????????????????
-        //not working!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         List<Teacher> teachers = new ArrayList<>(student.getTeachers());
         teachers.add(course.getTeacher());
         student.setTeachers(teachers);
@@ -46,6 +45,6 @@ public class StudentServiceImpl extends PersonServiceImpl<Student, StudentReposi
         students.add(student);
         course.getTeacher().setStudents(students);
         teacherService.save(course.getTeacher());
-        studentRepository.save(student);
+        Student save = studentRepository.save(student);
     }
 }

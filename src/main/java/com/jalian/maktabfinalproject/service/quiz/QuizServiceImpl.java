@@ -8,6 +8,7 @@ import com.jalian.maktabfinalproject.service.question.testQuestion.TestQuestionS
 import com.jalian.maktabfinalproject.service.quizQuestion.QuizQuestionService;
 import com.jalian.maktabfinalproject.service.studentQuiz.StudentQuizService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -24,16 +25,20 @@ public class QuizServiceImpl extends BaseServiceImpl<Quiz, Long, QuizRepository>
     private QuizRepository quizRepository;
 
     @Autowired
+    @Lazy
     private StudentQuizService studentQuizService;
 
     //eshkali nadare service ha beham vabaste and??????????????????????????????????????????????????
     @Autowired
+    @Lazy
     private TestQuestionService testQuestionService;
 
     @Autowired
+    @Lazy
     private TestAnswerService testAnswerService;
 
     @Autowired
+    @Lazy
     private QuizQuestionService quizQuestionService;
 
     public QuizServiceImpl(QuizRepository repository) {
@@ -87,6 +92,12 @@ public class QuizServiceImpl extends BaseServiceImpl<Quiz, Long, QuizRepository>
         oldQuiz.setTime(newQuiz.getTime());
         oldQuiz.setTitle(newQuiz.getTitle());
         return quizRepository.save(oldQuiz);
+    }
+
+    @Override
+    public void addToCourse(Course course, Quiz quiz) {
+        quiz.setCourse(course);
+        quizRepository.save(quiz);
     }
 
     @Override

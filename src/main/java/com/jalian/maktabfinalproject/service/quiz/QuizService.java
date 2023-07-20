@@ -1,5 +1,6 @@
 package com.jalian.maktabfinalproject.service.quiz;
 
+import com.jalian.maktabfinalproject.entity.Course;
 import com.jalian.maktabfinalproject.entity.Question;
 import com.jalian.maktabfinalproject.entity.Quiz;
 import com.jalian.maktabfinalproject.entity.Student;
@@ -19,4 +20,6 @@ public interface QuizService extends BaseService<Quiz, Long> {
     Map<String, Double> correctTestQuestion(Student student, Quiz quiz) throws Exception;
 
     Quiz updateQuiz(Quiz newQuiz);
+
+    void addToCourse(Course course, Quiz quiz);
 }

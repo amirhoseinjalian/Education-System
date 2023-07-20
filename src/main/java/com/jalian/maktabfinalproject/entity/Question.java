@@ -32,7 +32,7 @@ public abstract class Question extends LongIdEntity {
 
     private String description;
 
-    @OneToMany(mappedBy = "question", cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    @OneToMany(mappedBy = "question", cascade = CascadeType.ALL)
     List<QuizQuestionJoinTable> quizzes;
 
     @OneToOne(mappedBy = "question", cascade = {CascadeType.MERGE, CascadeType.PERSIST})

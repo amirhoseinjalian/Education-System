@@ -38,7 +38,7 @@ public class Quiz extends LongIdEntity {
     @JoinColumn(name = "course_id")
     private Course course;
 
-    @OneToMany(mappedBy = "quiz", fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    @OneToMany(mappedBy = "quiz", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<QuizQuestionJoinTable> questions;
 
     @OneToMany(mappedBy = "quiz", cascade = {CascadeType.MERGE, CascadeType.PERSIST})

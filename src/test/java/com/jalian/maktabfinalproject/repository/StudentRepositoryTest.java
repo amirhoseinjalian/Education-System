@@ -21,25 +21,26 @@ public class StudentRepositoryTest {
     private Student student;
 
     @BeforeEach
-    public void setup() {
-        student = new Student();
-        student.setFirstName("amirhosein");
-        student.setLastName("jalian");
-        student.setPassword("1382");
-        student.setId("aj");
-        student.setBirthDate(new Date(System.currentTimeMillis()));
-        student.setRole(new Role(RoleNames.STUDENT));
+    void setup() {
+        student = Student.builder().
+                firstName("amirhosein").
+                lastName("jalian").
+                password("1382").
+                id("aj").
+                birthDate(new Date(System.currentTimeMillis())).
+                role(new Role(RoleNames.STUDENT))
+                .build();
     }
 
     @Test
-    public void save() {
+    void save() {
         Student savedStudent = studentRepository.save(student);
         assertThat(savedStudent).isNotNull();
         assertThat(savedStudent.getId()).isEqualTo("aj");
     }
 
     @Test
-    public void findAll() {
+    void findAll() {
         Student student1 = new Student();
         student1.setFirstName("robyn");
         student1.setLastName("fenty");
@@ -55,7 +56,7 @@ public class StudentRepositoryTest {
     }
 
     @Test
-    public void findById() {
+    void findById() {
         studentRepository.save(student);
         student = studentRepository.findById("aj").get();
         assertThat(student).isNotNull();
@@ -63,7 +64,7 @@ public class StudentRepositoryTest {
     }
 
     @Test
-    public void getAllWaitingUsers() {
+    void getAllWaitingUsers() {
         Student student1 = new Student();
         student1.setFirstName("robyn");
         student1.setLastName("fenty");

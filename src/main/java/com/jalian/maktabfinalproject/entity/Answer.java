@@ -2,6 +2,7 @@ package com.jalian.maktabfinalproject.entity;
 
 import com.fasterxml.jackson.annotation.*;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 import javax.persistence.*;
 
@@ -15,6 +16,7 @@ import javax.persistence.*;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@SuperBuilder
 @EqualsAndHashCode(callSuper = true)
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME,

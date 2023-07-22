@@ -1,12 +1,16 @@
 package com.jalian.maktabfinalproject.entity;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.experimental.SuperBuilder;
 
 import javax.persistence.*;
 
 @Entity
 @Table(name = "quiz_question")
-@Builder
+@SuperBuilder
 @Getter
 @Setter
 @AllArgsConstructor

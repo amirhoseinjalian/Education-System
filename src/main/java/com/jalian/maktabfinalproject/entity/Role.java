@@ -2,6 +2,7 @@ package com.jalian.maktabfinalproject.entity;
 
 import com.fasterxml.jackson.annotation.*;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 
@@ -14,7 +15,7 @@ import java.util.List;
 @DynamicUpdate
 @Setter
 @Getter
-@Builder
+@SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
 @RequiredArgsConstructor

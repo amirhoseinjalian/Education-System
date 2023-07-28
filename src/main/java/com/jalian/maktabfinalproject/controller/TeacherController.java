@@ -53,13 +53,20 @@ public class TeacherController extends BasicController {
         quizService.deleteById(id);
     }
 
-    @PutMapping("/{teacherId}/{courseId}/quizzes")
+    @PutMapping("/{teacherId}/courses/{courseId}/quizzes")
     public QuizDto updateQuiz(@RequestBody QuizDto quizDto, @PathVariable String teacherId, @PathVariable Long courseId) throws Exception {
-        if (quizDto.getId() == null) {
+        if (quizDto.getId() == null || quizDto.getId() == 0L) {
             throw new Exception("not found");
         }
-        isValid(teacherId, teacherService);
-        isValid(courseId, courseService);
+        Course course = get(courseId, courseService);
+        Teacher teacher = get(teacherId, teacherService);
+        Quiz quiz = get(quizDto.getId(), quizService);
+        if (!teacher.getCourses().contains(course)) {
+            throw new Exception("you do not have this course");
+        }
+        if (course.getQuizzes().contains(quiz)) {
+            throw new Exception("this course does not have this quiz");
+        }
         Quiz newQuiz = modelMapper.map(quizDto, Quiz.class);
         return modelMapper.map(quizService.updateQuiz(newQuiz), QuizDto.class);
     }

@@ -82,13 +82,13 @@ public class BasicController {
         return "WELLCOME";
     }
 
-    public <Id, T extends BaseEntity<Id>, R extends BaseService<T, Id>> boolean isValid(Id id, R r) {
-        return r.findById(id).isPresent();
+    public <Id, Entity extends BaseEntity<Id>, Service extends BaseService<Entity, Id>> boolean isValid(Id id, Service service) {
+        return service.findById(id).isPresent();
     }
 
-    public <Id, T extends BaseEntity<Id>, R extends BaseService<T, Id>> T get(Id id, R r) throws Exception {
-        if (isValid(id, r)) {
-            return r.findById(id).get();
+    public <Id, Entity extends BaseEntity<Id>, Service extends BaseService<Entity, Id>> Entity get(Id id, Service service) throws Exception {
+        if (isValid(id, service)) {
+            return service.findById(id).get();
         }
         throw new Exception("not found");
     }

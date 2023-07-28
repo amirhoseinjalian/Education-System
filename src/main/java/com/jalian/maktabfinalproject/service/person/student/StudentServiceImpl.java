@@ -2,49 +2,27 @@ package com.jalian.maktabfinalproject.service.person.student;
 
 import com.jalian.maktabfinalproject.entity.Course;
 import com.jalian.maktabfinalproject.entity.Student;
-import com.jalian.maktabfinalproject.entity.Teacher;
+import com.jalian.maktabfinalproject.repository.StudentCourseRepository;
 import com.jalian.maktabfinalproject.repository.StudentRepository;
 import com.jalian.maktabfinalproject.service.person.PersonServiceImpl;
-import com.jalian.maktabfinalproject.service.person.teacher.TeacherService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.List;
-
 @Service
 @Transactional
-//dast kari kardan dade ha dar service anjam mishavad
 public class StudentServiceImpl extends PersonServiceImpl<Student, StudentRepository> implements StudentService {
 
     @Autowired
-    @Qualifier(value = "studentRepository")
-    private StudentRepository studentRepository;
-
-    @Autowired
-    @Lazy
-    private TeacherService teacherService;
+    private StudentCourseRepository studentCourseRepository;
 
     public StudentServiceImpl(StudentRepository repository) {
         super(repository);
     }
 
     @Override
-    public void addCourse(Student student, Course course) {
-        ArrayList<Course> courses = new ArrayList<>(student.getCourses());
-        courses.add(course);
-        student.setCourses(courses);
-        //rah behtar vojud nadare??????????????????????????????????????????????????????????
-        List<Teacher> teachers = new ArrayList<>(student.getTeachers());
-        teachers.add(course.getTeacher());
-        student.setTeachers(teachers);
-        List<Student> students = new ArrayList<>(course.getStudents());
-        students.add(student);
-        course.getTeacher().setStudents(students);
-        teacherService.save(course.getTeacher());
-        Student save = studentRepository.save(student);
+    public Student addCourse(Student student, Course course) {
+        studentCourseRepository.addStudentToCourse(student.getId(), course.getId());
+        return getRepository().findById(student.getId()).get();
     }
 }

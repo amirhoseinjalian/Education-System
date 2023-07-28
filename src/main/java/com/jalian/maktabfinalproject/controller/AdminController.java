@@ -43,9 +43,8 @@ public class AdminController extends BasicController {
         Course course = get(id, courseService);
         List<Student> students = new ArrayList<>();
         studentsId.forEach(s -> students.add(studentService.findById(s).get()));
-        students.forEach(student -> studentService.addCourse(student, course));
-        courseService.addStudent(course, students);
-        return courseService.findById(course.getId()).get();
+        students.forEach(student -> courseService.addStudent(course, student));
+        return get(id, courseService);
     }
 
     @GetMapping("/courses")

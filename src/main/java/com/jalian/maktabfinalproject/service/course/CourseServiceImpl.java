@@ -2,6 +2,7 @@ package com.jalian.maktabfinalproject.service.course;
 
 import com.jalian.maktabfinalproject.entity.*;
 import com.jalian.maktabfinalproject.repository.CourseRepository;
+import com.jalian.maktabfinalproject.repository.StudentCourseRepository;
 import com.jalian.maktabfinalproject.service.base.BaseServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,24 +13,19 @@ import java.util.List;
 
 @Service
 @Transactional
-//validation tu service bashe ya coontroller???????????????????????????????????????
 public class CourseServiceImpl extends BaseServiceImpl<Course, Long, CourseRepository> implements CourseService {
 
     @Autowired
-    private CourseRepository courseRepository;
+    private StudentCourseRepository studentCourseRepository;
 
     public CourseServiceImpl(CourseRepository repository) {
         super(repository);
-        courseRepository = repository;//////////////////////////////////////////
     }
 
     @Override
-    @Transactional
-    public void addStudent(Course course, List<Student> students) {
-        List<Student> students1 = new ArrayList<>(students);
-        students1.addAll(course.getStudents());
-        course.setStudents(students1);
-        courseRepository.save(course);
+    public Course addStudent(Course course, Student student) {
+        studentCourseRepository.addStudentToCourse(student.getId(), course.getId());
+        return getRepository().findById(course.getId()).get();
     }
 
     @Override
@@ -43,15 +39,15 @@ public class CourseServiceImpl extends BaseServiceImpl<Course, Long, CourseRepos
         quizzes.add(quiz);
         quiz.setCourse(course);
         course.setQuizzes(quizzes);
-        courseRepository.save(course);
+        getRepository().save(course);
         return course.getQuizzes();
     }
 
     @Override
     public Course addTeacher(Course course, Teacher teacher) {
         course.setTeacher(teacher);
-        courseRepository.save(course);
-        return courseRepository.findById(course.getId()).get();
+        getRepository().save(course);
+        return getRepository().findById(course.getId()).get();
     }
 
     @Override

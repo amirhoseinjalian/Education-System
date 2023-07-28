@@ -14,5 +14,7 @@ public interface QuizQuestionService extends BaseService<QuizQuestionJoinTable, 
 
     List<Quiz> getQuizzes(Question question);
 
+    List<Question> getQuestions(Quiz quiz);
+
     Double getScore(Quiz quiz, Question question);
 }

@@ -3,6 +3,7 @@ package com.jalian.maktabfinalproject.controller;
 import com.jalian.maktabfinalproject.entity.*;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -46,7 +47,7 @@ public class TeacherController extends BasicController {
 
     @PutMapping("/{teacherId}/courses/{courseId}/quizzes")
     public QuizDto updateQuiz(@RequestBody QuizDto quizDto, @PathVariable String teacherId, @PathVariable Long courseId) throws Exception {
-        if (quizDto.getId() == null || quizDto.getId() == 0L) {
+        if (quizDto.getId() == null || quizDto.getId() == 0L || quizDto.getId() < 0) {
             throw new Exception("not found");
         }
         Course course = get(courseId, courseService);
@@ -57,12 +58,12 @@ public class TeacherController extends BasicController {
         return modelMapper.map(quizService.updateQuiz(newQuiz), QuizDto.class);
     }
 
-    @GetMapping("/{courseId}/quizzes/test-questions")
-    public List<TestQuestion> getTestQuestionBank(@PathVariable Long courseId) throws Exception {
-        if (isValid(courseId, courseService)) {
-            return testQuestionService.questionBank(get(courseId, courseService));
-        }
-        throw new Exception("not found");
+    /*@GetMapping("/{teacherId}/courses/{courseId}/quizzes/test-questions")
+    public List<TestQuestion> getTestQuestionBank(@PathVariable String teacherId, @PathVariable Long courseId) throws Exception {
+        Teacher teacher = get(teacherId, teacherService);
+        Course course = get(courseId, courseService);
+        validationBetweenTeacherAndCourse(teacher, course);
+        return testQuestionService.getQuestions()
     }
 
     @GetMapping("/{courseId}/quizzes/des-questions")
@@ -71,6 +72,17 @@ public class TeacherController extends BasicController {
             return descriptiveQuestionService.questionBank(get(courseId, courseService));
         }
         throw new Exception("not found");
+    }*/
+
+    @GetMapping("/{teacherId}/courses/{courseId}/quizzes/question-bank")
+    public List<Question> questionBank(@PathVariable("teacherId") String teacherId, @PathVariable("courseId") Long courseId) throws Exception {
+        Teacher teacher = get(teacherId, teacherService);
+        Course course = get(courseId, courseService);
+        validationBetweenTeacherAndCourse(teacher, course);
+        List<Quiz> quizzes = course.getQuizzes();
+        List<Question> questions = new ArrayList<>();
+        quizzes.forEach(quiz -> questions.addAll(quizQuestionService.getQuestions(quiz)));
+        return questions;
     }
 
     @PostMapping("/{courseId}/quizzes/{quizId}/test-questions/{score}")
@@ -117,14 +129,18 @@ public class TeacherController extends BasicController {
 
     private void validationBetweenTeacher_CourseAndQuiz(Teacher teacher, Course course, Quiz quiz) throws Exception {
         validationBetweenTeacherAndCourse(teacher, course);
-        if (course.getQuizzes().contains(quiz)) {
-            throw new Exception("this course does not have this quiz");
-        }
+        validationBetweenCourseAndQuiz(course, quiz);
     }
 
     private void validationBetweenTeacherAndCourse(Teacher teacher, Course course) throws Exception {
         if (!teacher.getCourses().contains(course)) {
             throw new Exception("you do not have this course");
+        }
+    }
+
+    private void validationBetweenCourseAndQuiz(Course course, Quiz quiz) throws Exception {
+        if (!course.getQuizzes().contains(quiz)) {
+            throw new Exception("this course does not have this quiz");
         }
     }
 }

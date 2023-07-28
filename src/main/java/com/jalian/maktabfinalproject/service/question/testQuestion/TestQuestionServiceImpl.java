@@ -17,7 +17,6 @@ public class TestQuestionServiceImpl extends QuestionServiceImpl<TestQuestion, T
         super(repository);
     }
 
-
     @Override
     public List<TestQuestion> questionBank(Course course) {
         return getRepository().questionBank(course.getId());

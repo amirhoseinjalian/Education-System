@@ -21,7 +21,6 @@ public class QuizQuestionServiceImpl extends BaseServiceImpl<QuizQuestionJoinTab
         super(repository);
     }
 
-
     @Override
     public <Values extends Question> List<Values> getQuestions(Quiz quiz, String questionType) {
         return getRepository().<Values>getQuestions(quiz.getId(), questionType);
@@ -30,6 +29,11 @@ public class QuizQuestionServiceImpl extends BaseServiceImpl<QuizQuestionJoinTab
     @Override
     public List<Quiz> getQuizzes(Question question) {
         return getRepository().getQuizzes(question.getId());
+    }
+
+    @Override
+    public List<Question> getQuestions(Quiz quiz) {
+        return getRepository().getQuestions(quiz.getId());
     }
 
     @Override

@@ -17,7 +17,6 @@ public class DescriptiveQuestionServiceImpl extends QuestionServiceImpl<Descript
         super(repository);
     }
 
-
     @Override
     public List<DescriptiveQuestion> questionBank(Course course) {
         return getRepository().questionBank(course.getId());

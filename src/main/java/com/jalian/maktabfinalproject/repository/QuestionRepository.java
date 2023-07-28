@@ -12,7 +12,7 @@ import java.util.List;
 @EnableJpaRepositories(considerNestedRepositories = true)
 public interface QuestionRepository<Value extends Question> extends BaseRepository<Value, Long> {
 
-    //bayad test beshe///////////////////////////////////////////////////////////////////////////////
+    //should be tested!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     @Query("select question from #{#entityName} question join question.quizzes q where q.quiz.course.id = :id")
     List<Value> questionBank(@Param("id") Long id);
 

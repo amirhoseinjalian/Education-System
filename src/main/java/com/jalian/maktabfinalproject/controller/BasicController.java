@@ -13,6 +13,7 @@ import com.jalian.maktabfinalproject.service.person.teacher.TeacherService;
 import com.jalian.maktabfinalproject.service.question.descriptiveQuestion.DescriptiveQuestionService;
 import com.jalian.maktabfinalproject.service.question.testQuestion.TestQuestionService;
 import com.jalian.maktabfinalproject.service.quiz.QuizService;
+import com.jalian.maktabfinalproject.service.quizQuestion.QuizQuestionService;
 import com.jalian.maktabfinalproject.service.role.RoleService;
 import com.jalian.maktabfinalproject.service.studentQuiz.StudentQuizService;
 import lombok.Data;
@@ -57,6 +58,9 @@ public class BasicController {
 
     @Autowired
     protected DescriptiveAnswerService descriptiveAnswerService;
+
+    @Autowired
+    protected QuizQuestionService quizQuestionService;
 
     @PostMapping("/reg")
     public String registration(@RequestBody SignupDto signupDto) throws Exception {

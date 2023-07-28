@@ -69,7 +69,7 @@ public class TeacherController extends BasicController {
         return questions;
     }
 
-    @GetMapping("/{teacherId}/courses/{courseId}/quizzes/test-questions")
+    @GetMapping("/{teacherId}/courses/{courseId}/quizzes/test-questions-bank")
     public List<TestQuestion> getTestQuestionBank(@PathVariable String teacherId, @PathVariable Long courseId) throws Exception {
         Teacher teacher = get(teacherId, teacherService);
         Course course = get(courseId, courseService);
@@ -77,7 +77,7 @@ public class TeacherController extends BasicController {
         return testQuestionService.questionBank(course);
     }
 
-    @GetMapping("/{teacherId}/{courseId}/quizzes/des-questions")
+    @GetMapping("/{teacherId}/{courseId}/quizzes/descriptive-questions-bank")
     public List<DescriptiveQuestion> getDesQuestionBank(@PathVariable String teacherId, @PathVariable Long courseId) throws Exception {
         Teacher teacher = get(teacherId, teacherService);
         Course course = get(courseId, courseService);

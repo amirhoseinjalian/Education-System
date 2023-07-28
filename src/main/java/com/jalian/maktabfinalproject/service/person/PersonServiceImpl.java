@@ -12,20 +12,17 @@ public abstract class PersonServiceImpl<Value extends Person, Repository extends
         extends BaseServiceImpl<Value, String, Repository>
         implements PersonService<Value> {
 
-    private Repository personRepository;
-
     public PersonServiceImpl(Repository repository) {
         super(repository);
-        personRepository = repository;
     }
 
     @Override
     public List<Person> getAllWaitingPersons() {
-        return personRepository.getAllWaitingPersons();
+        return getRepository().getAllWaitingPersons();
     }
 
     @Override
     public void confirmUsersReg(String username) {
-        personRepository.confirmUsersReg(username);
+        getRepository().confirmUsersReg(username);
     }
 }

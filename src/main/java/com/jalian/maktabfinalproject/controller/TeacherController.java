@@ -15,9 +15,7 @@ public class TeacherController extends BasicController {
     public List<QuizDto> createQuiz(@RequestBody QuizDto quizDto, @PathVariable String teacherId, @PathVariable Long courseId) throws Exception {
         Teacher teacher = get(teacherId, teacherService);
         Course course = get(courseId, courseService);
-        if (!teacher.getCourses().contains(course)) {
-            throw new Exception("toy do not have this course");
-        }
+        validationBetweenTeacherAndCourse(teacher, course);
         Quiz quiz = modelMapper.map(quizDto, Quiz.class);
         courseService.addQuiz(course, quiz);
         return get(courseId, courseService).getQuizzes().stream().map(quiz1 -> modelMapper.map(quiz1, QuizDto.class)).collect(Collectors.toList());
@@ -33,9 +31,7 @@ public class TeacherController extends BasicController {
     List<QuizDto> getAllQuizzes(@PathVariable("teacherId") String teacherId, @PathVariable("courseId") Long id) throws Exception {
         Course course = get(id, courseService);
         Teacher teacher = get(teacherId, teacherService);
-        if (!teacher.getCourses().contains(course)) {
-            throw new Exception("you do not have this course");
-        }
+        validationBetweenTeacherAndCourse(teacher, course);
         return course.getQuizzes().stream().map(quiz -> modelMapper.map(quiz, QuizDto.class)).collect(Collectors.toList());
     }
 
@@ -44,12 +40,7 @@ public class TeacherController extends BasicController {
         Course course = get(id, courseService);
         Teacher teacher = get(teacherId, teacherService);
         Quiz quiz = get(id, quizService);
-        if (!teacher.getCourses().contains(course)) {
-            throw new Exception("you do not have this course");
-        }
-        if (course.getQuizzes().contains(quiz)) {
-            throw new Exception("this course does not have this quiz");
-        }
+        validationBetweenTeacher_CourseAndQuiz(teacher, course, quiz);
         quizService.deleteById(id);
     }
 
@@ -61,12 +52,7 @@ public class TeacherController extends BasicController {
         Course course = get(courseId, courseService);
         Teacher teacher = get(teacherId, teacherService);
         Quiz quiz = get(quizDto.getId(), quizService);
-        if (!teacher.getCourses().contains(course)) {
-            throw new Exception("you do not have this course");
-        }
-        if (course.getQuizzes().contains(quiz)) {
-            throw new Exception("this course does not have this quiz");
-        }
+        validationBetweenTeacher_CourseAndQuiz(teacher, course, quiz);
         Quiz newQuiz = modelMapper.map(quizDto, Quiz.class);
         return modelMapper.map(quizService.updateQuiz(newQuiz), QuizDto.class);
     }
@@ -127,5 +113,18 @@ public class TeacherController extends BasicController {
         Student student = get(studentId, studentService);
         Quiz quiz = get(quizId, quizService);
         return quizService.correctTestQuestion(student, quiz);
+    }
+
+    private void validationBetweenTeacher_CourseAndQuiz(Teacher teacher, Course course, Quiz quiz) throws Exception {
+        validationBetweenTeacherAndCourse(teacher, course);
+        if (course.getQuizzes().contains(quiz)) {
+            throw new Exception("this course does not have this quiz");
+        }
+    }
+
+    private void validationBetweenTeacherAndCourse(Teacher teacher, Course course) throws Exception {
+        if (!teacher.getCourses().contains(course)) {
+            throw new Exception("you do not have this course");
+        }
     }
 }

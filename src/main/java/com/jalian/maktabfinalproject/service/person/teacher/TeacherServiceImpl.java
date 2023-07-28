@@ -9,8 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
-
 @Service
 @Transactional
 public class TeacherServiceImpl extends PersonServiceImpl<Teacher, TeacherRepository> implements TeacherService {
@@ -20,11 +18,6 @@ public class TeacherServiceImpl extends PersonServiceImpl<Teacher, TeacherReposi
 
     public TeacherServiceImpl(TeacherRepository repository) {
         super(repository);
-    }
-
-    @Override
-    public List<Course> getAllCourses(Teacher teacher) {
-        return teacher.getCourses();
     }
 
     @Override

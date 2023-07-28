@@ -22,9 +22,6 @@ import java.util.Map;
 public class QuizServiceImpl extends BaseServiceImpl<Quiz, Long, QuizRepository> implements QuizService {
 
     @Autowired
-    private QuizRepository quizRepository;
-
-    @Autowired
     @Lazy
     private StudentQuizService studentQuizService;
 
@@ -65,7 +62,7 @@ public class QuizServiceImpl extends BaseServiceImpl<Quiz, Long, QuizRepository>
             questionJoinTables.addAll(question.getQuizzes());
         }
         question.setQuizzes(questionJoinTables);
-        quizRepository.save(quiz);
+        getRepository().save(quiz);
     }
 
     @Override
@@ -95,22 +92,22 @@ public class QuizServiceImpl extends BaseServiceImpl<Quiz, Long, QuizRepository>
 
     @Override
     public Quiz updateQuiz(Quiz newQuiz) {
-        Quiz oldQuiz = quizRepository.findById(newQuiz.getId()).orElseThrow(() -> new NullPointerException("not found"));
+        Quiz oldQuiz = getRepository().findById(newQuiz.getId()).orElseThrow(() -> new NullPointerException("not found"));
         oldQuiz.setDate(newQuiz.getDate());
         oldQuiz.setDescription(newQuiz.getDescription());
         oldQuiz.setTime(newQuiz.getTime());
         oldQuiz.setTitle(newQuiz.getTitle());
-        return quizRepository.save(oldQuiz);
+        return getRepository().save(oldQuiz);
     }
 
     @Override
     public void addToCourse(Course course, Quiz quiz) {
         quiz.setCourse(course);
-        quizRepository.save(quiz);
+        getRepository().save(quiz);
     }
 
     @Override
     public List<Quiz> getAllowedQuizzes(Student student) {
-        return quizRepository.getAllowedQuizzes(student.getId());
+        return getRepository().getAllowedQuizzes(student.getId());
     }
 }

@@ -4,7 +4,6 @@ import com.jalian.maktabfinalproject.entity.Course;
 import com.jalian.maktabfinalproject.entity.DescriptiveQuestion;
 import com.jalian.maktabfinalproject.repository.DescriptiveQuestionRepository;
 import com.jalian.maktabfinalproject.service.question.QuestionServiceImpl;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -14,9 +13,6 @@ import java.util.List;
 @Transactional
 public class DescriptiveQuestionServiceImpl extends QuestionServiceImpl<DescriptiveQuestion, DescriptiveQuestionRepository> implements DescriptiveQuestionService {
 
-    @Autowired
-    private DescriptiveQuestionRepository descriptiveQuestionRepository;
-
     public DescriptiveQuestionServiceImpl(DescriptiveQuestionRepository repository) {
         super(repository);
     }
@@ -24,6 +20,6 @@ public class DescriptiveQuestionServiceImpl extends QuestionServiceImpl<Descript
 
     @Override
     public List<DescriptiveQuestion> questionBank(Course course) {
-        return descriptiveQuestionRepository.questionBank(course.getId());
+        return getRepository().questionBank(course.getId());
     }
 }

@@ -12,15 +12,12 @@ import java.util.List;
 public abstract class QuestionServiceImpl<Value extends Question, Repository extends QuestionRepository<Value>>
         extends BaseServiceImpl<Value, Long, Repository> implements QuestionService<Value> {
 
-    private Repository questionRepository;
-
     public QuestionServiceImpl(Repository repository) {
         super(repository);
-        this.questionRepository = repository;
     }
 
     @Override
     public List<Value> getQuestions(Quiz quiz) {
-        return questionRepository.getQuestions(quiz.getId());
+        return getRepository().getQuestions(quiz.getId());
     }
 }

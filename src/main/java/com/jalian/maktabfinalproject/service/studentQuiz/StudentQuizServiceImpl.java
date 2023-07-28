@@ -20,31 +20,27 @@ import java.util.List;
 public class StudentQuizServiceImpl extends BaseServiceImpl<StudentQuiz, StudentQuizKey, StudentQuizRepository> implements StudentQuizService {
 
     @Autowired
-    private StudentQuizRepository studentQuizRepository;
-
-    @Autowired
     public StudentQuizServiceImpl(StudentQuizRepository repository) {
         super(repository);
-        studentQuizRepository = repository;
     }
 
     @Override
     public void joinedAQuiz(Student student, Quiz quiz) {
-        studentQuizRepository.joinedAQuiz(student.getId(), quiz.getId());
+        getRepository().joinedAQuiz(student.getId(), quiz.getId());
     }
 
     @Override
     public List<Student> getStudentsOfAQuiz(Quiz quiz) {
-        return studentQuizRepository.getStudentsOfAQuiz(quiz.getId());
+        return getRepository().getStudentsOfAQuiz(quiz.getId());
     }
 
     @Override
     public List<Student> getPassedStudents(Quiz quiz) {
-        return studentQuizRepository.getPassedStudents(quiz.getId());
+        return getRepository().getPassedStudents(quiz.getId());
     }
 
     @Override
     public List<Quiz> getQuizzesOfAStudent(Student student) {
-        return studentQuizRepository.getQuizzesOfAStudent(student.getId());
+        return getRepository().getQuizzesOfAStudent(student.getId());
     }
 }

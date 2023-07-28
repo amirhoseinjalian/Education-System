@@ -4,7 +4,6 @@ import com.jalian.maktabfinalproject.entity.Course;
 import com.jalian.maktabfinalproject.entity.TestQuestion;
 import com.jalian.maktabfinalproject.repository.TestQuestionRepository;
 import com.jalian.maktabfinalproject.service.question.QuestionServiceImpl;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -14,10 +13,6 @@ import java.util.List;
 @Transactional
 public class TestQuestionServiceImpl extends QuestionServiceImpl<TestQuestion, TestQuestionRepository> implements TestQuestionService {
 
-
-    @Autowired
-    private TestQuestionRepository testQuestionRepository;
-
     public TestQuestionServiceImpl(TestQuestionRepository repository) {
         super(repository);
     }
@@ -25,6 +20,6 @@ public class TestQuestionServiceImpl extends QuestionServiceImpl<TestQuestion, T
 
     @Override
     public List<TestQuestion> questionBank(Course course) {
-        return testQuestionRepository.questionBank(course.getId());
+        return getRepository().questionBank(course.getId());
     }
 }

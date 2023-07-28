@@ -16,27 +16,24 @@ import java.util.List;
 @Transactional
 public class QuizQuestionServiceImpl extends BaseServiceImpl<QuizQuestionJoinTable, QuizQuestionKey, QuizQuestionRepository> implements QuizQuestionService {
 
-    private QuizQuestionRepository quizQuestionRepository;
-
     @Autowired
     public QuizQuestionServiceImpl(QuizQuestionRepository repository) {
         super(repository);
-        quizQuestionRepository = repository;
     }
 
 
     @Override
     public <Values extends Question> List<Values> getQuestions(Quiz quiz, String questionType) {
-        return quizQuestionRepository.<Values>getQuestions(quiz.getId(), questionType);
+        return getRepository().<Values>getQuestions(quiz.getId(), questionType);
     }
 
     @Override
     public List<Quiz> getQuizzes(Question question) {
-        return quizQuestionRepository.getQuizzes(question.getId());
+        return getRepository().getQuizzes(question.getId());
     }
 
     @Override
     public Double getScore(Quiz quiz, Question question) {
-        return quizQuestionRepository.getScore(quiz.getId(), question.getId());
+        return getRepository().getScore(quiz.getId(), question.getId());
     }
 }

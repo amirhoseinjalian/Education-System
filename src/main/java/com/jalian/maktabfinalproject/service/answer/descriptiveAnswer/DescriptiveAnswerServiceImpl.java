@@ -11,11 +11,8 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public class DescriptiveAnswerServiceImpl extends AnswerServiceImpl<DescriptiveAnswer, DescriptiveAnswerRepository> implements DescriptiveAnswerService {
 
-    private DescriptiveAnswerRepository descriptiveAnswerRepository;
-
     @Autowired
     public DescriptiveAnswerServiceImpl(DescriptiveAnswerRepository repository) {
         super(repository);
-        descriptiveAnswerRepository = repository;
     }
 }

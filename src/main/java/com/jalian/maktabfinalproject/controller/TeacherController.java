@@ -29,7 +29,7 @@ public class TeacherController extends BasicController {
         return teacher.getCourses().stream().map(course -> modelMapper.map(course, CourseDto.class)).collect(Collectors.toList());
     }
 
-    @GetMapping("/{teacherId}/{courseId}/courses/quizzes")
+    @GetMapping("/{teacherId}/courses/{courseId}/quizzes")
     List<QuizDto> getAllQuizzes(@PathVariable("teacherId") String teacherId, @PathVariable("courseId") Long id) throws Exception {
         Course course = get(id, courseService);
         Teacher teacher = get(teacherId, teacherService);
@@ -39,10 +39,18 @@ public class TeacherController extends BasicController {
         return course.getQuizzes().stream().map(quiz -> modelMapper.map(quiz, QuizDto.class)).collect(Collectors.toList());
     }
 
-    @DeleteMapping("/courses/(id)")
-    public void deleteQuiz(@PathVariable Long id) throws Exception {
-        if (isValid(id, quizService))
-            quizService.deleteById(id);
+    @DeleteMapping("/{teacherId}/courses/{courseId}/(id)")
+    public void deleteQuiz(@PathVariable("teacherId") String teacherId, @PathVariable("courseId") Long courseId, @PathVariable Long id) throws Exception {
+        Course course = get(id, courseService);
+        Teacher teacher = get(teacherId, teacherService);
+        Quiz quiz = get(id, quizService);
+        if (!teacher.getCourses().contains(course)) {
+            throw new Exception("you do not have this course");
+        }
+        if (course.getQuizzes().contains(quiz)) {
+            throw new Exception("this course does not have this quiz");
+        }
+        quizService.deleteById(id);
     }
 
     @PutMapping("/{teacherId}/{courseId}/quizzes")

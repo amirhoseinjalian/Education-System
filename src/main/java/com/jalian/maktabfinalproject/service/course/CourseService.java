@@ -11,7 +11,7 @@ public interface CourseService extends BaseService<Course, Long> {
 
     List<Quiz> getAllQuizzes(Course course);
 
-    List<Quiz> addQuiz(Course course, Quiz quiz);
+    void addQuiz(Course course, Quiz quiz);
 
     void addTeacher(Course course, Teacher teacher);
 

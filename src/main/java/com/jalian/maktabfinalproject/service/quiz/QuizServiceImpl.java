@@ -102,7 +102,10 @@ public class QuizServiceImpl extends BaseServiceImpl<Quiz, Long, QuizRepository>
 
     @Override
     public void addToCourse(Course course, Quiz quiz) {
+        List<Quiz> quizzes = new ArrayList<>(course.getQuizzes());
+        quizzes.add(quiz);
         quiz.setCourse(course);
+        course.setQuizzes(quizzes);
         getRepository().save(quiz);
     }
 

@@ -12,14 +12,15 @@ import java.util.stream.Collectors;
 public class TeacherController extends BasicController {
 
     @PostMapping("{teacherId}/{courseId}/quizzes")
-    public List<Quiz> createQuiz(@RequestBody QuizDto quizDto, @PathVariable String teacherId, @PathVariable Long courseId) throws Exception {
+    public List<QuizDto> createQuiz(@RequestBody QuizDto quizDto, @PathVariable String teacherId, @PathVariable Long courseId) throws Exception {
         Teacher teacher = get(teacherId, teacherService);
         Course course = get(courseId, courseService);
         if (!teacher.getCourses().contains(course)) {
             throw new Exception("toy do not have this course");
         }
         Quiz quiz = modelMapper.map(quizDto, Quiz.class);
-        return courseService.addQuiz(course, quiz);
+        courseService.addQuiz(course, quiz);
+        return get(courseId, courseService).getQuizzes().stream().map(quiz1 -> modelMapper.map(quiz1, QuizDto.class)).collect(Collectors.toList());
     }
 
     @GetMapping("/{id}/courses")

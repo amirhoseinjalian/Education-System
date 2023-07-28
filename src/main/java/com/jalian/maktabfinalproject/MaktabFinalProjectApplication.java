@@ -4,8 +4,12 @@ import org.modelmapper.ModelMapper;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication
+@ComponentScan(basePackages = {"com.jalian.maktabfinalproject.repository",
+        "com.jalian.maktabfinalproject.entity",
+        "com.jalian.maktabfinalproject.service", "com.jalian.maktabfinalproject.controller"})
 //@EnableWebSecurity
 public class MaktabFinalProjectApplication {
 

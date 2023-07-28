@@ -13,8 +13,12 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public class StudentServiceImpl extends PersonServiceImpl<Student, StudentRepository> implements StudentService {
 
-    @Autowired
     private StudentCourseRepository studentCourseRepository;
+
+    @Autowired
+    public void setStudentCourseRepository(StudentCourseRepository studentCourseRepository) {
+        this.studentCourseRepository = studentCourseRepository;
+    }
 
     public StudentServiceImpl(StudentRepository repository) {
         super(repository);

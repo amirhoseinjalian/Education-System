@@ -3,6 +3,8 @@ package com.jalian.maktabfinalproject.service.course;
 import com.jalian.maktabfinalproject.entity.*;
 import com.jalian.maktabfinalproject.repository.CourseRepository;
 import com.jalian.maktabfinalproject.repository.StudentCourseRepository;
+import com.jalian.maktabfinalproject.repository.StudentTeacherRepository;
+import com.jalian.maktabfinalproject.repository.TeacherCourseRepository;
 import com.jalian.maktabfinalproject.service.base.BaseServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,6 +20,12 @@ public class CourseServiceImpl extends BaseServiceImpl<Course, Long, CourseRepos
     @Autowired
     private StudentCourseRepository studentCourseRepository;
 
+    @Autowired
+    private TeacherCourseRepository teacherCourseRepository;
+
+    @Autowired
+    private StudentTeacherRepository studentTeacherRepository;
+
     public CourseServiceImpl(CourseRepository repository) {
         super(repository);
     }
@@ -25,6 +33,7 @@ public class CourseServiceImpl extends BaseServiceImpl<Course, Long, CourseRepos
     @Override
     public Course addStudent(Course course, Student student) {
         studentCourseRepository.addStudentToCourse(student.getId(), course.getId());
+        studentTeacherRepository.addStudentToTeacher(student.getId(), course.getTeacher().getId());
         return getRepository().findById(course.getId()).get();
     }
 
@@ -45,8 +54,8 @@ public class CourseServiceImpl extends BaseServiceImpl<Course, Long, CourseRepos
 
     @Override
     public Course addTeacher(Course course, Teacher teacher) {
-        course.setTeacher(teacher);
-        getRepository().save(course);
+        teacherCourseRepository.addTeacherToCourse(teacher.getId(), course.getId());
+        course.getStudents().forEach(student -> studentTeacherRepository.addStudentToTeacher(student.getId(), teacher.getId()));
         return getRepository().findById(course.getId()).get();
     }
 

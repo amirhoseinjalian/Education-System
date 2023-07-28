@@ -25,8 +25,7 @@ public class StudentServiceImpl extends PersonServiceImpl<Student, StudentReposi
     }
 
     @Override
-    public Student addCourse(Student student, Course course) {
+    public void addCourse(Student student, Course course) {
         studentCourseRepository.addStudentToCourse(student.getId(), course.getId());
-        return getRepository().findById(student.getId()).get();
     }
 }

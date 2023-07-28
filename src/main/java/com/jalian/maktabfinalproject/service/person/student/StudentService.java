@@ -6,5 +6,5 @@ import com.jalian.maktabfinalproject.service.person.PersonService;
 
 public interface StudentService extends PersonService<Student> {
 
-    Student addCourse(Student student, Course course);
+    void addCourse(Student student, Course course);
 }

@@ -34,7 +34,7 @@ public class AdminController extends BasicController {
     public Course addATeacherToACourse(@PathVariable Long id, @PathVariable String teacherId) throws Exception {
         Course course = get(id, courseService);
         Teacher teacher = get(teacherId, teacherService);
-        teacherService.addCourse(teacher, course);
+        courseService.addTeacher(course, teacher);
         return get(id, courseService);
     }
 

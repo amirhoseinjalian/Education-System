@@ -28,8 +28,7 @@ public class TeacherServiceImpl extends PersonServiceImpl<Teacher, TeacherReposi
     }
 
     @Override
-    public List<Course> addCourse(Teacher teacher, Course course) {
+    public void addCourse(Teacher teacher, Course course) {
         teacherCourseRepository.addTeacherToCourse(teacher.getId(), course.getId());
-        return getRepository().findById(teacher.getId()).get().getCourses();
     }
 }

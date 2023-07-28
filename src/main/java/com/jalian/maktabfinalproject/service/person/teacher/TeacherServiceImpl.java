@@ -2,8 +2,8 @@ package com.jalian.maktabfinalproject.service.person.teacher;
 
 import com.jalian.maktabfinalproject.entity.Course;
 import com.jalian.maktabfinalproject.entity.Teacher;
-import com.jalian.maktabfinalproject.repository.TeacherCourseRepository;
 import com.jalian.maktabfinalproject.repository.TeacherRepository;
+import com.jalian.maktabfinalproject.repository.util.TeacherCourseRepository;
 import com.jalian.maktabfinalproject.service.person.PersonServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

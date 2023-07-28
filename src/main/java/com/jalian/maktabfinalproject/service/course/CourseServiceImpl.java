@@ -2,9 +2,9 @@ package com.jalian.maktabfinalproject.service.course;
 
 import com.jalian.maktabfinalproject.entity.*;
 import com.jalian.maktabfinalproject.repository.CourseRepository;
-import com.jalian.maktabfinalproject.repository.StudentCourseRepository;
-import com.jalian.maktabfinalproject.repository.StudentTeacherRepository;
-import com.jalian.maktabfinalproject.repository.TeacherCourseRepository;
+import com.jalian.maktabfinalproject.repository.util.StudentCourseRepository;
+import com.jalian.maktabfinalproject.repository.util.StudentTeacherRepository;
+import com.jalian.maktabfinalproject.repository.util.TeacherCourseRepository;
 import com.jalian.maktabfinalproject.service.base.BaseServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

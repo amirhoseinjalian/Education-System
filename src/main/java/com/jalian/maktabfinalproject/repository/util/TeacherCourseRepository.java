@@ -1,4 +1,4 @@
-package com.jalian.maktabfinalproject.repository;
+package com.jalian.maktabfinalproject.repository.util;
 
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;

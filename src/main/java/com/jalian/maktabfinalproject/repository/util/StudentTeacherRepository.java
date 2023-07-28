@@ -1,4 +1,4 @@
-package com.jalian.maktabfinalproject.repository;
+package com.jalian.maktabfinalproject.repository.util;
 
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;

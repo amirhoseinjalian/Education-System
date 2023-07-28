@@ -58,22 +58,6 @@ public class TeacherController extends BasicController {
         return modelMapper.map(quizService.updateQuiz(newQuiz), QuizDto.class);
     }
 
-    /*@GetMapping("/{teacherId}/courses/{courseId}/quizzes/test-questions")
-    public List<TestQuestion> getTestQuestionBank(@PathVariable String teacherId, @PathVariable Long courseId) throws Exception {
-        Teacher teacher = get(teacherId, teacherService);
-        Course course = get(courseId, courseService);
-        validationBetweenTeacherAndCourse(teacher, course);
-        return testQuestionService.getQuestions()
-    }
-
-    @GetMapping("/{courseId}/quizzes/des-questions")
-    public List<DescriptiveQuestion> getDesQuestionBank(@PathVariable Long courseId) throws Exception {
-        if (isValid(courseId, courseService)) {
-            return descriptiveQuestionService.questionBank(get(courseId, courseService));
-        }
-        throw new Exception("not found");
-    }*/
-
     @GetMapping("/{teacherId}/courses/{courseId}/quizzes/question-bank")
     public List<Question> questionBank(@PathVariable("teacherId") String teacherId, @PathVariable("courseId") Long courseId) throws Exception {
         Teacher teacher = get(teacherId, teacherService);
@@ -83,6 +67,22 @@ public class TeacherController extends BasicController {
         List<Question> questions = new ArrayList<>();
         quizzes.forEach(quiz -> questions.addAll(quizQuestionService.getQuestions(quiz)));
         return questions;
+    }
+
+    @GetMapping("/{teacherId}/courses/{courseId}/quizzes/test-questions")
+    public List<TestQuestion> getTestQuestionBank(@PathVariable String teacherId, @PathVariable Long courseId) throws Exception {
+        Teacher teacher = get(teacherId, teacherService);
+        Course course = get(courseId, courseService);
+        validationBetweenTeacherAndCourse(teacher, course);
+        return testQuestionService.questionBank(course);
+    }
+
+    @GetMapping("/{teacherId}/{courseId}/quizzes/des-questions")
+    public List<DescriptiveQuestion> getDesQuestionBank(@PathVariable String teacherId, @PathVariable Long courseId) throws Exception {
+        Teacher teacher = get(teacherId, teacherService);
+        Course course = get(courseId, courseService);
+        validationBetweenTeacherAndCourse(teacher, course);
+        return descriptiveQuestionService.questionBank(course);
     }
 
     @PostMapping("/{courseId}/quizzes/{quizId}/test-questions/{score}")

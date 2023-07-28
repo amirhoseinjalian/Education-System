@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface CourseService extends BaseService<Course, Long> {
 
-    void addStudent(Course course, List<Student> students);
+    Course addStudent(Course course, Student student);
 
     List<Quiz> getAllQuizzes(Course course);
 

@@ -2,12 +2,14 @@ package com.jalian.maktabfinalproject.service.base;
 
 import com.jalian.maktabfinalproject.entity.BaseEntity;
 import com.jalian.maktabfinalproject.repository.BaseRepository;
+import lombok.Getter;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
 
 @Transactional
+@Getter
 public abstract class BaseServiceImpl<Value extends BaseEntity<Key>, Key, Repository extends BaseRepository<Value, Key>>
         implements BaseService<Value, Key> {
 

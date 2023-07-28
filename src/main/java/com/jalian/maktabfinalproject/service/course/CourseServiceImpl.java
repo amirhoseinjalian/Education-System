@@ -37,11 +37,6 @@ public class CourseServiceImpl extends BaseServiceImpl<Course, Long, CourseRepos
     }
 
     @Override
-    public List<Quiz> getAllQuizzes(Course course) {
-        return course.getQuizzes();
-    }
-
-    @Override
     public void addQuiz(Course course, Quiz quiz) {
         List<Quiz> quizzes = new ArrayList<>(course.getQuizzes());
         quizzes.add(quiz);

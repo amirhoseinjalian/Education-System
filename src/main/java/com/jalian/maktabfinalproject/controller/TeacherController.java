@@ -29,10 +29,14 @@ public class TeacherController extends BasicController {
         return teacher.getCourses().stream().map(course -> modelMapper.map(course, CourseDto.class)).collect(Collectors.toList());
     }
 
-    @GetMapping("/{id}/courses/quizzes")
-    List<QuizDto> getAllQuizzes(@PathVariable Long id) throws Exception {
+    @GetMapping("/{teacherId}/{courseId}/courses/quizzes")
+    List<QuizDto> getAllQuizzes(@PathVariable("teacherId") String teacherId, @PathVariable("courseId") Long id) throws Exception {
         Course course = get(id, courseService);
-        return courseService.getAllQuizzes(course).stream().map(quiz -> modelMapper.map(quiz, QuizDto.class)).collect(Collectors.toList());
+        Teacher teacher = get(teacherId, teacherService);
+        if (!teacher.getCourses().contains(course)) {
+            throw new Exception("you do not have this course");
+        }
+        return course.getQuizzes().stream().map(quiz -> modelMapper.map(quiz, QuizDto.class)).collect(Collectors.toList());
     }
 
     @DeleteMapping("/courses/(id)")

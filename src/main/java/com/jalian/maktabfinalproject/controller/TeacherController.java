@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RestController
@@ -141,10 +142,13 @@ public class TeacherController extends BasicController {
         return studentQuizService.getStudentsOfAQuiz(quiz).stream().map(student -> modelMapper.map(student, PersonDto.class)).collect(Collectors.toList());
     }
 
-    @PutMapping("/{studentId}/quizzes/{quizId}/test-questions/grade")
-    public Map<String, Double> getTestQuestionGrades(@PathVariable String studentId, @PathVariable Long quizId) throws Exception {
+    @PutMapping("{teacherId}/students/{studentId}/quizzes/{quizId}/test-questions/grade")
+    public Map<String, Double> getTestQuestionGrades(@PathVariable String teacherId, @PathVariable String studentId, @PathVariable Long quizId) throws Exception {
         Student student = get(studentId, studentService);
+        Teacher teacher = get(teacherId, teacherService);
+        validationBetweenTeacherAndStudent(teacher, student);
         Quiz quiz = get(quizId, quizService);
+        validationBetweenStudentAndQuiz(student, quiz);
         return quizService.correctTestQuestion(student, quiz);
     }
 
@@ -162,6 +166,19 @@ public class TeacherController extends BasicController {
     private void validationBetweenCourseAndQuiz(Course course, Quiz quiz) throws Exception {
         if (!course.getQuizzes().contains(quiz)) {
             throw new Exception("this course does not have this quiz");
+        }
+    }
+
+    private void validationBetweenTeacherAndStudent(Teacher teacher, Student student) throws Exception {
+        if (!teacher.getStudents().contains(student)) {
+            throw new Exception("you do not have this student");
+        }
+    }
+
+    private void validationBetweenStudentAndQuiz(Student student, Quiz quiz) throws Exception {
+        Optional<StudentQuiz> studentQuiz = studentQuizService.findById(new StudentQuizKey(student.getId(), quiz.getId()));
+        if (!studentQuiz.isPresent()) {
+            throw new Exception("this student does not have this quiz");
         }
     }
 }

@@ -181,4 +181,12 @@ public class TeacherController extends BasicController {
             throw new Exception("this student does not have this quiz");
         }
     }
+
+    private void validationBetweenQuizAndQuestion(Quiz quiz, Question question) throws Exception {
+        Optional<QuizQuestionJoinTable> quizQuestionJoinTable = quizQuestionService.findById(
+                new QuizQuestionKey(quiz.getId(), question.getId()));
+        if (!quizQuestionJoinTable.isPresent()) {
+            throw new Exception("this quiz does not have this question");
+        }
+    }
 }

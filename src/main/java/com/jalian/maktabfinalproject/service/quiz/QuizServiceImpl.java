@@ -80,6 +80,7 @@ public class QuizServiceImpl extends BaseServiceImpl<Quiz, Long, QuizRepository>
         quizzes.add(quiz);
         quiz.setCourse(course);
         course.setQuizzes(quizzes);
+        course.getStudents().forEach(student -> studentQuizService.addStudent(quiz, student));
         getRepository().save(quiz);
     }
 

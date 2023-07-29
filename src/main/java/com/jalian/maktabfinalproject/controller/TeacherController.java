@@ -93,17 +93,28 @@ public class TeacherController extends BasicController {
         Course course = get(courseId, courseService);
         Quiz quiz = get(quizId, quizService);
         validationBetweenTeacher_CourseAndQuiz(teacher, course, quiz);
-        testQuestion = testQuestionService.save(testQuestion);
+        if (testQuestion.getId() != null || testQuestion.getId() > 0L) {
+            testQuestion = testQuestionService.findById(testQuestion.getId()).get();
+        } else {
+            testQuestion = testQuestionService.save(testQuestion);
+        }
         quizService.addQuestion(quiz, testQuestion, score);
         return testQuestionService.getQuestions(quiz);
     }
 
-    @PostMapping("/{courseId}/quizzes/{quizId}/descriptive-questions/{score}")
-    public List<DescriptiveQuestion> addDesQuestion(@PathVariable(name = "courseId") Long courseId, @PathVariable(name = "quizId") Long quizId
+    @PostMapping("/{teacherId}/courses/{courseId}/quizzes/{quizId}/descriptive-questions/{score}")
+    public List<DescriptiveQuestion> addDesQuestion(@PathVariable String teacherId, @PathVariable(name = "courseId") Long courseId, @PathVariable(name = "quizId") Long quizId
             , @RequestBody DescriptiveQuestion descriptiveQuestion, @PathVariable Double score) throws Exception {
 
-        isValid(courseId, courseService);
+        Teacher teacher = get(teacherId, teacherService);
+        Course course = get(courseId, courseService);
         Quiz quiz = get(quizId, quizService);
+        validationBetweenTeacher_CourseAndQuiz(teacher, course, quiz);
+        if (descriptiveQuestion.getId() != null || descriptiveQuestion.getId() > 0L) {
+            descriptiveQuestion = descriptiveQuestionService.findById(descriptiveQuestion.getId()).get();
+        } else {
+            descriptiveQuestion = descriptiveQuestionService.save(descriptiveQuestion);
+        }
         quizService.addQuestion(quiz, descriptiveQuestion, score);
         return descriptiveQuestionService.getQuestions(quiz);
     }

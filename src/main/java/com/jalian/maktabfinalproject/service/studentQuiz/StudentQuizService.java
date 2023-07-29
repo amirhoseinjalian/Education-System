@@ -17,4 +17,6 @@ public interface StudentQuizService extends BaseService<StudentQuiz, StudentQuiz
     List<Student> getPassedStudents(Quiz quiz);
 
     List<Quiz> getQuizzesOfAStudent(Student student);
+
+    void addStudent(Quiz quiz, Student student);
 }

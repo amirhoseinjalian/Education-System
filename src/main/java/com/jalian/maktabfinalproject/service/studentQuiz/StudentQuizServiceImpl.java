@@ -43,4 +43,16 @@ public class StudentQuizServiceImpl extends BaseServiceImpl<StudentQuiz, Student
     public List<Quiz> getQuizzesOfAStudent(Student student) {
         return getRepository().getQuizzesOfAStudent(student.getId());
     }
+
+    @Override
+    public void addStudent(Quiz quiz, Student student) {
+        StudentQuiz studentQuiz = StudentQuiz.builder()
+                .studentQuizKey(new StudentQuizKey(student.getId(), quiz.getId()))
+                .student(student)
+                .quiz(quiz)
+                .build();
+        student.getQuizzes().add(studentQuiz);
+        quiz.getStudents().add(studentQuiz);
+        getRepository().save(studentQuiz);
+    }
 }

@@ -6,6 +6,7 @@ import com.jalian.maktabfinalproject.repository.util.StudentCourseRepository;
 import com.jalian.maktabfinalproject.repository.util.StudentTeacherRepository;
 import com.jalian.maktabfinalproject.repository.util.TeacherCourseRepository;
 import com.jalian.maktabfinalproject.service.base.BaseServiceImpl;
+import com.jalian.maktabfinalproject.service.studentQuiz.StudentQuizService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -26,6 +27,9 @@ public class CourseServiceImpl extends BaseServiceImpl<Course, Long, CourseRepos
     @Autowired
     private StudentTeacherRepository studentTeacherRepository;
 
+    @Autowired
+    private StudentQuizService studentQuizService;
+
     public CourseServiceImpl(CourseRepository repository) {
         super(repository);
     }
@@ -42,6 +46,7 @@ public class CourseServiceImpl extends BaseServiceImpl<Course, Long, CourseRepos
         quizzes.add(quiz);
         quiz.setCourse(course);
         course.setQuizzes(quizzes);
+        course.getStudents().forEach(student -> studentQuizService.addStudent(quiz, student));
         getRepository().save(course);
     }
 

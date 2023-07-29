@@ -41,9 +41,9 @@ public class StudentQuiz extends BaseEntity<StudentQuizKey> {
     @JoinColumn(name = "quiz_id")
     private Quiz quiz;
 
-    private Boolean isJoined;
+    private Boolean isJoined = false;
 
-    private Double grade;
+    private Double grade = 0.0;
 
     @OneToMany(mappedBy = "studentQuiz")
     private List<Answer> answers;

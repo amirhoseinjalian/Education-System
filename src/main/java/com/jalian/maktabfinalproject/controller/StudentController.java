@@ -12,6 +12,8 @@ import java.util.stream.Collectors;
 @RequestMapping("/api/students")
 public class StudentController extends BasicController {
 
+    private LocalTime endTime;
+
     @GetMapping("/{studentId}/courses")
     public List<CourseDto> getCourses(@PathVariable String studentId) throws Exception {
         Student student = get(studentId, studentService);
@@ -20,8 +22,8 @@ public class StudentController extends BasicController {
 
     @GetMapping("/{studentId}/quizzes")
     public List<QuizDto> getAllowedQuizzes(@PathVariable String studentId) throws Exception {
-        isValid(studentId, studentService);
-        return quizService.getAllowedQuizzes(get(studentId, studentService)).stream().map(quiz -> modelMapper.map(quiz, QuizDto.class)).collect(Collectors.toList());
+        Student student = get(studentId, studentService);
+        return quizService.getAllowedQuizzes(student).stream().map(quiz -> modelMapper.map(quiz, QuizDto.class)).collect(Collectors.toList());
     }
 
     @PutMapping("/{studentId}/participating-in-a-test/{quizId}")
@@ -42,6 +44,7 @@ public class StudentController extends BasicController {
                 handleTimerFinished(true);
             }
         }, delay);*/
+        endTime = LocalTime.of(0, quiz.getTime());
         return questions;
     }
 
@@ -53,11 +56,11 @@ public class StudentController extends BasicController {
 
     @PostMapping("/{studentId}/quiz/{quizId}")
     public void receiveAnswers(@PathVariable String studentId, @PathVariable Long quizId, @RequestBody List<Answer> answers) throws Exception {
-        if (isQuizEnded(quizId)) {
+        Quiz quiz = get(quizId, quizService);
+        if (isQuizEnded(quiz)) {
             throw new Exception("Quiz has ended. Answers cannot be submitted.");
         }
         isValid(studentId, studentService);
-        Quiz quiz = get(quizId, quizService);
         if(!quizService.getAllowedQuizzes(get(studentId, studentService)).contains(quiz)) {
             throw new Exception("not found");
         }
@@ -69,10 +72,7 @@ public class StudentController extends BasicController {
         });
     }
 
-    private boolean isQuizEnded(Long quizId) throws Exception {
-        Quiz quiz = get(quizId, quizService);
-        int quizDurationMinutes = quiz.getTime();
-        LocalTime endTime = LocalTime.of(0, quizDurationMinutes);
+    private boolean isQuizEnded(Quiz quiz) throws Exception {
         LocalTime currentTime = LocalTime.now();
         return currentTime.isAfter(endTime);
     }

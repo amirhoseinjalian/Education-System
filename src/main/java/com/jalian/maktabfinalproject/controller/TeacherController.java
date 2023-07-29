@@ -119,9 +119,15 @@ public class TeacherController extends BasicController {
         return descriptiveQuestionService.getQuestions(quiz);
     }
 
-    @GetMapping("/{quizId}/students")
-    public List<PersonDto> getStudentsOfAQuiz(@PathVariable Long quizId) throws Exception {
-        return studentQuizService.getStudentsOfAQuiz(get(quizId, quizService)).stream().map(student -> modelMapper.map(student, PersonDto.class)).collect(Collectors.toList());
+    @GetMapping("/{teacherId}/courses/{courseId}/quizzes/{quizId}/students")
+    public List<PersonDto> getStudentsOfAQuiz(@PathVariable String teacherId, @PathVariable(name = "courseId") Long courseId,
+                                              @PathVariable Long quizId) throws Exception {
+
+        Teacher teacher = get(teacherId, teacherService);
+        Course course = get(courseId, courseService);
+        Quiz quiz = get(quizId, quizService);
+        validationBetweenTeacher_CourseAndQuiz(teacher, course, quiz);
+        return studentQuizService.getStudentsOfAQuiz(quiz).stream().map(student -> modelMapper.map(student, PersonDto.class)).collect(Collectors.toList());
     }
 
     @GetMapping("/{quizId}/passed-students")

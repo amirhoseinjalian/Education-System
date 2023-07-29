@@ -6,7 +6,6 @@ import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RestController
@@ -150,43 +149,5 @@ public class TeacherController extends BasicController {
         Quiz quiz = get(quizId, quizService);
         validationBetweenStudentAndQuiz(student, quiz);
         return quizService.correctTestQuestion(student, quiz);
-    }
-
-    private void validationBetweenTeacher_CourseAndQuiz(Teacher teacher, Course course, Quiz quiz) throws Exception {
-        validationBetweenTeacherAndCourse(teacher, course);
-        validationBetweenCourseAndQuiz(course, quiz);
-    }
-
-    private void validationBetweenTeacherAndCourse(Teacher teacher, Course course) throws Exception {
-        if (!teacher.getCourses().contains(course)) {
-            throw new Exception("you do not have this course");
-        }
-    }
-
-    private void validationBetweenCourseAndQuiz(Course course, Quiz quiz) throws Exception {
-        if (!course.getQuizzes().contains(quiz)) {
-            throw new Exception("this course does not have this quiz");
-        }
-    }
-
-    private void validationBetweenTeacherAndStudent(Teacher teacher, Student student) throws Exception {
-        if (!teacher.getStudents().contains(student)) {
-            throw new Exception("you do not have this student");
-        }
-    }
-
-    private void validationBetweenStudentAndQuiz(Student student, Quiz quiz) throws Exception {
-        Optional<StudentQuiz> studentQuiz = studentQuizService.findById(new StudentQuizKey(student.getId(), quiz.getId()));
-        if (!studentQuiz.isPresent()) {
-            throw new Exception("this student does not have this quiz");
-        }
-    }
-
-    private void validationBetweenQuizAndQuestion(Quiz quiz, Question question) throws Exception {
-        Optional<QuizQuestionJoinTable> quizQuestionJoinTable = quizQuestionService.findById(
-                new QuizQuestionKey(quiz.getId(), question.getId()));
-        if (!quizQuestionJoinTable.isPresent()) {
-            throw new Exception("this quiz does not have this question");
-        }
     }
 }

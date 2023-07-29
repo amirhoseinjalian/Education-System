@@ -1,9 +1,6 @@
 package com.jalian.maktabfinalproject.controller;
 
-import com.jalian.maktabfinalproject.entity.BaseEntity;
-import com.jalian.maktabfinalproject.entity.SignupDto;
-import com.jalian.maktabfinalproject.entity.Student;
-import com.jalian.maktabfinalproject.entity.Teacher;
+import com.jalian.maktabfinalproject.entity.*;
 import com.jalian.maktabfinalproject.service.answer.descriptiveAnswer.DescriptiveAnswerService;
 import com.jalian.maktabfinalproject.service.answer.testAnswer.TestAnswerService;
 import com.jalian.maktabfinalproject.service.base.BaseService;
@@ -20,6 +17,8 @@ import lombok.Data;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api")
@@ -91,5 +90,43 @@ public class BasicController {
             return service.findById(id).get();
         }
         throw new Exception("not found");
+    }
+
+    protected void validationBetweenTeacher_CourseAndQuiz(Teacher teacher, Course course, Quiz quiz) throws Exception {
+        validationBetweenTeacherAndCourse(teacher, course);
+        validationBetweenCourseAndQuiz(course, quiz);
+    }
+
+    protected void validationBetweenTeacherAndCourse(Teacher teacher, Course course) throws Exception {
+        if (!teacher.getCourses().contains(course)) {
+            throw new Exception("you do not have this course");
+        }
+    }
+
+    protected void validationBetweenCourseAndQuiz(Course course, Quiz quiz) throws Exception {
+        if (!course.getQuizzes().contains(quiz)) {
+            throw new Exception("this course does not have this quiz");
+        }
+    }
+
+    protected void validationBetweenTeacherAndStudent(Teacher teacher, Student student) throws Exception {
+        if (!teacher.getStudents().contains(student)) {
+            throw new Exception("you do not have this student");
+        }
+    }
+
+    protected void validationBetweenStudentAndQuiz(Student student, Quiz quiz) throws Exception {
+        Optional<StudentQuiz> studentQuiz = studentQuizService.findById(new StudentQuizKey(student.getId(), quiz.getId()));
+        if (!studentQuiz.isPresent()) {
+            throw new Exception("this student does not have this quiz");
+        }
+    }
+
+    protected void validationBetweenQuizAndQuestion(Quiz quiz, Question question) throws Exception {
+        Optional<QuizQuestionJoinTable> quizQuestionJoinTable = quizQuestionService.findById(
+                new QuizQuestionKey(quiz.getId(), question.getId()));
+        if (!quizQuestionJoinTable.isPresent()) {
+            throw new Exception("this quiz does not have this question");
+        }
     }
 }

@@ -4,7 +4,6 @@ import com.jalian.maktabfinalproject.entity.*;
 import com.jalian.maktabfinalproject.repository.QuizRepository;
 import com.jalian.maktabfinalproject.service.answer.testAnswer.TestAnswerService;
 import com.jalian.maktabfinalproject.service.base.BaseServiceImpl;
-import com.jalian.maktabfinalproject.service.question.testQuestion.TestQuestionService;
 import com.jalian.maktabfinalproject.service.quizQuestion.QuizQuestionService;
 import com.jalian.maktabfinalproject.service.studentQuiz.StudentQuizService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,20 +21,13 @@ import java.util.Map;
 public class QuizServiceImpl extends BaseServiceImpl<Quiz, Long, QuizRepository> implements QuizService {
 
     @Autowired
-    @Lazy
     private StudentQuizService studentQuizService;
-
-    //eshkali nadare service ha beham vabaste and??????????????????????????????????????????????????
-    @Autowired
-    @Lazy
-    private TestQuestionService testQuestionService;
 
     @Autowired
     @Lazy
     private TestAnswerService testAnswerService;
 
     @Autowired
-    @Lazy
     private QuizQuestionService quizQuestionService;
 
     public QuizServiceImpl(QuizRepository repository) {
@@ -48,24 +40,6 @@ public class QuizServiceImpl extends BaseServiceImpl<Quiz, Long, QuizRepository>
     }*/
 
     @Override
-    public void addQuestion(Quiz quiz, Question question, Double score) {
-        QuizQuestionJoinTable quizQuestionJoinTable = new QuizQuestionJoinTable(new QuizQuestionKey(quiz.getId(), question.getId()), quiz, question, score);
-        quizQuestionJoinTable.setQuiz(quiz);
-        quizQuestionJoinTable.setQuestion(question);
-        quizQuestionJoinTable = quizQuestionService.save(quizQuestionJoinTable);
-        List<QuizQuestionJoinTable> questionJoinTables = new ArrayList<>(quiz.getQuestions());
-        questionJoinTables.add(quizQuestionJoinTable);
-        quiz.setQuestions(questionJoinTables);
-        questionJoinTables = new ArrayList<>();
-        questionJoinTables.add(quizQuestionJoinTable);
-        if (question.getQuizzes() != null) {
-            questionJoinTables.addAll(question.getQuizzes());
-        }
-        question.setQuizzes(questionJoinTables);
-        getRepository().save(quiz);
-    }
-
-    @Override
     public Map<String, Double> correctTestQuestion(Student student, Quiz quiz) throws Exception {
         final Double[] grade = {0.0};
         StudentQuiz studentQuiz = studentQuizService.findById(new StudentQuizKey(student.getId(), quiz.getId()))
@@ -74,7 +48,7 @@ public class QuizServiceImpl extends BaseServiceImpl<Quiz, Long, QuizRepository>
         List<TestQuestion> questions = quizQuestionService.<TestQuestion>getQuestions(quiz, "TestQuestion");
         List<TestAnswer> correctAnswers = new ArrayList<>();
         questions.forEach(question -> {
-                correctAnswers.add((TestAnswer) question.getAnswer());
+            correctAnswers.add((TestAnswer) question.getAnswer());
         });
         correctAnswers.forEach(testAnswer -> {
             answers.forEach(testAnswer1 -> {
@@ -107,6 +81,11 @@ public class QuizServiceImpl extends BaseServiceImpl<Quiz, Long, QuizRepository>
         quiz.setCourse(course);
         course.setQuizzes(quizzes);
         getRepository().save(quiz);
+    }
+
+    @Override
+    public void addQuestion(Quiz quiz, Question question, Double score) {
+        quizQuestionService.addQuestion(quiz, question, score);
     }
 
     @Override

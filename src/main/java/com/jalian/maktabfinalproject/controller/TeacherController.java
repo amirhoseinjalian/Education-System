@@ -77,7 +77,7 @@ public class TeacherController extends BasicController {
         return testQuestionService.questionBank(course);
     }
 
-    @GetMapping("/{teacherId}/{courseId}/quizzes/descriptive-questions-bank")
+    @GetMapping("/{teacherId}/courses/{courseId}/quizzes/descriptive-questions-bank")
     public List<DescriptiveQuestion> getDesQuestionBank(@PathVariable String teacherId, @PathVariable Long courseId) throws Exception {
         Teacher teacher = get(teacherId, teacherService);
         Course course = get(courseId, courseService);
@@ -85,15 +85,14 @@ public class TeacherController extends BasicController {
         return descriptiveQuestionService.questionBank(course);
     }
 
-    @PostMapping("/{courseId}/quizzes/{quizId}/test-questions/{score}")
-    public List<TestQuestion> addTestQuestion(@PathVariable(name = "courseId") Long courseId, @PathVariable(name = "quizId") Long quizId
+    @PostMapping("/{teacherId}/courses/{courseId}/quizzes/{quizId}/test-questions/{score}")
+    public List<TestQuestion> addTestQuestion(@PathVariable String teacherId, @PathVariable(name = "courseId") Long courseId, @PathVariable(name = "quizId") Long quizId
             , @RequestBody TestQuestion testQuestion, @PathVariable Double score) throws Exception {
 
-        isValid(courseId, courseService);
+        Teacher teacher = get(teacherId, teacherService);
+        Course course = get(courseId, courseService);
         Quiz quiz = get(quizId, quizService);
-        if (!testQuestion.getOptions().contains(((TestAnswer) testQuestion.getAnswer()).getCorrectOption())) {
-            throw new Exception("answer not found");
-        }
+        validationBetweenTeacher_CourseAndQuiz(teacher, course, quiz);
         testQuestion = testQuestionService.save(testQuestion);
         quizService.addQuestion(quiz, testQuestion, score);
         return testQuestionService.getQuestions(quiz);

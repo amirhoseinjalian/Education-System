@@ -37,6 +37,20 @@ public class QuizQuestionServiceImpl extends BaseServiceImpl<QuizQuestionJoinTab
     }
 
     @Override
+    public void addQuestion(Quiz quiz, Question question, double score) {
+        QuizQuestionJoinTable quizQuestionJoinTable = QuizQuestionJoinTable.builder()
+                .quizQuestionKey(new QuizQuestionKey(quiz.getId(), question.getId()))
+                .score(score)
+                .quiz(quiz)
+                .question(question)
+                .build();
+        //are lines 48 and 49 needed???????????????????????????????????????????????????
+        question.getQuizzes().add(quizQuestionJoinTable);
+        quiz.getQuestions().add(quizQuestionJoinTable);
+        getRepository().save(quizQuestionJoinTable);
+    }
+
+    @Override
     public Double getScore(Quiz quiz, Question question) {
         return getRepository().getScore(quiz.getId(), question.getId());
     }

@@ -33,7 +33,9 @@ public class CourseServiceImpl extends BaseServiceImpl<Course, Long, CourseRepos
     @Override
     public void addStudent(Course course, Student student) {
         getRepository().addStudentToCourse(student.getId(), course.getId());
-        studentRepository.addStudentToTeacher(student.getId(), course.getTeacher().getId());
+        if (course.getTeacher() != null) {
+            studentRepository.addStudentToTeacher(student.getId(), course.getTeacher().getId());
+        }
     }
 
     @Override
@@ -49,7 +51,9 @@ public class CourseServiceImpl extends BaseServiceImpl<Course, Long, CourseRepos
     @Override
     public void addTeacher(Course course, Teacher teacher) {
         getRepository().addTeacherToCourse(teacher.getId(), course.getId());
-        course.getStudents().forEach(student -> teacherRepository.addStudentToTeacher(student.getId(), teacher.getId()));
+        if (course.getStudents() != null) {
+            course.getStudents().forEach(student -> teacherRepository.addStudentToTeacher(student.getId(), teacher.getId()));
+        }
     }
 
     @Override

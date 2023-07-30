@@ -41,12 +41,4 @@ public class Student extends Person {
 
     /*@OneToMany(mappedBy = "student")
     private List<Answer> answers;*/
-
-    @Override
-    public String toString() {
-        return "Student{" +
-                "id='" + getId() + '\'' +
-                ", password='" + getPassword() + '\'' +
-                '}';
-    }
 }

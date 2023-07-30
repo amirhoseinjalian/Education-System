@@ -7,18 +7,16 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication
-@ComponentScan(basePackages = {"com.jalian.maktabfinalproject.repository",
-        "com.jalian.maktabfinalproject.entity",
-        "com.jalian.maktabfinalproject.service", "com.jalian.maktabfinalproject.controller"})
+@ComponentScan(basePackages = {"com.jalian.maktabfinalproject.**"})
 //@EnableWebSecurity
 public class MaktabFinalProjectApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(MaktabFinalProjectApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(MaktabFinalProjectApplication.class, args);
+    }
 
-	@Bean
-	public ModelMapper modelMapper() {
-		return new ModelMapper();
-	}
+    @Bean
+    public ModelMapper modelMapper() {
+        return new ModelMapper();
+    }
 }

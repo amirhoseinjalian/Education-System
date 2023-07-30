@@ -14,5 +14,6 @@ public interface CourseRepository extends BaseRepository<Course, Long> {
     void addStudentToCourse(@Param("sId") String sId, @Param("cId") Long cId);
 
     @Query(value = "update course set teacher_username = :tId where id = :cId", nativeQuery = true)
+    @Modifying
     void addTeacherToCourse(@Param("tId") String teacherId, @Param("cId") Long courseId);
 }

@@ -14,5 +14,6 @@ public interface TeacherRepository extends PersonRepository<Teacher> {
     void addStudentToTeacher(@Param("sId") String sId, @Param("tId") String tId);
 
     @Query(value = "update course set teacher_username = :tId where id = :cId", nativeQuery = true)
+    @Modifying
     void addTeacherToCourse(@Param("tId") String teacherId, @Param("cId") Long courseId);
 }

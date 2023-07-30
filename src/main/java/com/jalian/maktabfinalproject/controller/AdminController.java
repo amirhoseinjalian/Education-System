@@ -26,8 +26,8 @@ public class AdminController extends BasicController {
     }
 
     @PostMapping("/courses")
-    public Course createCourse(@RequestBody CourseDto courseDto) {
-        return courseService.save(modelMapper.map(courseDto, Course.class));
+    public CourseDto createCourse(@RequestBody CourseDto courseDto) {
+        return modelMapper.map(courseService.save(modelMapper.map(courseDto, Course.class)), CourseDto.class);
     }
 
     @PutMapping("/add-teacher-to-course/{id}/{teacherId}")

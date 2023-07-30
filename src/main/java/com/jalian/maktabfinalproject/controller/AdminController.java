@@ -31,20 +31,20 @@ public class AdminController extends BasicController {
     }
 
     @PutMapping("/add-teacher-to-course/{id}/{teacherId}")
-    public Course addATeacherToACourse(@PathVariable Long id, @PathVariable String teacherId) throws Exception {
+    public PersonDto addATeacherToACourse(@PathVariable Long id, @PathVariable String teacherId) throws Exception {
         Course course = get(id, courseService);
         Teacher teacher = get(teacherId, teacherService);
         courseService.addTeacher(course, teacher);
-        return get(id, courseService);
+        return modelMapper.map(get(id, courseService).getTeacher(), PersonDto.class);
     }
 
     @PutMapping("/add-students-to-course/{id}")
-    public Course addAStudentsToACourse(@PathVariable Long id, @RequestBody List<String> studentsId) throws Exception {
+    public List<PersonDto> addAStudentsToACourse(@PathVariable Long id, @RequestBody List<String> studentsId) throws Exception {
         Course course = get(id, courseService);
         List<Student> students = new ArrayList<>();
         studentsId.forEach(s -> students.add(studentService.findById(s).get()));
         students.forEach(student -> courseService.addStudent(course, student));
-        return get(id, courseService);
+        return get(id, courseService).getStudents().stream().map(student -> modelMapper.map(student, PersonDto.class)).collect(Collectors.toList());
     }
 
     @GetMapping("/courses")

@@ -47,7 +47,7 @@ public abstract class Person extends BaseEntity<String> {
     @Enumerated(EnumType.STRING)
     private RegistrationStatus status = RegistrationStatus.WAITING;
 
-    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @ManyToOne
     @JoinColumn(name = "role_id")
     private Role role;
 

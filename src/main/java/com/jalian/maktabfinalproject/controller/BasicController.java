@@ -63,7 +63,7 @@ public class BasicController {
 
     @PostMapping("/reg")
     public String registration(@RequestBody SignupDto signupDto) throws Exception {
-        String type = signupDto.getRole().getName().toString();
+        String type = roleService.findById(signupDto.getRole().getId()).get().getName().toString();
         switch (type) {
             case "ADMIN":
                 throw new Exception("You are not admin");

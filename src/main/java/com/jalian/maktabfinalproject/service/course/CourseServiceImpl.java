@@ -2,9 +2,8 @@ package com.jalian.maktabfinalproject.service.course;
 
 import com.jalian.maktabfinalproject.entity.*;
 import com.jalian.maktabfinalproject.repository.CourseRepository;
-import com.jalian.maktabfinalproject.repository.util.StudentCourseRepository;
-import com.jalian.maktabfinalproject.repository.util.StudentTeacherRepository;
-import com.jalian.maktabfinalproject.repository.util.TeacherCourseRepository;
+import com.jalian.maktabfinalproject.repository.StudentRepository;
+import com.jalian.maktabfinalproject.repository.TeacherRepository;
 import com.jalian.maktabfinalproject.service.base.BaseServiceImpl;
 import com.jalian.maktabfinalproject.service.studentQuiz.StudentQuizService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,13 +18,10 @@ import java.util.List;
 public class CourseServiceImpl extends BaseServiceImpl<Course, Long, CourseRepository> implements CourseService {
 
     @Autowired
-    private StudentCourseRepository studentCourseRepository;
+    private TeacherRepository teacherRepository;
 
     @Autowired
-    private TeacherCourseRepository teacherCourseRepository;
-
-    @Autowired
-    private StudentTeacherRepository studentTeacherRepository;
+    private StudentRepository studentRepository;
 
     @Autowired
     private StudentQuizService studentQuizService;
@@ -36,8 +32,8 @@ public class CourseServiceImpl extends BaseServiceImpl<Course, Long, CourseRepos
 
     @Override
     public void addStudent(Course course, Student student) {
-        studentCourseRepository.addStudentToCourse(student.getId(), course.getId());
-        studentTeacherRepository.addStudentToTeacher(student.getId(), course.getTeacher().getId());
+        getRepository().addStudentToCourse(student.getId(), course.getId());
+        studentRepository.addStudentToTeacher(student.getId(), course.getTeacher().getId());
     }
 
     @Override
@@ -52,8 +48,8 @@ public class CourseServiceImpl extends BaseServiceImpl<Course, Long, CourseRepos
 
     @Override
     public void addTeacher(Course course, Teacher teacher) {
-        teacherCourseRepository.addTeacherToCourse(teacher.getId(), course.getId());
-        course.getStudents().forEach(student -> studentTeacherRepository.addStudentToTeacher(student.getId(), teacher.getId()));
+        getRepository().addTeacherToCourse(teacher.getId(), course.getId());
+        course.getStudents().forEach(student -> teacherRepository.addStudentToTeacher(student.getId(), teacher.getId()));
     }
 
     @Override

@@ -57,7 +57,7 @@ public class StudentController extends BasicController {
     @PostMapping("/{studentId}/quiz/{quizId}")
     public void receiveAnswers(@PathVariable String studentId, @PathVariable Long quizId, @RequestBody List<Answer> answers) throws Exception {
         Quiz quiz = get(quizId, quizService);
-        if (isQuizEnded(quiz)) {
+        if (isQuizEnded()) {
             throw new Exception("Quiz has ended. Answers cannot be submitted.");
         }
         isValid(studentId, studentService);
@@ -72,7 +72,7 @@ public class StudentController extends BasicController {
         });
     }
 
-    private boolean isQuizEnded(Quiz quiz) throws Exception {
+    private boolean isQuizEnded() throws Exception {
         LocalTime currentTime = LocalTime.now();
         return currentTime.isAfter(endTime);
     }

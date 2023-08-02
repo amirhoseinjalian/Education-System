@@ -40,12 +40,17 @@ public class CourseServiceImpl extends BaseServiceImpl<Course, Long, CourseRepos
 
     @Override
     public void addQuiz(Course course, Quiz quiz) {
-        List<Quiz> quizzes = new ArrayList<>(course.getQuizzes());
+        List<Quiz> quizzes = new ArrayList<>();
+        if (course.getQuizzes() != null) {
+            quizzes.addAll(course.getQuizzes());
+        }
         quizzes.add(quiz);
         quiz.setCourse(course);
         course.setQuizzes(quizzes);
-        course.getStudents().forEach(student -> studentQuizService.addStudent(quiz, student));
         getRepository().save(course);
+        if (course.getStudents() != null) {
+            course.getStudents().forEach(student -> studentQuizService.addStudent(quiz, student));
+        }
     }
 
     @Override

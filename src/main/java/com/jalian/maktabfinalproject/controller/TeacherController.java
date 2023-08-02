@@ -18,6 +18,7 @@ public class TeacherController extends BasicController {
         Course course = get(courseId, courseService);
         validationBetweenTeacherAndCourse(teacher, course);
         Quiz quiz = modelMapper.map(quizDto, Quiz.class);
+        quiz = quizService.save(quiz);
         courseService.addQuiz(course, quiz);
         return get(courseId, courseService).getQuizzes().stream().map(quiz1 -> modelMapper.map(quiz1, QuizDto.class)).collect(Collectors.toList());
     }

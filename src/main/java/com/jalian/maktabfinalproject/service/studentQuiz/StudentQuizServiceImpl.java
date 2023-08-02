@@ -51,8 +51,13 @@ public class StudentQuizServiceImpl extends BaseServiceImpl<StudentQuiz, Student
                 .student(student)
                 .quiz(quiz)
                 .build();
-        student.getQuizzes().add(studentQuiz);
-        quiz.getStudents().add(studentQuiz);
+        studentQuiz = getRepository().save(studentQuiz);
+        if (student.getQuizzes() != null) {
+            student.getQuizzes().add(studentQuiz);
+        }
+        if (quiz.getStudents() != null) {
+            quiz.getStudents().add(studentQuiz);
+        }
         getRepository().save(studentQuiz);
     }
 }

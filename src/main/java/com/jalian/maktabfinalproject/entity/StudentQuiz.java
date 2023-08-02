@@ -4,10 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import lombok.experimental.SuperBuilder;
 
 import javax.persistence.*;
@@ -41,8 +38,10 @@ public class StudentQuiz extends BaseEntity<StudentQuizKey> {
     @JoinColumn(name = "quiz_id")
     private Quiz quiz;
 
+    @Builder.Default
     private Boolean isJoined = false;
 
+    @Builder.Default
     private Double grade = 0.0;
 
     @OneToMany(mappedBy = "studentQuiz")

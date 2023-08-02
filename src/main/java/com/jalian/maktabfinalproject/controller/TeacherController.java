@@ -94,11 +94,12 @@ public class TeacherController extends BasicController {
         Course course = get(courseId, courseService);
         Quiz quiz = get(quizId, quizService);
         validationBetweenTeacher_CourseAndQuiz(teacher, course, quiz);
-        if (testQuestion.getId() != null || testQuestion.getId() > 0L) {
+        if (testQuestion.getId() != null) {
             testQuestion = testQuestionService.findById(testQuestion.getId()).get();
         } else {
             testQuestion = testQuestionService.save(testQuestion);
         }
+        testQuestion.getAnswer().setQuestion(testQuestion);
         quizService.addQuestion(quiz, testQuestion, score);
         return testQuestionService.getQuestions(quiz);
     }
@@ -111,11 +112,12 @@ public class TeacherController extends BasicController {
         Course course = get(courseId, courseService);
         Quiz quiz = get(quizId, quizService);
         validationBetweenTeacher_CourseAndQuiz(teacher, course, quiz);
-        if (descriptiveQuestion.getId() != null || descriptiveQuestion.getId() > 0L) {
+        if (descriptiveQuestion.getId() != null) {
             descriptiveQuestion = descriptiveQuestionService.findById(descriptiveQuestion.getId()).get();
         } else {
             descriptiveQuestion = descriptiveQuestionService.save(descriptiveQuestion);
         }
+        descriptiveQuestion.getAnswer().setQuestion(descriptiveQuestion);
         quizService.addQuestion(quiz, descriptiveQuestion, score);
         return descriptiveQuestionService.getQuestions(quiz);
     }

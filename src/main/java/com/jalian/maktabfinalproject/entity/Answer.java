@@ -28,7 +28,7 @@ import javax.persistence.*;
 @JsonTypeName("answer")
 public abstract class Answer extends LongIdEntity {
 
-    @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    @ManyToOne(/*cascade = {CascadeType.MERGE, CascadeType.PERSIST}*/)
     @JoinColumns({
             @JoinColumn(name = "student_id"),
             @JoinColumn(name = "quiz_id")

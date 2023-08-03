@@ -1,9 +1,6 @@
 package com.jalian.maktabfinalproject.service.quizQuestion;
 
-import com.jalian.maktabfinalproject.entity.Question;
-import com.jalian.maktabfinalproject.entity.Quiz;
-import com.jalian.maktabfinalproject.entity.QuizQuestionJoinTable;
-import com.jalian.maktabfinalproject.entity.QuizQuestionKey;
+import com.jalian.maktabfinalproject.entity.*;
 import com.jalian.maktabfinalproject.repository.QuizQuestionRepository;
 import com.jalian.maktabfinalproject.service.base.BaseServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,8 +19,8 @@ public class QuizQuestionServiceImpl extends BaseServiceImpl<QuizQuestionJoinTab
     }
 
     @Override
-    public <Values extends Question> List<Values> getQuestions(Quiz quiz, String questionType) {
-        return getRepository().<Values>getQuestions(quiz.getId(), questionType);
+    public <Values extends Question> List<Values> getQuestions(Course course, String questionType) {
+        return getRepository().<Values>getQuestions(course.getId(), questionType);
     }
 
     @Override

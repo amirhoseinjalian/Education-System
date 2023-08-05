@@ -15,6 +15,7 @@ import javax.persistence.Table;
 @Entity
 @Table
 @PrimaryKeyJoinColumn(name = "id")
+//@Polymorphism(type = PolymorphismType.EXPLICIT)
 @DiscriminatorValue("DescriptiveQuestion")
 @Setter
 @Getter

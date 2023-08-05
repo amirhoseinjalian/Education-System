@@ -13,6 +13,7 @@ import java.util.List;
 @Entity
 @Table
 @PrimaryKeyJoinColumn(name = "id")
+//@Polymorphism(type = PolymorphismType.EXPLICIT)
 @DiscriminatorValue("TestQuestion")
 @Setter
 @Getter

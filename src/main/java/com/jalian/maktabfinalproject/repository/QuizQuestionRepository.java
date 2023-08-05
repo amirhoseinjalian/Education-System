@@ -15,12 +15,15 @@ public interface QuizQuestionRepository extends BaseRepository<QuizQuestionJoinT
 
     /*
     wrong!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-    @Query("select s.question from QuizQuestionJoinTable s where s.quiz.id = :quizId and type(s.question) = :questionType")
+    @Query("select s.question from QuizQuestionJoinTable s where s.quiz.course.id = :courseId and type(s.question) = :questionType")
     */
-    //correct
-    @Query("select s.question from QuizQuestionJoinTable s where s.quiz.course.id = :courseId and Question_TYPE = :questionType")
-    /*@Query("select question from QuizQuestionJoinTable s where s.quiz.id = :quizId and FUNCTION('CLASS', question) = :questionType")*/
-    <Value extends Question> List<Value> getQuestions(@Param("courseId") Long quizId, @Param("questionType") String questionType);
+
+    //wrong
+    @Query("select s.question from QuizQuestionJoinTable s where s.quiz.course.id = :courseId and FUNCTION('CLASS', question) = :questionType")
+
+    //wrong
+    //@Query("select s.question from QuizQuestionJoinTable s where s.quiz.course.id = :courseId")
+    <Value extends Question> List<Value> getQuestions(@Param("courseId") Long quizId, @Param("questionType") Class<? extends Question> c);
 
     @Query("select s.quiz from QuizQuestionJoinTable s where s.question.id = :questionId")
     List<Quiz> getQuizzes(@Param("questionId") Long questionId);

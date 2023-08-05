@@ -45,7 +45,7 @@ public class QuizServiceImpl extends BaseServiceImpl<Quiz, Long, QuizRepository>
         StudentQuiz studentQuiz = studentQuizService.findById(new StudentQuizKey(student.getId(), quiz.getId()))
                 .orElseThrow(() -> new NullPointerException("student or quiz not found"));
         List<TestAnswer> answers = testAnswerService.getAnswers(student, quiz);
-        List<TestQuestion> questions = quizQuestionService.<TestQuestion>getQuestions(quiz, "TestQuestion");
+        List<TestQuestion> questions = null; /*quizQuestionService.<TestQuestion>getQuestions(quiz, "TestQuestion");*/
         List<TestAnswer> correctAnswers = new ArrayList<>();
         questions.forEach(question -> {
             correctAnswers.add((TestAnswer) question.getAnswer());

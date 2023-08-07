@@ -12,7 +12,6 @@ import java.util.List;
 
 @Entity
 @Table
-@PrimaryKeyJoinColumn(name = "id")
 @Setter
 @Getter
 @NoArgsConstructor

@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface QuizQuestionService extends BaseService<QuizQuestionJoinTable, QuizQuestionKey> {
 
-    <Values extends Question> List<Values> getQuestions(Course course, String questionType);
+    <Value extends Question> List<Value> getQuestions(Course course, Class<Value> questionType);
 
     List<Quiz> getQuizzes(Question question);
 

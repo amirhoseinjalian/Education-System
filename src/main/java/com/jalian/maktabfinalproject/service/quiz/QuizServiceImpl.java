@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -45,7 +46,11 @@ public class QuizServiceImpl extends BaseServiceImpl<Quiz, Long, QuizRepository>
         StudentQuiz studentQuiz = studentQuizService.findById(new StudentQuizKey(student.getId(), quiz.getId()))
                 .orElseThrow(() -> new NullPointerException("student or quiz not found"));
         List<TestAnswer> answers = testAnswerService.getAnswers(student, quiz);
-        List<TestQuestion> questions = null; /*quizQuestionService.<TestQuestion>getQuestions(quiz, "TestQuestion");*/
+        List<TestQuestion> questions = quizQuestionService.getQuestions(quiz).
+                stream().
+                filter(question -> question instanceof TestQuestion).
+                map(question -> (TestQuestion) question).
+                collect(Collectors.toList());
         List<TestAnswer> correctAnswers = new ArrayList<>();
         questions.forEach(question -> {
             correctAnswers.add((TestAnswer) question.getAnswer());

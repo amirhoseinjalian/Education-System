@@ -19,8 +19,8 @@ public class QuizQuestionServiceImpl extends BaseServiceImpl<QuizQuestionJoinTab
     }
 
     @Override
-    public <Values extends Question> List<Values> getQuestions(Course course, String questionType) {
-        return getRepository().<Values>getQuestions(course.getId(), TestQuestion.class);
+    public <Value extends Question> List<Value> getQuestions(Course course, Class<Value> questionType) {
+        return getRepository().getQuestions(course.getId(), questionType);
     }
 
     @Override

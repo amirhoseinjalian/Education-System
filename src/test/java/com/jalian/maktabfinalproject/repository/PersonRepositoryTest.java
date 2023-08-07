@@ -32,6 +32,4 @@ public abstract class PersonRepositoryTest<Value extends Person, Repository exte
         List<Person> people = repository().getAllWaitingPersons();
         assertThat(people.size()).isEqualTo(0);
     }
-
-
 }

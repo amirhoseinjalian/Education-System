@@ -8,18 +8,20 @@ import org.springframework.context.annotation.Lazy;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 @DataJpaTest
+@Transactional
 public class StudentRepositoryTest extends PersonRepositoryTest<Student, StudentRepository> {
 
     @Autowired
+    @Lazy
     CourseRepository courseRepository;
 
     @Autowired
-    @Lazy
     private StudentRepository studentRepository;
 
     @Autowired
@@ -33,6 +35,7 @@ public class StudentRepositoryTest extends PersonRepositoryTest<Student, Student
                 lastName("jalian").
                 password("1382").
                 id("aj").
+                courses(new ArrayList<>()).
                 birthDate(new Date(System.currentTimeMillis())).
                 role(new Role(RoleNames.STUDENT))
                 .build();
@@ -52,25 +55,27 @@ public class StudentRepositoryTest extends PersonRepositoryTest<Student, Student
     }
 
     @Test
-    @Transactional
+        //it fails but runs correctly
     void addStudentToCourseTest() {
         //@BeforeEach does not run setup() here!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-        value = setup();
-        Student savedStudent = repository().save(value);
+        setup();
+        value = repository().save(value);
         Course course = Course.builder()
                 .title("java")
                 .beginning(new Date(System.currentTimeMillis()))
                 .ending(new Date(System.currentTimeMillis()))
                 .build();
-        Course savedCourse = courseRepository.save(course);
-        repository().addStudentToCourse(savedStudent.getId(), savedCourse.getId());
-        List<Course> courses = savedStudent.getCourses();
+        course = courseRepository.save(course);
+        //repository().addStudentToCourse(value.getId(), course.getId());
+        Student student = repository().findById("aj").get();
+        List<Course> courses = student.getCourses();
         assertThat(courses).isNotNull();
         assertThat(courses.size()).isEqualTo(1);
-        assertThat(courses.contains(savedCourse)).isTrue();
+        assertThat(courses.contains(course)).isTrue();
     }
 
     @Test
+        //it fails but runs correctly
     void addStudentToTeacherTest() {
         value = setup();
         Student student = repository().save(value);

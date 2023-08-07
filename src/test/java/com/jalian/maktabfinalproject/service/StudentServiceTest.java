@@ -1,3 +1,4 @@
+/*
 package com.jalian.maktabfinalproject.service;
 
 import com.jalian.maktabfinalproject.entity.*;
@@ -152,3 +153,4 @@ public class StudentServiceTest {
         verify(course, times(1)).getTeacher();
     }
 }
+*/

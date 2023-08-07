@@ -11,7 +11,10 @@ import java.util.List;
 @Table
 @Inheritance(strategy = InheritanceType.JOINED)
 @PrimaryKeyJoinColumn(name = "id")
+/*
+should be define in the root entity!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 @DiscriminatorColumn(name = "Question_TYPE", discriminatorType = DiscriminatorType.STRING)
+*/
 @Setter
 @Getter
 @EqualsAndHashCode(callSuper = true)
@@ -28,14 +31,14 @@ import java.util.List;
 @JsonTypeName("question")
 public abstract class Question extends LongIdEntity {
 
+    @OneToMany(mappedBy = "question", cascade = CascadeType.ALL)
+    List<QuizQuestionJoinTable> quizzes;
+
     //behtar nist yek paper entity dar nazar begirim va in 2 fild azmun va soal ro dar un bezarim ta code kamtari bezanim??????????????????????
     @Column(nullable = false)
     private String title;
 
     private String description;
-
-    @OneToMany(mappedBy = "question", cascade = CascadeType.ALL)
-    List<QuizQuestionJoinTable> quizzes;
 
     @OneToOne(mappedBy = "question", cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     private Answer answer;

@@ -75,7 +75,10 @@ public class TeacherController extends BasicController {
         Teacher teacher = get(teacherId, teacherService);
         Course course = get(courseId, courseService);
         validationBetweenTeacherAndCourse(teacher, course);
-        return testQuestionService.questionBank(course);
+        //why it returns all of the questions?????????????????????????????????????????????????????????
+        return quizQuestionService.getQuestions(course, TestQuestion.class);
+        //or::::::::::::::::::::::::::::::::::::::::::
+        //return testQuestionService.questionBank(course)
     }
 
     @GetMapping("/{teacherId}/courses/{courseId}/quizzes/descriptive-questions-bank")
@@ -84,6 +87,8 @@ public class TeacherController extends BasicController {
         Course course = get(courseId, courseService);
         validationBetweenTeacherAndCourse(teacher, course);
         return descriptiveQuestionService.questionBank(course);
+        //or::::::::::::::::::::::::::::::::::::::::::::::::::::::
+        //return quizQuestionService.getQuestions(course, DescriptiveQuestion.class);
     }
 
     @PostMapping("/{teacherId}/courses/{courseId}/quizzes/{quizId}/test-questions/{score}")

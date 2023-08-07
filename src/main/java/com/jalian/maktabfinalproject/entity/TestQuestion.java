@@ -7,13 +7,17 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
-import javax.persistence.*;
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 import java.util.List;
 
 @Entity
 @Table
-@PrimaryKeyJoinColumn(name = "id")
-@DiscriminatorValue("TestQuestion")
+//@PrimaryKeyJoinColumn(name = "id")
+//@Polymorphism(type = PolymorphismType.EXPLICIT)
+//@DiscriminatorValue("TestQuestion")
 @Setter
 @Getter
 @SuperBuilder

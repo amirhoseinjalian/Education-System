@@ -1,10 +1,7 @@
 package com.jalian.maktabfinalproject.entity;
 
 import com.fasterxml.jackson.annotation.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.DynamicInsert;
 
@@ -45,9 +42,11 @@ public abstract class Person extends BaseEntity<String> {
     private String password;
 
     @Enumerated(EnumType.STRING)
+    @Builder.Default
     private RegistrationStatus status = RegistrationStatus.WAITING;
 
-    @ManyToOne
+    //cascade is needed for unit testing
+    @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "role_id")
     private Role role;
 

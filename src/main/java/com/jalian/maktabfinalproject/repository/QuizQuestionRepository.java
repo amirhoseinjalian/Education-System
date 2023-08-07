@@ -13,14 +13,11 @@ import java.util.List;
 @RepositoryRestResource
 public interface QuizQuestionRepository extends BaseRepository<QuizQuestionJoinTable, QuizQuestionKey> {
 
-    //should be tested!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-    @Query("select s.question from QuizQuestionJoinTable s where s.quiz.id = :quizId and Question_TYPE = :questionType")
-    /*@Query("select question from QuizQuestionJoinTable s where s.quiz.id = :quizId and FUNCTION('CLASS', question) = :questionType")*/
-/*
-    wrong!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-    @Query("select s.question from QuizQuestionJoinTable s where s.quiz.id = :quizId and type(s.question) = :questionType")
-*/
-    <Value extends Question> List<Value> getQuestions(@Param("quizId") Long quizId, @Param("questionType") String questionType);
+    //wrong
+    //@Query("select s.question from QuizQuestionJoinTable s where s.quiz.course.id = :courseId and FUNCTION('CLASS', question) = :questionType"
+    //@Query("select s.question from QuizQuestionJoinTable s where s.quiz.course.id = :courseId and type(s) = :questionType")    , 'DescriptiveQuestion.class'
+    @Query("select s.question from QuizQuestionJoinTable s where s.quiz.course.id = :courseId AND type (s.question.class) = :questionType")
+    <Value extends Question> List<Value> getQuestions(@Param("courseId") Long courseId, @Param("questionType") Class<Value> questionType);
 
     @Query("select s.quiz from QuizQuestionJoinTable s where s.question.id = :questionId")
     List<Quiz> getQuizzes(@Param("questionId") Long questionId);

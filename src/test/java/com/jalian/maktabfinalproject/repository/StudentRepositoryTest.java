@@ -1,93 +1,102 @@
 package com.jalian.maktabfinalproject.repository;
 
 import com.jalian.maktabfinalproject.entity.*;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 @DataJpaTest
-public class StudentRepositoryTest {
+@Transactional
+public class StudentRepositoryTest extends PersonRepositoryTest<Student, StudentRepository> {
+
+    @Autowired
+    @Lazy
+    CourseRepository courseRepository;
 
     @Autowired
     private StudentRepository studentRepository;
 
-    private Student student;
+    @Autowired
+    @Lazy
+    private TeacherRepository teacherRepository;
 
-    @BeforeEach
-    void setup() {
-        student = Student.builder().
+    @Override
+    protected Student setup() {
+        value = Student.builder().
                 firstName("amirhosein").
                 lastName("jalian").
                 password("1382").
                 id("aj").
+                courses(new ArrayList<>()).
+                birthDate(new Date(System.currentTimeMillis())).
+                role(new Role(RoleNames.STUDENT))
+                .build();
+        return value;
+    }
+
+    @Override
+    protected Student newInstance() {
+        return Student.builder().
+                firstName("mohammad").
+                lastName("jalian").
+                password("1375").
+                id("mj").
                 birthDate(new Date(System.currentTimeMillis())).
                 role(new Role(RoleNames.STUDENT))
                 .build();
     }
 
     @Test
-    void save() {
-        Student savedStudent = studentRepository.save(student);
-        assertThat(savedStudent).isNotNull();
-        assertThat(savedStudent.getId()).isEqualTo("aj");
+        //it fails but runs correctly
+    void addStudentToCourseTest() {
+        //@BeforeEach does not run setup() here!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        setup();
+        value = repository().save(value);
+        Course course = Course.builder()
+                .title("java")
+                .beginning(new Date(System.currentTimeMillis()))
+                .ending(new Date(System.currentTimeMillis()))
+                .build();
+        course = courseRepository.save(course);
+        //repository().addStudentToCourse(value.getId(), course.getId());
+        Student student = repository().findById("aj").get();
+        List<Course> courses = student.getCourses();
+        assertThat(courses).isNotNull();
+        assertThat(courses.size()).isEqualTo(1);
+        assertThat(courses.contains(course)).isTrue();
     }
 
     @Test
-    void findAll() {
-        Student student1 = new Student();
-        student1.setFirstName("robyn");
-        student1.setLastName("fenty");
-        student1.setPassword("1988");
-        student1.setId("rihanna");
-        student1.setBirthDate(new Date(System.currentTimeMillis()));
-        student1.setRole(new Role(RoleNames.TEACHER));
-        studentRepository.save(student1);
-        studentRepository.save(student);
-        List<Student> students = studentRepository.findAll();
-        assertThat(students).isNotNull();
-        assertThat(students.size()).isEqualTo(2);
+        //it fails but runs correctly
+    void addStudentToTeacherTest() {
+        value = setup();
+        Student student = repository().save(value);
+        Teacher teacher = Teacher.builder().
+                firstName("mohammad").
+                lastName("jalian").
+                password("1375").
+                id("mj").
+                role(new Role(RoleNames.TEACHER)).
+                birthDate(new Date(System.currentTimeMillis())).
+                build();
+        Teacher savedTeacher = teacherRepository.save(teacher);
+        repository().addStudentToTeacher(student.getId(), savedTeacher.getId());
+        List<Teacher> teachers = student.getTeachers();
+        assertThat(teachers).isNotNull();
+        assertThat(teachers.size()).isEqualTo(1);
+        assertThat(teachers.contains(savedTeacher)).isTrue();
     }
 
-    @Test
-    void findById() {
-        studentRepository.save(student);
-        student = studentRepository.findById("aj").get();
-        assertThat(student).isNotNull();
-        assertThat(student).isEqualTo(student);
-    }
-
-    @Test
-    void getAllWaitingUsers() {
-        Student student1 = new Student();
-        student1.setFirstName("robyn");
-        student1.setLastName("fenty");
-        student1.setPassword("1988");
-        student1.setId("rihanna");
-        student1.setStatus(RegistrationStatus.CONFIRMED);
-        student1.setBirthDate(new Date(System.currentTimeMillis()));
-        student1.setRole(new Role(RoleNames.TEACHER));
-        studentRepository.save(student1);
-        studentRepository.save(student);
-        List<Person> waitingStudents = studentRepository.getAllWaitingPersons();
-        assertThat(waitingStudents).isNotNull();
-        assertThat(waitingStudents.size()).isEqualTo(1);
-        assertThat(student).isEqualTo((Student) waitingStudents.get(0));
-    }
-
-    @Test
-    @Transactional
-    //fails!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-    public void confirmUsersReg() {
-        studentRepository.save(student);
-        studentRepository.confirmUsersReg(student.getId());
-        student = studentRepository.findById("aj").get();
-        assertThat(student.getStatus()).isEqualTo(RegistrationStatus.CONFIRMED);
+    @Override
+    protected StudentRepository repository() {
+        return studentRepository;
     }
 }

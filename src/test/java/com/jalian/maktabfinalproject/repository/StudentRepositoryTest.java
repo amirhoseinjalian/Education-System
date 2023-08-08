@@ -5,6 +5,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.Date;
 import java.util.ArrayList;
@@ -13,6 +14,7 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @DataJpaTest
+@Transactional
 public class StudentRepositoryTest extends PersonRepositoryTest<Student, StudentRepository> {
 
     @Autowired
@@ -61,6 +63,7 @@ public class StudentRepositoryTest extends PersonRepositoryTest<Student, Student
                 .build();
         course = courseRepository.save(course);
         repository().addStudentToCourse(value.getId(), course.getId());
+        repository().flush();
         Student savedStudent = repository().findById(value.getId()).get();
         List<Course> courses = savedStudent.getCourses();
         assertThat(courses).isNotNull();

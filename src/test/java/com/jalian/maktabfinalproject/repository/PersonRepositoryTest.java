@@ -13,7 +13,6 @@ public abstract class PersonRepositoryTest<Value extends Person, Repository exte
 
     @Test
     protected void getAllWaitingPersonsTest() {
-        value = setup();
         Value value1 = newInstance();
         value1.setStatus(RegistrationStatus.CONFIRMED);
         repository().save(value1);
@@ -26,7 +25,6 @@ public abstract class PersonRepositoryTest<Value extends Person, Repository exte
 
     @Test
     protected void confirmUsersRegTest() {
-        value = setup();
         repository().save(value);
         repository().confirmUsersReg(value.getId());
         List<Person> people = repository().getAllWaitingPersons();

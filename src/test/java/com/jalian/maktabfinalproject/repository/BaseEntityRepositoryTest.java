@@ -4,6 +4,7 @@ import com.jalian.maktabfinalproject.entity.BaseEntity;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -11,6 +12,7 @@ import java.util.Optional;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @DataJpaTest
+@Transactional
 public abstract class BaseEntityRepositoryTest<Id, Value extends BaseEntity<Id>, Repository extends BaseRepository<Value, Id>> {
 
     protected Value value;

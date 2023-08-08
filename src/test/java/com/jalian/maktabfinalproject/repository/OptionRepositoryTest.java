@@ -4,8 +4,10 @@ import com.jalian.maktabfinalproject.entity.Option;
 import org.junit.jupiter.api.BeforeEach;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.transaction.annotation.Transactional;
 
 @DataJpaTest
+@Transactional
 public class OptionRepositoryTest extends BaseEntityRepositoryTest<Long, Option, OptionRepository> {
 
     @Autowired

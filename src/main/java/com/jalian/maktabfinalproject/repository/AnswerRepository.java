@@ -14,4 +14,7 @@ public interface AnswerRepository<Value extends Answer> extends BaseRepository<V
 
     @Query("select a from #{#entityName} a where a.studentQuiz.student.id = :studentId and a.studentQuiz.quiz.id = :quizId")
     List<Value> getAnswers(@Param("studentId") String studentId, @Param("quizId") Long quizId);
+
+    @Query("select a from Answer a where a.studentQuiz.student.id = :studentId and a.studentQuiz.quiz.id = :quizId")
+    List<Answer> getAllAnswers(@Param("studentId") String studentId, @Param("quizId") Long quizId);
 }

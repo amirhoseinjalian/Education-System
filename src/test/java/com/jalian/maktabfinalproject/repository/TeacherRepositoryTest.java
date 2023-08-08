@@ -3,6 +3,7 @@ package com.jalian.maktabfinalproject.repository;
 import com.jalian.maktabfinalproject.entity.Role;
 import com.jalian.maktabfinalproject.entity.RoleNames;
 import com.jalian.maktabfinalproject.entity.Teacher;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
@@ -21,7 +22,8 @@ public class TeacherRepositoryTest extends PersonRepositoryTest<Teacher, Teacher
     }
 
     @Override
-    protected Teacher setup() {
+    @BeforeEach
+    protected void setup() {
         value = Teacher.builder().
                 firstName("amirhosein").
                 lastName("jalian").
@@ -30,7 +32,6 @@ public class TeacherRepositoryTest extends PersonRepositoryTest<Teacher, Teacher
                 birthDate(new Date(System.currentTimeMillis())).
                 role(new Role(RoleNames.TEACHER))
                 .build();
-        return value;
     }
 
     @Override

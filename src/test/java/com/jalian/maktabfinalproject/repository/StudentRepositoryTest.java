@@ -1,11 +1,10 @@
 package com.jalian.maktabfinalproject.repository;
 
 import com.jalian.maktabfinalproject.entity.*;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.context.annotation.Lazy;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.Date;
 import java.util.ArrayList;
@@ -14,22 +13,20 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @DataJpaTest
-@Transactional
 public class StudentRepositoryTest extends PersonRepositoryTest<Student, StudentRepository> {
-
-    @Autowired
-    @Lazy
-    CourseRepository courseRepository;
 
     @Autowired
     private StudentRepository studentRepository;
 
     @Autowired
-    @Lazy
+    private CourseRepository courseRepository;
+
+    @Autowired
     private TeacherRepository teacherRepository;
 
     @Override
-    protected Student setup() {
+    @BeforeEach
+    protected void setup() {
         value = Student.builder().
                 firstName("amirhosein").
                 lastName("jalian").
@@ -39,7 +36,6 @@ public class StudentRepositoryTest extends PersonRepositoryTest<Student, Student
                 birthDate(new Date(System.currentTimeMillis())).
                 role(new Role(RoleNames.STUDENT))
                 .build();
-        return value;
     }
 
     @Override
@@ -55,10 +51,8 @@ public class StudentRepositoryTest extends PersonRepositoryTest<Student, Student
     }
 
     @Test
-        //it fails but runs correctly
+        //it fails but runs correctly, it is because nativeQuery
     void addStudentToCourseTest() {
-        //@BeforeEach does not run setup() here!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-        setup();
         value = repository().save(value);
         Course course = Course.builder()
                 .title("java")
@@ -66,18 +60,17 @@ public class StudentRepositoryTest extends PersonRepositoryTest<Student, Student
                 .ending(new Date(System.currentTimeMillis()))
                 .build();
         course = courseRepository.save(course);
-        //repository().addStudentToCourse(value.getId(), course.getId());
-        Student student = repository().findById("aj").get();
-        List<Course> courses = student.getCourses();
+        repository().addStudentToCourse(value.getId(), course.getId());
+        Student savedStudent = repository().findById(value.getId()).get();
+        List<Course> courses = savedStudent.getCourses();
         assertThat(courses).isNotNull();
         assertThat(courses.size()).isEqualTo(1);
         assertThat(courses.contains(course)).isTrue();
     }
 
     @Test
-        //it fails but runs correctly
+        //it fails but runs correctly, it is because nativeQuery
     void addStudentToTeacherTest() {
-        value = setup();
         Student student = repository().save(value);
         Teacher teacher = Teacher.builder().
                 firstName("mohammad").

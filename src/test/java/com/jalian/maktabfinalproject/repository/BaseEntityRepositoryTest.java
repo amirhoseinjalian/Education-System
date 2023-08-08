@@ -18,13 +18,13 @@ public abstract class BaseEntityRepositoryTest<Id, Value extends BaseEntity<Id>,
     protected abstract Repository repository();
 
     @BeforeEach
-    protected abstract Value setup();
+    //must be annotated @BeforeEach in the sub classes!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    protected abstract void setup();
 
     protected abstract Value newInstance();
 
     @Test
     protected void save() {
-        value = setup();
         Value savedValue = repository().save(value);
         assertThat(savedValue).isNotNull();
         assertThat(savedValue).isEqualTo(value);
@@ -32,7 +32,6 @@ public abstract class BaseEntityRepositoryTest<Id, Value extends BaseEntity<Id>,
 
     @Test
     protected void findById() {
-        value = setup();
         repository().save(value);
         Value founded = repository().findById(value.getId()).get();
         assertThat(founded).isNotNull();
@@ -40,7 +39,6 @@ public abstract class BaseEntityRepositoryTest<Id, Value extends BaseEntity<Id>,
 
     @Test
     protected void update() {
-        value = setup();
         repository().save(value);
         Value saved = repository().findById(value.getId()).get();
         saved = newInstance();
@@ -50,7 +48,6 @@ public abstract class BaseEntityRepositoryTest<Id, Value extends BaseEntity<Id>,
 
     @Test
     void delete() {
-        value = setup();
         repository().save(value);
         repository().deleteById(value.getId());
         Optional<Value> deleted = repository().findById(value.getId());
@@ -59,7 +56,6 @@ public abstract class BaseEntityRepositoryTest<Id, Value extends BaseEntity<Id>,
 
     @Test
     void findAll() {
-        value = setup();
         Value value1 = newInstance();
         repository().save(value);
         repository().save(value1);

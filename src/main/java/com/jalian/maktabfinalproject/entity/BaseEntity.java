@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
@@ -15,6 +16,7 @@ import javax.persistence.Transient;
 @SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
+@EqualsAndHashCode
 /*@JsonTypeInfo(use = JsonTypeInfo.Id.NAME,
         include = JsonTypeInfo.As.EXTERNAL_PROPERTY,
         property = "type")
@@ -32,13 +34,4 @@ public abstract class BaseEntity<Id> {
 
     @Transient
     private Id id;
-
-    @Override
-    public boolean equals(Object o) {
-        if(o == null) {
-            return false;
-        }
-        BaseEntity baseEntity = (BaseEntity) o;
-        return id == baseEntity.getId();
-    }
 }

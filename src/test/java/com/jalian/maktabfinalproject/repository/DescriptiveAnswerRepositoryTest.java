@@ -59,7 +59,7 @@ public class DescriptiveAnswerRepositoryTest extends AnswerRepositoryTest<Descri
         StudentQuiz studentQuiz = StudentQuiz.builder().
                 student(student).
                 quiz(quiz).
-                studentQuizKey(new StudentQuizKey(student.getId(), quiz.getId())).
+                id(new StudentQuizKey(student.getId(), quiz.getId())).
                 isJoined(false).
                 grade(10.0).
                 answers(List.of(value, descriptiveAnswer)).

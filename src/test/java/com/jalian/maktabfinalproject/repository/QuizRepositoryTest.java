@@ -75,20 +75,20 @@ public class QuizRepositoryTest extends BaseEntityRepositoryTest<Long, Quiz, Qui
                 .grade(2.)
                 .student(student)
                 .quiz(value)
-                .studentQuizKey(new StudentQuizKey(student.getId(), value.getId()))
+                .id(new StudentQuizKey(student.getId(), value.getId()))
                 .build();
         StudentQuiz studentQuiz2 = StudentQuiz.builder()
                 .grade(2.3)
                 .student(student)
                 .quiz(quiz)
                 .isJoined(true)
-                .studentQuizKey(new StudentQuizKey(student.getId(), quiz.getId()))
+                .id(new StudentQuizKey(student.getId(), quiz.getId()))
                 .build();
         StudentQuiz studentQuiz3 = StudentQuiz.builder()
                 .grade(2.7)
                 .student(student)
                 .quiz(quiz2)
-                .studentQuizKey(new StudentQuizKey(student.getId(), quiz2.getId()))
+                .id(new StudentQuizKey(student.getId(), quiz2.getId()))
                 .build();
         student.setQuizzes(List.of(studentQuiz, studentQuiz2, studentQuiz3));
         value.setStudents(List.of(studentQuiz));

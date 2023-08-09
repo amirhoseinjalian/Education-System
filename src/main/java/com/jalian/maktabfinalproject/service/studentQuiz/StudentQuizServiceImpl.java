@@ -47,7 +47,7 @@ public class StudentQuizServiceImpl extends BaseServiceImpl<StudentQuiz, Student
     @Override
     public void addStudent(Quiz quiz, Student student) {
         StudentQuiz studentQuiz = StudentQuiz.builder()
-                .studentQuizKey(new StudentQuizKey(student.getId(), quiz.getId()))
+                .id(new StudentQuizKey(student.getId(), quiz.getId()))
                 .student(student)
                 .quiz(quiz)
                 .build();

@@ -18,14 +18,14 @@ import javax.persistence.*;
 public class QuizQuestionJoinTable extends BaseEntity<QuizQuestionKey> {
 
     @EmbeddedId
-    private QuizQuestionKey quizQuestionKey;
+    private QuizQuestionKey id;
 
     @ManyToOne
     @MapsId("quizId")
     @JoinColumn(name = "quiz_id")
     private Quiz quiz;
 
-    @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    @ManyToOne
     @MapsId("questionId")
     @JoinColumn(name = "question_id")
     private Question question;

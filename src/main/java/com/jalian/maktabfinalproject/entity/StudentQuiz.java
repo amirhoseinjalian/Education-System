@@ -25,7 +25,7 @@ import java.util.List;
 public class StudentQuiz extends BaseEntity<StudentQuizKey> {
 
     @EmbeddedId
-    private StudentQuizKey studentQuizKey;
+    private StudentQuizKey id;
 
     @ManyToOne
     @MapsId("studentId")

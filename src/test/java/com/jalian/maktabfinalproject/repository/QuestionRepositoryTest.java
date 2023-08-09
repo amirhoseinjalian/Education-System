@@ -55,7 +55,7 @@ public abstract class QuestionRepositoryTest<Value extends Question, Repository 
                 .quiz(quiz)
                 .question(value)
                 .score(10.0)
-                .quizQuestionKey(new QuizQuestionKey(quiz.getId(), value.getId()))
+                .id(new QuizQuestionKey(quiz.getId(), value.getId()))
                 .build();
         value.setQuizzes(List.of(quizQuestionJoinTable));
         quiz.setQuestions(List.of(quizQuestionJoinTable));
@@ -63,7 +63,7 @@ public abstract class QuestionRepositoryTest<Value extends Question, Repository 
                 .quiz(quiz2)
                 .question(value2)
                 .score(10.0)
-                .quizQuestionKey(new QuizQuestionKey(quiz.getId(), value2.getId()))
+                .id(new QuizQuestionKey(quiz.getId(), value2.getId()))
                 .build();
         value2.setQuizzes(List.of(quizQuestionJoinTable2));
         quiz2.setQuestions(List.of(quizQuestionJoinTable));
@@ -114,14 +114,14 @@ public abstract class QuestionRepositoryTest<Value extends Question, Repository 
                 .quiz(quiz)
                 .question(value)
                 .score(10.0)
-                .quizQuestionKey(new QuizQuestionKey(quiz.getId(), value.getId()))
+                .id(new QuizQuestionKey(quiz.getId(), value.getId()))
                 .build();
         value.setQuizzes(List.of(quizQuestionJoinTable));
         QuizQuestionJoinTable quizQuestionJoinTable2 = QuizQuestionJoinTable.builder()
                 .quiz(quiz)
                 .question(value2)
                 .score(10.0)
-                .quizQuestionKey(new QuizQuestionKey(quiz.getId(), value2.getId()))
+                .id(new QuizQuestionKey(quiz.getId(), value2.getId()))
                 .build();
         value2.setQuizzes(List.of(quizQuestionJoinTable2));
         quiz.setQuestions(List.of(quizQuestionJoinTable, quizQuestionJoinTable2));

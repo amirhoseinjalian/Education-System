@@ -58,7 +58,7 @@ public abstract class AnswerRepositoryTest<AnswerValue extends Answer, Repositor
         StudentQuiz studentQuiz = StudentQuiz.builder().
                 student(student).
                 quiz(quiz).
-                studentQuizKey(new StudentQuizKey(student.getId(), quiz.getId())).
+                id(new StudentQuizKey(student.getId(), quiz.getId())).
                 isJoined(false).
                 answers(answers).
                 build();

@@ -36,7 +36,7 @@ public class Student extends Person {
     @ManyToMany(mappedBy = "students", cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH})
     private List<Teacher> teachers;
 
-    @OneToMany(mappedBy = "student", cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    @OneToMany(mappedBy = "student", cascade = CascadeType.ALL)
     private List<StudentQuiz> quizzes;
 
     /*@OneToMany(mappedBy = "student")

@@ -28,14 +28,14 @@ import java.util.List;
 @JsonTypeName("course")
 public class Course extends LongIdEntity {
 
-    @ManyToMany(mappedBy = "courses", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    List<Student> students;
-
     private String title;
 
     private Date beginning = new Date(System.currentTimeMillis());
 
     private Date ending;
+
+    @ManyToMany(mappedBy = "courses", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    List<Student> students;
 
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinColumn(name = "teacher_username")

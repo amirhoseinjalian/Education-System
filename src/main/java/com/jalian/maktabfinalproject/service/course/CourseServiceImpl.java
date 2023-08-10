@@ -34,6 +34,7 @@ public class CourseServiceImpl extends BaseServiceImpl<Course, Long, CourseRepos
     public void addStudent(Course course, Student student) {
         getRepository().addStudentToCourse(student.getId(), course.getId());
         if (course.getTeacher() != null) {
+            //should I use repository or service????????????????????????????????????????????????
             studentRepository.addStudentToTeacher(student.getId(), course.getTeacher().getId());
         }
     }
@@ -57,6 +58,7 @@ public class CourseServiceImpl extends BaseServiceImpl<Course, Long, CourseRepos
     public void addTeacher(Course course, Teacher teacher) {
         getRepository().addTeacherToCourse(teacher.getId(), course.getId());
         if (course.getStudents() != null) {
+            //should I use repository or service????????????????????????????????????????????????
             course.getStudents().forEach(student -> teacherRepository.addStudentToTeacher(student.getId(), teacher.getId()));
         }
     }

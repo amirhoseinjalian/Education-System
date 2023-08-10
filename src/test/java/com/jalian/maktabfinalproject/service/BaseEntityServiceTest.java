@@ -2,6 +2,7 @@ package com.jalian.maktabfinalproject.service;
 
 import com.jalian.maktabfinalproject.entity.BaseEntity;
 import com.jalian.maktabfinalproject.repository.BaseRepository;
+import com.jalian.maktabfinalproject.repository.CourseRepository;
 import com.jalian.maktabfinalproject.repository.StudentRepository;
 import com.jalian.maktabfinalproject.repository.TeacherRepository;
 import com.jalian.maktabfinalproject.service.base.BaseService;
@@ -28,7 +29,7 @@ import static org.mockito.Mockito.verify;
 //needed for update test????????????????????????????????????????????????????????
 public abstract class BaseEntityServiceTest<Id, Value extends BaseEntity<Id>, Repository extends BaseRepository<Value, Id>, Service extends BaseService<Value, Id>> {
 
-    @Mock(extraInterfaces = {StudentRepository.class, TeacherRepository.class})
+    @Mock(extraInterfaces = {StudentRepository.class, TeacherRepository.class, CourseRepository.class})
     //(extraInterfaces = {StudentRepository.class, PersonRepository.class}) needed for class casting!!!!!!!!!!!!!!!!!!!!!!!!!!!
     protected Repository repository;
 

@@ -2,6 +2,7 @@ package com.jalian.maktabfinalproject.service;
 
 import com.jalian.maktabfinalproject.entity.BaseEntity;
 import com.jalian.maktabfinalproject.repository.BaseRepository;
+import com.jalian.maktabfinalproject.repository.StudentRepository;
 import com.jalian.maktabfinalproject.service.base.BaseService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -26,22 +27,30 @@ import static org.mockito.Mockito.verify;
 //needed for update test????????????????????????????????????????????????????????
 public abstract class BaseEntityServiceTest<Id, Value extends BaseEntity<Id>, Repository extends BaseRepository<Value, Id>, Service extends BaseService<Value, Id>> {
 
-    @Mock
+    @Mock(extraInterfaces = {StudentRepository.class/*, PersonRepository.class*/})
+    //(extraInterfaces = {StudentRepository.class, PersonRepository.class}) needed for class casting!!!!!!!!!!!!!!!!!!!!!!!!!!!
     protected Repository repository;
 
     @InjectMocks
     protected Service service = getService();
 
-    protected abstract Service getService();
-
     protected Value value;
 
-    @BeforeEach
+    protected abstract Service getService();
+
     protected abstract void setup();
 
     protected abstract Value newInstance();
 
     protected abstract Value getNewValueForUpdate();
+
+    @BeforeEach
+    void validateId() {
+        setup();
+        if (value.getId() == null) {
+            throw new RuntimeException("Id is required");
+        }
+    }
 
     @Test
     void save() {

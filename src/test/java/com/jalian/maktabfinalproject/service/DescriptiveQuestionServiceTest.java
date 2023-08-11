@@ -4,6 +4,7 @@ import com.jalian.maktabfinalproject.entity.DescriptiveQuestion;
 import com.jalian.maktabfinalproject.repository.DescriptiveQuestionRepository;
 import com.jalian.maktabfinalproject.service.question.descriptiveQuestion.DescriptiveQuestionService;
 import com.jalian.maktabfinalproject.service.question.descriptiveQuestion.DescriptiveQuestionServiceImpl;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
 
@@ -16,6 +17,7 @@ public class DescriptiveQuestionServiceTest extends QuestionServiceTest<Descript
     }
 
     @Override
+    @BeforeEach
     protected void setup() {
         value = DescriptiveQuestion.builder()
                 .id(1L)

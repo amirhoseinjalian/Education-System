@@ -5,6 +5,7 @@ import com.jalian.maktabfinalproject.entity.TestQuestion;
 import com.jalian.maktabfinalproject.repository.TestQuestionRepository;
 import com.jalian.maktabfinalproject.service.question.testQuestion.TestQuestionService;
 import com.jalian.maktabfinalproject.service.question.testQuestion.TestQuestionServiceImpl;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
 
@@ -19,6 +20,7 @@ public class TestQuestionServiceTest extends QuestionServiceTest<TestQuestion, T
     }
 
     @Override
+    @BeforeEach
     protected void setup() {
         value = TestQuestion.builder()
                 .id(1L)

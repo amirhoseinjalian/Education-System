@@ -4,6 +4,7 @@ import com.jalian.maktabfinalproject.entity.*;
 import com.jalian.maktabfinalproject.repository.QuizQuestionRepository;
 import com.jalian.maktabfinalproject.service.quizQuestion.QuizQuestionService;
 import com.jalian.maktabfinalproject.service.quizQuestion.QuizQuestionServiceImpl;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -23,6 +24,7 @@ public class QuizQuestionServiceTest extends BaseEntityServiceTest<QuizQuestionK
     }
 
     @Override
+    @BeforeEach
     protected void setup() {
         Quiz quiz = Quiz.builder().
                 id(1L).

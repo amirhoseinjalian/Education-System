@@ -7,6 +7,7 @@ import com.jalian.maktabfinalproject.service.quiz.QuizService;
 import com.jalian.maktabfinalproject.service.quiz.QuizServiceImpl;
 import com.jalian.maktabfinalproject.service.quizQuestion.QuizQuestionService;
 import com.jalian.maktabfinalproject.service.studentQuiz.StudentQuizService;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
@@ -42,6 +43,7 @@ public class QuizServiceTest extends BaseEntityServiceTest<Long, Quiz, QuizRepos
     }
 
     @Override
+    @BeforeEach
     protected void setup() {
         value = Quiz.builder().
                 id(1L).

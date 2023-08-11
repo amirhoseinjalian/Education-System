@@ -4,6 +4,7 @@ import com.jalian.maktabfinalproject.entity.DescriptiveAnswer;
 import com.jalian.maktabfinalproject.repository.DescriptiveAnswerRepository;
 import com.jalian.maktabfinalproject.service.answer.descriptiveAnswer.DescriptiveAnswerService;
 import com.jalian.maktabfinalproject.service.answer.descriptiveAnswer.DescriptiveAnswerServiceImpl;
+import org.junit.jupiter.api.BeforeEach;
 
 public class DescriptiveAnswerServiceTest extends AnswerServiceTest<DescriptiveAnswer, DescriptiveAnswerRepository, DescriptiveAnswerService> {
 
@@ -13,6 +14,7 @@ public class DescriptiveAnswerServiceTest extends AnswerServiceTest<DescriptiveA
     }
 
     @Override
+    @BeforeEach
     protected void setup() {
         value = DescriptiveAnswer.builder().id(1L).answer("correct answer").build();
     }

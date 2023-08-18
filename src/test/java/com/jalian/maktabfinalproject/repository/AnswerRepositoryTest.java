@@ -12,7 +12,6 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-
 @DataJpaTest
 @Transactional
 public abstract class AnswerRepositoryTest<AnswerValue extends Answer, Repository extends AnswerRepository<AnswerValue>> extends BaseEntityRepositoryTest<Long, AnswerValue, Repository> {

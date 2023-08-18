@@ -25,7 +25,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .hasAuthority(RoleNames.TEACHER.name())
                 .antMatchers("/api/admin/**")
                 .hasAuthority(RoleNames.ADMIN.name())
-                .antMatchers("/maktab-final-project/reg").permitAll()
+                .antMatchers("/api/reg").permitAll()
                 .anyRequest().authenticated()
                 .and().formLogin().and().httpBasic();
     }

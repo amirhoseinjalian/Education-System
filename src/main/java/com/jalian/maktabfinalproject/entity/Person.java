@@ -38,7 +38,10 @@ public abstract class Person extends BaseEntity<String> {
 
     private Date birthDate;
 
+    private boolean enabled = true;
+
     @Column(nullable = false)
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
 
     @Enumerated(EnumType.STRING)

@@ -1,10 +1,10 @@
-/*
 package com.jalian.maktabfinalproject.security;
 
 import com.jalian.maktabfinalproject.entity.Person;
-import com.jalian.maktabfinalproject.repository.PersonRepository;
+import com.jalian.maktabfinalproject.repository.AdminRepository;
+import com.jalian.maktabfinalproject.repository.StudentRepository;
+import com.jalian.maktabfinalproject.repository.TeacherRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -16,16 +16,28 @@ import java.util.Optional;
 public class CustomUserDetailsService implements UserDetailsService {
 
     @Autowired
-    @Qualifier(value = "personRepository")
-    private PersonRepository repository;
+    private TeacherRepository teacherRepository;
+
+    @Autowired
+    private StudentRepository studentRepository;
+
+    @Autowired
+    private AdminRepository adminRepository;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Optional<Person> person = repository.findById(username);
-        if(!person.isPresent()) {
-            throw new UsernameNotFoundException("User Not Found");
+        Optional<? extends Person> person = studentRepository.findById(username);
+        if (person.isPresent()) {
+            return new CustomUserDetails(person.get());
         }
-        return new CustomUserDetails(person.get());
+        person = teacherRepository.findById(username);
+        if (person.isPresent()) {
+            return new CustomUserDetails(person.get());
+        }
+        person = adminRepository.findById(username);
+        if (person.isPresent()) {
+            return new CustomUserDetails(person.get());
+        }
+        throw new UsernameNotFoundException("not found");
     }
 }
-*/

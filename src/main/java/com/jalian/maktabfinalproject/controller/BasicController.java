@@ -16,6 +16,7 @@ import com.jalian.maktabfinalproject.service.studentQuiz.StudentQuizService;
 import lombok.Data;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
@@ -61,12 +62,16 @@ public class BasicController {
     @Autowired
     protected QuizQuestionService quizQuestionService;
 
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
     @PostMapping("/reg")
     public String registration(@RequestBody SignupDto signupDto) throws Exception {
         String type = roleService.findById(signupDto.getRole().getId()).get().getName().toString();
+        signupDto.setPassword(passwordEncoder.encode(signupDto.getPassword()));
         switch (type) {
             case "ADMIN":
-                throw new Exception("You are not admin");
+                throw new Exception("You are admin");
             case "STUDENT":
                 return studentService.save(modelMapper.map(signupDto, Student.class)).toString();
             case "TEACHER":

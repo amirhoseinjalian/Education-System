@@ -30,7 +30,6 @@ import java.util.List;
 public class Role extends LongIdEntity {
 
     @Enumerated(EnumType.STRING)
-    @Column(length = 20, columnDefinition = "enum('ADMIN','TEACHER','STUDENT')")
     @NonNull
     @JsonProperty
     private RoleNames name;

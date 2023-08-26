@@ -20,6 +20,11 @@ public class TestQuestionServiceTest extends QuestionServiceTest<TestQuestion, T
     }
 
     @Override
+    protected Class<TestQuestionRepository> getRepositoryClass() {
+        return TestQuestionRepository.class;
+    }
+
+    @Override
     @BeforeEach
     protected void setup() {
         value = TestQuestion.builder()

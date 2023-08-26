@@ -28,6 +28,11 @@ public class OptionServiceTest extends BaseEntityServiceTest<Long, Option, Optio
     }
 
     @Override
+    protected Class<OptionRepository> getRepositoryClass() {
+        return OptionRepository.class;
+    }
+
+    @Override
     protected Option getNewValueForUpdate() {
         return Option.builder().id(1L).expression("new option").build();
     }

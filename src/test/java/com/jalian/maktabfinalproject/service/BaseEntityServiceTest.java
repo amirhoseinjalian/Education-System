@@ -1,13 +1,13 @@
 package com.jalian.maktabfinalproject.service;
 
 import com.jalian.maktabfinalproject.entity.BaseEntity;
-import com.jalian.maktabfinalproject.repository.*;
+import com.jalian.maktabfinalproject.repository.BaseRepository;
 import com.jalian.maktabfinalproject.service.base.BaseService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
-import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.mockito.junit.jupiter.MockitoSettings;
 import org.mockito.quality.Strictness;
@@ -27,9 +27,9 @@ import static org.mockito.Mockito.verify;
 public abstract class BaseEntityServiceTest<Id, Value extends BaseEntity<Id>, Repository extends BaseRepository<Value, Id>, Service extends BaseService<Value, Id>> {
 
     //(extraInterfaces = {StudentRepository.class) needed for class casting!!!!!!!!!!!!!!!!!!!!!!!!!!!
-    @Mock(extraInterfaces = {StudentRepository.class, TeacherRepository.class, CourseRepository.class, AnswerRepository.class
-            , QuestionRepository.class, QuizRepository.class, QuizQuestionRepository.class, StudentQuizRepository.class})
-    protected Repository repository;
+    //@Mock(extraInterfaces = {StudentRepository.class, TeacherRepository.class, CourseRepository.class, AnswerRepository.class
+    //      , QuestionRepository.class, QuizRepository.class, QuizQuestionRepository.class, StudentQuizRepository.class})
+    protected Repository repository = Mockito.mock(getRepositoryClass());
 
     @InjectMocks
     protected Service service = getService();
@@ -37,6 +37,8 @@ public abstract class BaseEntityServiceTest<Id, Value extends BaseEntity<Id>, Re
     protected Value value;
 
     protected abstract Service getService();
+
+    protected abstract Class<Repository> getRepositoryClass();
 
     protected abstract void setup();
 

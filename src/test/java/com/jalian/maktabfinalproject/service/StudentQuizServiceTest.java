@@ -28,6 +28,11 @@ public class StudentQuizServiceTest extends BaseEntityServiceTest<StudentQuizKey
     }
 
     @Override
+    protected Class<StudentQuizRepository> getRepositoryClass() {
+        return StudentQuizRepository.class;
+    }
+
+    @Override
     @BeforeEach
     protected void setup() {
         Student student = Student.builder().

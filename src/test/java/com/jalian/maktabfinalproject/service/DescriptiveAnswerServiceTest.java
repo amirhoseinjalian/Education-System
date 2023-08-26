@@ -14,6 +14,11 @@ public class DescriptiveAnswerServiceTest extends AnswerServiceTest<DescriptiveA
     }
 
     @Override
+    protected Class<DescriptiveAnswerRepository> getRepositoryClass() {
+        return DescriptiveAnswerRepository.class;
+    }
+
+    @Override
     @BeforeEach
     protected void setup() {
         value = DescriptiveAnswer.builder().id(1L).answer("correct answer").build();

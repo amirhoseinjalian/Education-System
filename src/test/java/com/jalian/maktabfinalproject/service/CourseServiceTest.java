@@ -24,7 +24,13 @@ public class CourseServiceTest extends BaseEntityServiceTest<Long, Course, Cours
 
     @Override
     protected CourseService getService() {
+        //repository = Mockito.mock(CourseRepository.class);
         return new CourseServiceImpl(repository);
+    }
+
+    @Override
+    protected Class<CourseRepository> getRepositoryClass() {
+        return CourseRepository.class;
     }
 
     @Override

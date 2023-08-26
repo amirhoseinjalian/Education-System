@@ -17,6 +17,11 @@ public class RoleServiceTest extends BaseEntityServiceTest<Long, Role, RoleRepos
     }
 
     @Override
+    protected Class<RoleRepository> getRepositoryClass() {
+        return RoleRepository.class;
+    }
+
+    @Override
     protected void setup() {
         value = Role.builder().
                 id(1L).

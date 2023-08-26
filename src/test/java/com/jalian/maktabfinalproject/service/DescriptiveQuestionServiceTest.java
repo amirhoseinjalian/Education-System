@@ -17,6 +17,11 @@ public class DescriptiveQuestionServiceTest extends QuestionServiceTest<Descript
     }
 
     @Override
+    protected Class<DescriptiveQuestionRepository> getRepositoryClass() {
+        return DescriptiveQuestionRepository.class;
+    }
+
+    @Override
     @BeforeEach
     protected void setup() {
         value = DescriptiveQuestion.builder()

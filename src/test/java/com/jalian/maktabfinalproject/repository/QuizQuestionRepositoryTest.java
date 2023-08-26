@@ -219,6 +219,6 @@ public class QuizQuestionRepositoryTest extends BaseEntityRepositoryTest<QuizQue
                 .build();
         testQuestion.setQuizzes(List.of(quizQuestionJoinTable3));
         List<DescriptiveQuestion> descriptiveQuestions = repository().getQuestions(course.getId(), DescriptiveQuestion.class);
-        assertThat(descriptiveQuestions).isEqualTo(List.of(quizQuestionJoinTable.getQuestion(), descriptiveQuestion));
+        assertThat(descriptiveQuestions).isEqualTo(List.of(descriptiveQuestion, quizQuestionJoinTable.getQuestion()));
     }
 }

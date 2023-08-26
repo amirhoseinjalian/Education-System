@@ -18,6 +18,11 @@ public class TestAnswerServiceTest extends AnswerServiceTest<TestAnswer, TestAns
     }
 
     @Override
+    protected Class<TestAnswerRepository> getRepositoryClass() {
+        return TestAnswerRepository.class;
+    }
+
+    @Override
     @BeforeEach
     protected void setup() {
         value = TestAnswer.builder().id(1L).correctOption(new Option("correct option")).build();

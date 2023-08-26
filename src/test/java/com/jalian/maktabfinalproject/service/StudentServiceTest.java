@@ -28,6 +28,11 @@ public class StudentServiceTest extends PersonServiceTest<Student, StudentReposi
     }
 
     @Override
+    protected Class<StudentRepository> getRepositoryClass() {
+        return StudentRepository.class;
+    }
+
+    @Override
     @BeforeEach
     protected void setup() {
         value = Student.builder().

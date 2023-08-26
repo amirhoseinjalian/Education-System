@@ -43,6 +43,11 @@ public class QuizServiceTest extends BaseEntityServiceTest<Long, Quiz, QuizRepos
     }
 
     @Override
+    protected Class<QuizRepository> getRepositoryClass() {
+        return QuizRepository.class;
+    }
+
+    @Override
     @BeforeEach
     protected void setup() {
         value = Quiz.builder().

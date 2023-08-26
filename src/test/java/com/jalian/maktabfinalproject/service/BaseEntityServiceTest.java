@@ -26,8 +26,7 @@ import static org.mockito.Mockito.verify;
 //needed for update test????????????????????????????????????????????????????????
 public abstract class BaseEntityServiceTest<Id, Value extends BaseEntity<Id>, Repository extends BaseRepository<Value, Id>, Service extends BaseService<Value, Id>> {
 
-    @Mock(extraInterfaces = {StudentRepository.class, TeacherRepository.class, CourseRepository.class, AnswerRepository.class
-            , QuestionRepository.class, QuizRepository.class, QuizQuestionRepository.class, StudentQuizRepository.class})
+    @Mock(extraInterfaces = {StudentRepository.class, TeacherRepository.class, CourseRepository.class, AnswerRepository.class, QuestionRepository.class, QuizRepository.class, QuizQuestionRepository.class, StudentQuizRepository.class})
     //(extraInterfaces = {StudentRepository.class) needed for class casting!!!!!!!!!!!!!!!!!!!!!!!!!!!
     protected Repository repository;
 

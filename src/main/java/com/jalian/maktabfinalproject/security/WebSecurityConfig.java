@@ -7,27 +7,28 @@ import org.springframework.security.authentication.dao.DaoAuthenticationProvider
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
 @EnableWebSecurity
-public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
+public class WebSecurityConfig /*extends WebSecurityConfigurerAdapter*/ {
 
-    @Override
-    public void configure(HttpSecurity http) throws Exception {
+    //@Override
+    public SecurityFilterChain configure(HttpSecurity http) throws Exception {
         http.csrf().disable().authorizeHttpRequests()
-                .antMatchers("/api/students/**")
+                .requestMatchers("/api/students/**")
                 .hasAuthority(RoleNames.STUDENT.name())
-                .antMatchers("/api/teachers/**")
+                .requestMatchers("/api/teachers/**")
                 .hasAuthority(RoleNames.TEACHER.name())
-                .antMatchers("/api/admin/**")
+                .requestMatchers("/api/admin/**")
                 .hasAuthority(RoleNames.ADMIN.name())
-                .antMatchers("/api/reg").permitAll()
+                .requestMatchers("/api/reg").permitAll()
                 .anyRequest().authenticated()
                 .and().formLogin().and().httpBasic();
+        return http.build();
     }
 
     @Bean
@@ -48,7 +49,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         return authProvider;
     }
 
-    @Override
+    //@Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.authenticationProvider(authenticationProvider());
     }

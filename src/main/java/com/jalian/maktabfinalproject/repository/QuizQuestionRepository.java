@@ -16,7 +16,7 @@ public interface QuizQuestionRepository extends BaseRepository<QuizQuestionJoinT
     //wrong
     //@Query("select s.question from QuizQuestionJoinTable s where s.quiz.course.id = :courseId and FUNCTION('CLASS', question) = :questionType"
     //@Query("select s.question from QuizQuestionJoinTable s where s.quiz.course.id = :courseId and type(s) = :questionType")    , 'DescriptiveQuestion.class'
-    @Query("select s.question from QuizQuestionJoinTable s where s.quiz.course.id = :courseId AND type (s.question.class) = :questionType")
+    @Query("select s.question from QuizQuestionJoinTable s where s.quiz.course.id = :courseId AND type (s.question) = :questionType")
     <Value extends Question> List<Value> getQuestions(@Param("courseId") Long courseId, @Param("questionType") Class<Value> questionType);
 
     @Query("select s.quiz from QuizQuestionJoinTable s where s.question.id = :questionId")

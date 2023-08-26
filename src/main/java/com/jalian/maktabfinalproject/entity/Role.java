@@ -1,12 +1,12 @@
 package com.jalian.maktabfinalproject.entity;
 
 import com.fasterxml.jackson.annotation.*;
+import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 
-import javax.persistence.*;
 import java.util.List;
 
 @Entity

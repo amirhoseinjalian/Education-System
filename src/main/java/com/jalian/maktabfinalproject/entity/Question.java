@@ -1,10 +1,10 @@
 package com.jalian.maktabfinalproject.entity;
 
 import com.fasterxml.jackson.annotation.*;
+import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
-import javax.persistence.*;
 import java.util.List;
 
 @Entity

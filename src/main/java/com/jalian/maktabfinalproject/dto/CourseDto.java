@@ -1,4 +1,4 @@
-package com.jalian.maktabfinalproject.entity;
+package com.jalian.maktabfinalproject.dto;
 
 import lombok.*;
 

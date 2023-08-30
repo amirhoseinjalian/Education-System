@@ -1,6 +1,10 @@
 package com.jalian.maktabfinalproject.controller;
 
-import com.jalian.maktabfinalproject.entity.*;
+import com.jalian.maktabfinalproject.dto.CourseDto;
+import com.jalian.maktabfinalproject.dto.PersonDto;
+import com.jalian.maktabfinalproject.entity.Course;
+import com.jalian.maktabfinalproject.entity.Student;
+import com.jalian.maktabfinalproject.entity.Teacher;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;

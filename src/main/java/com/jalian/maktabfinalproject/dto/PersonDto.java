@@ -1,5 +1,6 @@
-package com.jalian.maktabfinalproject.entity;
+package com.jalian.maktabfinalproject.dto;
 
+import com.jalian.maktabfinalproject.entity.Role;
 import lombok.*;
 
 @Setter

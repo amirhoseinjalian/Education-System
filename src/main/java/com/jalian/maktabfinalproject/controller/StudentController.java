@@ -1,5 +1,7 @@
 package com.jalian.maktabfinalproject.controller;
 
+import com.jalian.maktabfinalproject.dto.CourseDto;
+import com.jalian.maktabfinalproject.dto.QuizDto;
 import com.jalian.maktabfinalproject.entity.*;
 import org.springframework.web.bind.annotation.*;
 

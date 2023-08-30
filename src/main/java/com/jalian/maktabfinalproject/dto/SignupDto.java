@@ -1,5 +1,7 @@
-package com.jalian.maktabfinalproject.entity;
+package com.jalian.maktabfinalproject.dto;
 
+import com.jalian.maktabfinalproject.entity.RegistrationStatus;
+import com.jalian.maktabfinalproject.entity.Role;
 import lombok.*;
 
 import java.sql.Date;
